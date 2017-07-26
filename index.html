@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-朴素贝叶斯" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/26/朴素贝叶斯/" class="article-date">
+  <time datetime="2017-07-26T14:17:19.000Z" itemprop="datePublished">2017-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><pre><code>P(Y|X) = P(X|Y)P(Y)/P(X)
+P(Y,X) = P(Y|X)P(X) = P(X|Y)P(Y)
+P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
+</code></pre><p>只需要找到一些包含已知特征标签的样本，即可训练。</p>
+<h4 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h4><p>贝叶斯的核心思想：高概率对应的类别。<br></p>
+<p>如果    P(‘属于A类’| ‘具有某特征’) &gt; P(‘属于B类’| ‘具有某特征’)，那么(x,y)属于A类。</p>
+<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
+<li>分词：把一句话拆成更细粒度的词语来。</li>
+<li>停用词(stop words)：无助于我们分类的词。</li>
+<li>词袋子模型(bag of words): 贝叶斯失去了词语之间的顺序信息。</li>
+<li>朴素贝叶斯: 加上条件独立假设的贝叶斯方法 </li>
+</ul>
+<h3 id="使用python进行文本分类"><a href="#使用python进行文本分类" class="headerlink" title="使用python进行文本分类"></a>使用python进行文本分类</h3><p>思路过程：</p>
+<ol>
+<li>拆分文本： 对文本集合进行分词,去掉标点符号、数字、停用词等特征预处理</li>
+<li>考虑所有词汇： 选取部分词汇集合</li>
+<li>区分好训练集和测试集</li>
+<li>对训练集 将文本向量转换成数字向量 [0,1,1,0,0]</li>
+<li>训练算法：计算概率 [0,1/2,1/2,0,0]</li>
+<li>对测试集 文本向量转换成数字向量</li>
+<li>P(X|Yi)P(Yi) 向量相乘，对比概率大小</li>
+<li>分类结果与测试集对比，求出错误率</li>
+</ol>
+<p>伪代码：</p>
+<pre><code>计算每个类别中的文档数目
+对每篇训练文档
+    对每个类别
+        如果词条出现在文档中-&gt;增加该词条的计数
+        增加所有词条的数值
+对每个类别
+    各词条的数目／所有词条数 -&gt;条件概率
+返回每个类别的条件概率(和各词条在某类中出现的概率)
+</code></pre><h3 id="代码分解"><a href="#代码分解" class="headerlink" title="代码分解"></a>代码分解</h3><p>样本</p>
+<pre><code>def loadDataSet():
+    postingList = [[&apos;my&apos;, &apos;dog&apos;, &apos;has&apos;, &apos;flea&apos;, &apos;problems&apos;, &apos;help&apos;, &apos;please&apos;],
+               [&apos;maybe&apos;, &apos;not&apos;, &apos;take&apos;, &apos;him&apos;, &apos;to&apos;, &apos;dog&apos;, &apos;park&apos;, &apos;stupid&apos;],
+               [&apos;my&apos;, &apos;dalmation&apos;, &apos;is&apos;, &apos;so&apos;, &apos;cute&apos;, &apos;I&apos;, &apos;love&apos;, &apos;him&apos;],
+               [&apos;stop&apos;, &apos;posting&apos;, &apos;stupid&apos;, &apos;worthless&apos;, &apos;garbage&apos;],
+               [&apos;mr&apos;, &apos;licks&apos;, &apos;ate&apos;, &apos;my&apos;, &apos;steak&apos;, &apos;how&apos;, &apos;to&apos;, &apos;stop&apos;, &apos;him&apos;],
+               [&apos;quit&apos;, &apos;buying&apos;, &apos;worthless&apos;, &apos;dog&apos;, &apos;food&apos;, &apos;stupid&apos;]]
+    classVec = [0,1,0,1,0,1]
+    return postingList,classVec
+</code></pre><p>分词</p>
+<pre><code>def testParse(bigString):
+    # 去掉单词、数字，字符串长度小于2
+    lisetOfToken = re.split(&apos;\\W*&apos;, bigString)
+    # 全部小写处理
+    return [tok.lower() for tok in lisetOfToken if len(tok) &gt; 2]
+</code></pre><p>取得所有词汇</p>
+<pre><code>def creatVocabList(dataSet):
+    vocabSet = set([])
+    for document in dataSet:
+        vocabSet = vocabSet | set(document)
+    return vocabSet
+</code></pre><p>取出前三十个高频字符串，去掉 (with and you for之类)    </p>
+<pre><code>#vocabList 所有词汇  fullText未去重过的词汇
+def calcMostFreq(vocabList, fullText):
+    freqDict = {}
+    for token in vocabList:
+        freqDict[token] = fullText.count(token)
+    # iteritems 排序
+    sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1),\
+                reverse=True)
+    return sortedFreq[:30]
+</code></pre><p>留存交叉验证： (随机取20个作为测试集 其他为训练集)</p>
+<pre><code>trainingSet = list(range(2 * minLen)); testSet = []
+for i in range(20):
+    randIndex = int(np.random.uniform(0, len(trainingSet)))
+    testSet.append(trainingSet[randIndex])    
+    del(trainingSet[randIndex])
+</code></pre><p>训练模型－词量模型:不计算重复词语出现的次数</p>
+<pre><code>def setOfWords2Vec(vocabList, inputSet):
+    returnVet = [1 if w in inputSet else 0 for w in vocabList]
+    return returnVet
+</code></pre><p>训练模型－词袋模型:计算重复词语出现的次数                </p>
+<pre><code>def bagOfWords2VecMN(vocabList, inputSet):
+    returnVet = [0] * len(vocabList)
+    for i in range(len(vocabList)):
+        if vocabList[i] in inputSet:
+            returnVet[i] += 1
+    return returnVet    
+</code></pre><p>训练算法<br>注：</p>
+<ol>
+<li>想求函数的最大值时,可以使用该函数的自然对数来替换原函数进行求解</li>
+<li>平滑处理：将所有词的出现数初始化为1,所有词条数初始化为2</li>
+</ol>
+<pre><code>
+# 训练算法：从词向量计算概率
+# trainMatrix：文档矩阵(数字向量)
+# trainCategory：文档对应的类别 0正常 1垃圾
+
+def trainNB0(trainMatrix, trainCategory):
+    # 文档数量
+    numTrainDocs = len(trainMatrix)
+    # 词汇量大小
+    numWords = len(trainMatrix[0])
+    # 垃圾文档的概率
+    pAbusive = sum(trainCategory)/float(numTrainDocs)
+    # 创建一个全部为0的矩阵p0Num
+    # [1,2,3,4,0,0,1]即第一个词在垃圾文档中出现的次数1次，第二个出现2次
+    # p1Denom 所有的词出现的总数 即1+2+3+4+1=11
+    p0Num = np.ones(numWords); p1Num = np.ones(numWords)
+    p0Denom = 2.0; p1Denom = 2.0
+
+    for i in range(numTrainDocs):
+        if trainCategory[i] == 1:
+            p1Num += trainMatrix[i]
+            p1Denom += sum(trainMatrix[i])
+        else:
+            p0Num += trainMatrix[i]
+            p0Denom += sum(trainMatrix[i])
+    # 得到每个词在垃圾文档中出现的频率[1/11,2/11,3/11,4/11,0,0,1/11]    
+    p1Vect = [math.log(x/p1Denom) for x in p1Num]
+    p0Vect = [math.log(x/p0Denom) for x in p0Num]
+    # p1Vect = p1Num/p1Denom
+    # p0Vect = p0Num/p0Denom
+    return p1Vect,p0Vect,pAbusive
+</code></pre><p>朴素贝叶斯分类函数</p>
+<pre><code>def classifyNB(vec2Classify, p0Vect,p1Vect,pClass1):
+    p1VecSum = 0; p0VecSum = 0
+    for i in range(len(p0Vect)):
+        p1VecSum += vec2Classify[i] * p1Vect[i]
+        p0VecSum += vec2Classify[i] * p0Vect[i]
+
+    p1 = p1VecSum + math.log(pClass1)
+    p0 = p0VecSum + math.log(1.0 - pClass1)
+    # p1 = sum(vec2Classify * p1Vect) + math.log(pClass1)
+    # p0 = sum(vec2Classify * p0Vect) + math.log(1.0 - pClass1)
+    if p1 &gt; p0:
+        return 1
+    else:
+        return 0
+</code></pre><h3 id="示例：使用naive-bayes从个人广告中获取区域倾向"><a href="#示例：使用naive-bayes从个人广告中获取区域倾向" class="headerlink" title="示例：使用naive bayes从个人广告中获取区域倾向"></a>示例：使用naive bayes从个人广告中获取区域倾向</h3><p>训练出模型后，获取各分类 词条出现概率较高的前十个单词    </p>
+<pre><code># -*- coding: utf-8 -*-
+# !/usr/bin/env python
+
+import feedparser
+import re
+import words2vec as bayes
+import numpy as np
+import operator    
+
+def testParse(bigString):
+    # 去掉单词、数字，字符串长度小于2
+    lisetOfToken = re.split(&apos;\\W*&apos;, bigString)
+    # 全部小写处理
+    return [tok.lower() for tok in lisetOfToken if len(tok) &gt; 2]
+
+# 取出前三十个高频字符串   with and you for之类
+def calcMostFreq(vocabList, fullText):
+    freqDict = {}
+    for token in vocabList:
+        freqDict[token] = fullText.count(token)
+    # iteritems 排序
+    sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1),\
+                    reverse=True)
+    return sortedFreq[:50]                    
+
+def localWords(feed1, feed0):
+    docList = []; classList = []; fullText = []
+    minLen = min(len(feed1[&apos;entries&apos;]), len(feed0[&apos;entries&apos;]))
+    # print(minLen)
+    for i in range(minLen):
+        wordList = testParse(feed1[&apos;entries&apos;][i][&apos;summary&apos;])
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(1)
+        wordList = testParse(feed0[&apos;entries&apos;][i][&apos;summary&apos;])
+        docList.append(wordList)
+        fullText.extend(wordList)
+        classList.append(0)
+    # 创建所有 词向量
+    vocabList = bayes.creatVocabList(docList)
+    # 取出前三十个高频字符串
+    top30Words = calcMostFreq(vocabList, fullText)
+    # print(top30Words)
+    # 去掉高频词
+    for pairW in top30Words:
+        if pairW[0] in vocabList:
+            vocabList.remove(pairW[0])
+    print(vocabList)
+    print(len(vocabList))        
+    # 留存交叉验证     随机取20个作为测试集 其他为训练集
+    trainingSet = list(range(2 * minLen)); testSet = []
+    for i in range(20):
+        randIndex = int(np.random.uniform(0, len(trainingSet)))
+        testSet.append(trainingSet[randIndex])    
+        del(trainingSet[randIndex])
+    # print(testSet)
+    # 训练模型
+    trainMat = []; trainClasses = []
+    for docIndex in trainingSet:
+        trainMat.append(bayes.bagOfWords2VecMN(list(vocabList),docList[docIndex]))
+        trainClasses.append(classList[docIndex])
+    p0V,p1V,pSpam = bayes.trainNB0(np.array(trainMat), np.array(trainClasses))
+    # print(&apos;pSpam: &apos;,pSpam)
+    # 测试数据 查看错误率
+    errorCount = 0
+    for docIndex in testSet:
+        wordVector = bayes.bagOfWords2VecMN(list(vocabList),docList[docIndex])
+        if bayes.classifyNB(wordVector,p0V,p1V,pSpam) != classList[docIndex]:
+            errorCount += 1
+            # print(docList[docIndex], &apos;error&apos;)
+    print(&apos;the error rate is: &apos;, float(errorCount)/len(testSet))    
+    return vocabList,p0V,p1V    
+
+def getTopWords(ny,sf):
+    vocabList,p0V,p1V = localWords(ny,sf)
+    topNY = []; topSF = []
+    for i in range(len(p0V)):
+        if p0V[i] &gt; -6.0:    
+            topSF.append((list(vocabList)[i],p0V[i]))
+        if p1V[i] &gt; -6.0:
+            topNY.append((list(vocabList)[i],p1V[i]))
+
+    sortedSF = sorted(topSF, key=lambda pair: pair[1], reverse=True)
+    print(&apos;SF *****   *****    *****&apos;)
+    top10SF = map(lambda x: x[0], sortedSF[:10])
+    for i in top10SF:
+        print(i)
+
+    sortedNY = sorted(topNY, key=lambda pair: pair[1], reverse=True)
+    print(&apos;NY *****   *****    *****&apos;)
+    for item in sortedNY[:10]:
+        print(item[0])
+
+if __name__ == &apos;__main__&apos;:
+    ny = feedparser.parse(&apos;http://newyork.craigslist.org/stp/index.rss&apos;)
+    sf = feedparser.parse(&apos;http://sfbay.craigslist.org/stp/index.rss&apos;)
+    getTopWords(ny,sf)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5l6ev6j00057mlu69uo38e1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios之滑动条简单游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/29/ios之滑动条简单游戏/" class="article-date">
+  <time datetime="2016-04-29T07:21:38.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>一个简单小游戏，但是并不主流，不推荐学习</p>
+<h3 id="拖动滑动条，会弹出分数的提示框"><a href="#拖动滑动条，会弹出分数的提示框" class="headerlink" title="拖动滑动条，会弹出分数的提示框"></a>拖动滑动条，会弹出分数的提示框</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">#import "ViewController.h"</div><div class="line">#import "AboutViewController.h"</div><div class="line">//播放音频视频</div><div class="line">#import &lt;AVFoundation/AVFoundation.h&gt;</div><div class="line"></div><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property(nonatomic,strong)AVAudioPlayer *audioPlayer;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">@synthesize Scores;</div><div class="line">@synthesize gameTimes;</div><div class="line">@synthesize Nums;</div><div class="line">@synthesize slider;</div><div class="line">@synthesize audioPlayer;</div><div class="line"></div><div class="line">int score,currentValue,targetValue,currentTimes;</div><div class="line">bool musicPlay = true;</div><div class="line"></div><div class="line">- (IBAction)musicSlider:(UIButton *)sender&#123;</div><div class="line">    if(musicPlay) &#123;</div><div class="line">        musicPlay = false;</div><div class="line">        [self playBackgroundMusic];</div><div class="line">    &#125;else &#123;</div><div class="line">        musicPlay = true;</div><div class="line">        [audioPlayer stop];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//播放背景音乐</div><div class="line">- (void)playBackgroundMusic&#123;</div><div class="line">    NSString *musicPath = [[NSBundle mainBundle]pathForResource:@"no" ofType:@"mp3"];</div><div class="line">    NSURL *url = [NSURL fileURLWithPath:musicPath];</div><div class="line">    NSError *error;</div><div class="line">    audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&amp;error];</div><div class="line">    audioPlayer.numberOfLoops = -1;</div><div class="line">    if(audioPlayer == nil) &#123;</div><div class="line">        NSString *errorInfo = [NSString stringWithFormat:[error description]];</div><div class="line">        NSLog(@"the error is :%d",errorInfo);</div><div class="line">    &#125;else &#123;</div><div class="line">        [audioPlayer play];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (IBAction)SliderMoved:(UISlider *)sender &#123;</div><div class="line">    currentValue = lrintf(sender.value);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (IBAction)ShowScores:(id)sender &#123;</div><div class="line">    int currentScore = 100 - abs(currentValue - targetValue);</div><div class="line">    NSString *msg = [NSString stringWithFormat:@"滑动条所在位置:%d,分数:%d",currentValue,currentScore];</div><div class="line">    [[[UIAlertView alloc] initWithTitle:@"test" message:msg delegate:self cancelButtonTitle:@"好的，我知道了！" otherButtonTitles:nil, nil] show];</div><div class="line">    score += currentScore;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex&#123;</div><div class="line">    [self funcShow];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (IBAction)startOver:(id)sender &#123;</div><div class="line">    //添加过渡效果</div><div class="line">    CATransition *transition = [CATransition animation];</div><div class="line">    transition.type = kCATransitionFade;</div><div class="line">    transition.duration = 3;</div><div class="line">    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    </div><div class="line">    score = 0;</div><div class="line">    currentTimes = 0;</div><div class="line">    [self funcShow];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)funcShow&#123;</div><div class="line">    [self sliderStart];</div><div class="line">    [self randomNum];</div><div class="line">    [self ScoreText];</div><div class="line">    [self timesShow];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)randomNum&#123;</div><div class="line">    targetValue = 1 + (arc4random()%100);</div><div class="line">    Nums.text = [NSString stringWithFormat:@"%d",targetValue];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)ScoreText&#123;</div><div class="line">    Scores.text = [NSString stringWithFormat:@"%d",score];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)timesShow&#123;</div><div class="line">    currentTimes++;</div><div class="line">    gameTimes.text = [NSString stringWithFormat:@"%d",currentTimes];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)sliderStart&#123;</div><div class="line">    currentValue = 50;</div><div class="line">    slider.value = currentValue;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">//    UIImage *thumbImageNormal = [UIImage imageNamed:@"SliderThumb-Normal"];</div><div class="line">    [self funcShow];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">    // Dispose of any resources that can be recreated.</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (IBAction)showInfo:(id)sender &#123;</div><div class="line">    AboutViewController *controller = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];</div><div class="line">    controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;</div><div class="line">    [self presentViewController:controller animated:YES completion:nil];</div><div class="line">    </div><div class="line">    //主屏幕分辨率</div><div class="line">    NSLog(@"x:%f,y:%f,height:%f,width:%f",[UIScreen mainScreen].bounds.origin.x,[UIScreen mainScreen].bounds.origin.y,[UIScreen mainScreen].bounds.size.height,[UIScreen mainScreen].bounds.size.width);</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>关闭提示界面，新建一个类；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (IBAction)closeInfo:(id)sender &#123;</div><div class="line">    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5l6ev6g00037mluov2texj8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-学生成绩管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/30/学生成绩管理/" class="article-date">
+  <time datetime="2016-03-30T09:21:14.000Z" itemprop="datePublished">2016-03-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>输入某个班每个学生的所有课程的成绩，对所有成绩作如下处理：<br>1.求每门课程的平均分<br>2.输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。<br>3.输出所有平均分在90分以上（含90分）的学生的学号。</p>
+<h3 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h3><h4 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STUDENT_NUM 3</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STUDENT_COUR 3</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PASS_SCOR 60</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STU_GOOD 90</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> id[<span class="number">10</span>];</div><div class="line">	<span class="keyword">float</span> score[STUDENT_COUR];</div><div class="line">	<span class="keyword">float</span> cour_ave;</div><div class="line">&#125;STUDENT_SOCR_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>   </span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">double</span> score_ave[STUDENT_COUR];</div><div class="line">	STUDENT_SOCR_S stu[<span class="number">0</span>];</div><div class="line">&#125;STUDENT_S;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> STUDENT_S student;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i,j;</div><div class="line">	<span class="built_in">memset</span>(&amp;student,<span class="number">0</span>,<span class="keyword">sizeof</span>(student));</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; STUDENT_NUM; i++) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"请输入第%d个学生学号和各科成绩：\n"</span>,i+<span class="number">1</span>);</div><div class="line">		<span class="built_in">scanf</span>(<span class="string">"%s"</span>,&amp;student.stu[i].id);</div><div class="line">		<span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; STUDENT_COUR; j++) &#123;</div><div class="line">			<span class="built_in">scanf</span>(<span class="string">"%f"</span>,&amp;student.stu[i].score[j]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	all_cour_ave();</div><div class="line">	not_pass_stu();</div><div class="line">	stu_pass();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="功能一：求每门课程的平均分"><a href="#功能一：求每门课程的平均分" class="headerlink" title="功能一：求每门课程的平均分"></a>功能一：求每门课程的平均分</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">all_cour_ave</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i,j;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; STUDENT_COUR;i++) &#123;</div><div class="line">		<span class="keyword">for</span>(j = <span class="number">0</span>;j &lt; STUDENT_NUM;j++) &#123;</div><div class="line">			student.score_ave[i] += student.stu[j].score[i];</div><div class="line">		&#125;</div><div class="line">		student.score_ave[i] = student.score_ave[i]/STUDENT_NUM;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"第%d门课平均成绩为:%0.2f\n"</span>,i+<span class="number">1</span>,student.score_ave[i]);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="功能二：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。"><a href="#功能二：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。" class="headerlink" title="功能二：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。"></a>功能二：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">stu_socr_ave</span><span class="params">(<span class="keyword">int</span> id)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"   各科成绩如下：\n"</span>);</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; STUDENT_COUR; i++) &#123;</div><div class="line">		student.stu[id].cour_ave += student.stu[id].score[i];</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"   %0.2f"</span>,student.stu[id].score[i]);</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"平均成绩为:%0.2f\n"</span>, student.stu[id].cour_ave/STUDENT_COUR);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">not_pass_stu</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i,j;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; STUDENT_NUM;i++) &#123;</div><div class="line">		<span class="keyword">for</span>(j = <span class="number">0</span>;j &lt; STUDENT_COUR;j++) &#123;</div><div class="line">			<span class="keyword">if</span>(student.stu[i].score[j] &lt; PASS_SCOR) &#123;</div><div class="line">				<span class="built_in">printf</span>(<span class="string">"不及格学生：学号：%s"</span>,student.stu[i].id);</div><div class="line">				stu_socr_ave(i);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="功能三：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。"><a href="#功能三：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。" class="headerlink" title="功能三：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。"></a>功能三：输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">stu_pass</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i,j;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"以下为平均分90以上学生:\n"</span>);</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; STUDENT_NUM; i++) &#123;</div><div class="line">		student.stu[i].cour_ave = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; STUDENT_COUR; j++) &#123;</div><div class="line">			student.stu[i].cour_ave += student.stu[i].score[j];</div><div class="line">		&#125;</div><div class="line">		student.stu[i].cour_ave = student.stu[i].cour_ave/STUDENT_COUR;</div><div class="line">		<span class="keyword">if</span>(student.stu[i].cour_ave &gt;= STU_GOOD) &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%s\n"</span>,student.stu[i].id);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="测试如下："><a href="#测试如下：" class="headerlink" title="测试如下："></a>测试如下：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">➜  Desktop git:(master) ✗ ./st</div><div class="line">请输入第<span class="number">1</span>个学生学号和各科成绩：</div><div class="line"><span class="number">1</span></div><div class="line"><span class="number">22</span></div><div class="line"><span class="number">66</span></div><div class="line"><span class="number">77</span></div><div class="line">请输入第<span class="number">2</span>个学生学号和各科成绩：</div><div class="line"><span class="number">2</span></div><div class="line"><span class="number">88</span></div><div class="line"><span class="number">99</span></div><div class="line"><span class="number">99</span></div><div class="line">请输入第<span class="number">3</span>个学生学号和各科成绩：</div><div class="line"><span class="number">3</span></div><div class="line"><span class="number">99</span></div><div class="line"><span class="number">99</span></div><div class="line"><span class="number">99</span></div><div class="line">第<span class="number">1</span>门课平均成绩为:<span class="number">69.67</span></div><div class="line">第<span class="number">2</span>门课平均成绩为:<span class="number">88.00</span></div><div class="line">第<span class="number">3</span>门课平均成绩为:<span class="number">91.67</span></div><div class="line">不及格学生：学号：<span class="number">1</span>   各科成绩如下：</div><div class="line">   <span class="number">22.00</span>   <span class="number">66.00</span>   <span class="number">77.00</span></div><div class="line">平均成绩为:<span class="number">55.00</span></div><div class="line">以下为平均分<span class="number">90</span>以上学生:</div><div class="line"><span class="number">2</span></div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5l6ev6n00067mludgnmgim5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios基础学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/16/ios基础学习/" class="article-date">
+  <time datetime="2016-03-16T09:52:17.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/16/ios基础学习/">ios基础学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>swift实现一个简单的四则运算计算器<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>:</span> UIViewController &#123;</div><div class="line"></div><div class="line">    @IBOutlet weak var resultLable: UILabel!</div><div class="line">    </div><div class="line">    var operand1: String = <span class="string">""</span></div><div class="line">    var operand2: String = <span class="string">""</span></div><div class="line">    var operator3: String = <span class="string">""</span></div><div class="line">    </div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    override func didReceiveMemoryWarning() &#123;</div><div class="line">        super.didReceiveMemoryWarning()</div><div class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @IBAction func didClicked(sender: AnyObject) &#123;</div><div class="line">        let value = sender.currentTitle</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> value == <span class="string">"+"</span> || value == <span class="string">"-"</span> || value == <span class="string">"x"</span> || value == <span class="string">"/"</span> &#123;</div><div class="line">            operator3 = value!!</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> value == <span class="string">"="</span> &#123;</div><div class="line">            var result = <span class="number">0</span></div><div class="line">            <span class="keyword">switch</span> operator3 &#123;</div><div class="line">                <span class="keyword">case</span> <span class="string">"+"</span>:</div><div class="line">                    result = Int(operand1)! + Int(operand2)!</div><div class="line">                <span class="keyword">case</span> <span class="string">"-"</span>:</div><div class="line">                    result = Int(operand1)! - Int(operand2)!</div><div class="line">                <span class="keyword">case</span> <span class="string">"x"</span>:</div><div class="line">                    result = Int(operand1)! * Int(operand2)!</div><div class="line">                <span class="keyword">case</span> <span class="string">"/"</span>:</div><div class="line">                    result = Int(operand1)! / Int(operand2)!</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    result = <span class="number">0</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            resultLable.text = <span class="string">"\(result)"</span></div><div class="line">            </div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> operator3 == <span class="string">""</span> &#123;</div><div class="line">            operand1 += value!!</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            operand2 += value!!</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>用户登录<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>:</span> UIViewController &#123;</div><div class="line"></div><div class="line">    @IBOutlet weak var usernameLable: UITextField!</div><div class="line">    @IBOutlet weak var passwdLbale: UITextField!</div><div class="line">    @IBOutlet weak var tipLable: UILabel!</div><div class="line">    </div><div class="line">    <span class="function">override func <span class="title">viewDidLoad</span><span class="params">()</span> </span>&#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line"><span class="comment">//        print(usernameLable.text)</span></div><div class="line"><span class="comment">//        print(passwdLbale.text)</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">override func <span class="title">didReceiveMemoryWarning</span><span class="params">()</span> </span>&#123;</div><div class="line">        super.didReceiveMemoryWarning()</div><div class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @<span class="function">IBAction func <span class="title">didclicked</span><span class="params">(sender: UIButton)</span> </span>&#123;</div><div class="line">        let username = usernameLable.text</div><div class="line">        let passwd = passwdLbale.text</div><div class="line">        </div><div class="line">        <span class="comment">//admin 6666666</span></div><div class="line">        <span class="keyword">if</span> username == <span class="string">"admin"</span> &amp;&amp; passwd == <span class="string">"666666"</span> &#123;</div><div class="line">            tipLable.text = <span class="string">"login success!"</span></div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            tipLable.text = <span class="string">"username or passwd error!"</span></div><div class="line">        &#125;</div><div class="line">    </div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>根据成绩更换界面照片<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>:</span> UIViewController &#123;</div><div class="line">    @IBOutlet weak var sorceTextFiled: UITextField!</div><div class="line">    @IBOutlet weak var imageview: UIImageView!</div><div class="line">    </div><div class="line">    <span class="function">override func <span class="title">viewDidLoad</span><span class="params">()</span> </span>&#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">override func <span class="title">didReceiveMemoryWarning</span><span class="params">()</span> </span>&#123;</div><div class="line">        super.didReceiveMemoryWarning()</div><div class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @<span class="function">IBAction func <span class="title">clicked</span><span class="params">(sender: AnyObject)</span> </span>&#123;</div><div class="line">        var score = Int(sorceTextFiled.text!)</div><div class="line">        <span class="keyword">switch</span> score! &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">0.</span>.<span class="number">.59</span>:</div><div class="line">                imageview.image = UIImage(named: <span class="string">"s08"</span>)</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">case</span> <span class="number">60.</span>.<span class="number">.79</span>:</div><div class="line">                imageview.image = UIImage(named: <span class="string">"s09"</span>)</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">case</span> <span class="number">80.</span>.<span class="number">.100</span>:</div><div class="line">                imageview.image = UIImage(named: <span class="string">"s10"</span>)</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                print(<span class="string">"wrong score!"</span>)</div><div class="line">                <span class="keyword">break</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>简单记事本<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>:</span> UIViewController &#123;</div><div class="line"></div><div class="line">    @IBOutlet weak var noteTextView: UITextView!</div><div class="line">    @IBOutlet weak var viewTextFiled: UILabel!</div><div class="line">    @IBOutlet weak var nameTextFiled: UITextField!</div><div class="line"></div><div class="line"><span class="comment">//    var array = [String]()</span></div><div class="line">    var <span class="built_in">array</span> = [Dictionary&lt;String,String&gt;]()</div><div class="line"></div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        </div><div class="line">        super.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup</span></div><div class="line"><span class="comment">//        after loading the view, typically from a nib.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    override func didReceiveMemoryWarning() &#123;</div><div class="line">        super.didReceiveMemoryWarning()</div><div class="line">        <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @IBAction func didclicked(sender: UIButton) &#123;</div><div class="line">        var content = noteTextView.text</div><div class="line"><span class="comment">//        array.append(content)</span></div><div class="line">        var name = nameTextFiled.text</div><div class="line">        <span class="comment">//key-value</span></div><div class="line">        var dict = Dictionary&lt;String,String&gt;()</div><div class="line">        dict[<span class="string">"name"</span>] = name</div><div class="line">        dict[<span class="string">"content"</span>] = content</div><div class="line">        <span class="built_in">array</span>.append(dict)</div><div class="line"><span class="comment">//        var dict2: Dictionary&lt;String,Int&gt; = ["age": 18]</span></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @IBAction func viewClicked(sender: UIButton) &#123;</div><div class="line"><span class="comment">//        self.view.endEditing(false)</span></div><div class="line">        <span class="keyword">for</span> var value = <span class="number">0</span>; value &lt; <span class="built_in">array</span>.count; value++ &#123;</div><div class="line">            var dict = <span class="built_in">array</span>[value]</div><div class="line">            var name = dict[<span class="string">"name"</span>]</div><div class="line">            viewTextFiled.text! += name! + <span class="string">" "</span></div><div class="line">            print(dict[<span class="string">"content"</span>])</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    @IBAction func openClicked(sender: UIButton) &#123;</div><div class="line">        var name = self.nameTextFiled.text</div><div class="line">        <span class="keyword">for</span> dict in <span class="built_in">array</span> &#123;</div><div class="line">            var filename = dict[<span class="string">"name"</span>]</div><div class="line">            <span class="keyword">if</span> name == filename &#123;</div><div class="line">                noteTextView.text = dict[<span class="string">"content"</span>]!</div><div class="line">                <span class="keyword">break</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/16/ios基础学习/" data-id="cj5l6ev6500007mlugmkhu9rb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-udp编程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/16/udp编程/" class="article-date">
+  <time datetime="2016-03-16T09:31:36.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/16/udp编程/">udp编程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>创建udp socket 监听2222端口接收数据<br>发送数据端口为3333</p>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/socket.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;netinet/in.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;arpa/inet.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;errno.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;netdb.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SERV_PORT_UDP 2222</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SERV_SEND_PORT_UDP 3333</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> RECV_BUF_LMT 1024</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HEART_BEAT 10</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> QUEUE_MAX_EVENTS 5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SZ_FR_LEN_MIN 9 <span class="comment">//sizeof(SHUNZHOU_PRO_HEAD_S)+sizeof(SHUNZHOU_PRO_SUM_S)</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FALSE 0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE  1</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_HEART_BEAT 0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_SINGLE_ADD_DEV 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_BATCH_ADD_DEV 2</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_BATCH_ADD_CLOSE 3</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_ADD_SUCC_TIP 4</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEL_DEV 5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEV_GROUP 6</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEV_STA_QUE 7</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_GET_DEV_STA 8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_SINGLE_COMM_SEND 9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DATA_STA_UP 0x0a</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_GROUP_COMM_SEND 0x0b</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> VOID void</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STATIC static</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZEOF sizeof</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> BYTE;</div><div class="line"><span class="keyword">typedef</span> BYTE *PBYTE;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> WORD;</div><div class="line"><span class="keyword">typedef</span> WORD *PWORD;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> DWORD;</div><div class="line"><span class="keyword">typedef</span> DWORD *PDWORD;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> UINT;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> INT;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> *PUINT;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> WORD_SWAP(X) ((X <span class="meta-string">&lt;&lt;8) | (X &gt;&gt; 8))   //short</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DWORD_SWAP(X)(((X)&amp;0xff)&lt;&lt;24) + \</span></div><div class="line">                     (((X)&amp;0xff00)&lt;&lt;8) + \</div><div class="line">                     (((X)&amp;0xff0000)&gt;&gt;8) + \</div><div class="line">                     (((X)&amp;0xff000000)&gt;&gt;24)  <span class="comment">//int</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">    WORD fr_head; <span class="comment">// 0x55aa</span></div><div class="line">    BYTE fr_seq;</div><div class="line">    BYTE fr_type;</div><div class="line">    BYTE fr_ret;</div><div class="line">    WORD fr_len;</div><div class="line">    BYTE fr_data[<span class="number">0</span>];</div><div class="line">&#125;SZ_PRO_HEAD_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">    WORD fr_sum;</div><div class="line">&#125;SZ_PRO_SUM_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">    WORD len;       </div><div class="line">    BYTE is_ret;   </div><div class="line">    BYTE data[<span class="number">0</span>];  </div><div class="line">&#125;SZ_SEND_DATA_S;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">    INT udp_fd;</div><div class="line">    INT udp_send_fd;</div><div class="line">    INT time_out_cnt;</div><div class="line">    UINT recv_cout;</div><div class="line">    UINT seq;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">udp_addr</span>;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">server_send_addr</span>;</span></div><div class="line">    BYTE recv_buf[RECV_BUF_LMT];</div><div class="line">&#125;SZ_PRO_CNTL_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123;</div><div class="line">    SZ_UDP_RECV = <span class="number">0</span>,</div><div class="line">    SZ_UDP_PROC,</div><div class="line">&#125;SZ_UDP_RECV_S;</div><div class="line"></div><div class="line"><span class="comment">/***********************************************************</span></div><div class="line">*************************variable define********************</div><div class="line">***********************************************************/</div><div class="line">STATIC SZ_PRO_CNTL_S sz_pro_cntl;</div><div class="line"><span class="function">STATIC <span class="keyword">int</span> <span class="title">sz_udp_send_data</span><span class="params">(BYTE fr_type,\</span></span></div><div class="line">                            BYTE fr_ret,BYTE *fr_data,\</div><div class="line">                            UINT fr_len,BYTE is_ret);</div><div class="line"><span class="comment">/***********************************************************</span></div><div class="line">*************************function define********************</div><div class="line">***********************************************************/</div><div class="line"><span class="function">STATIC WORD <span class="title">getCheckSum</span><span class="params">(BYTE *pack, INT pack_len)</span></span></div><div class="line">&#123;</div><div class="line">    WORD check_sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(--pack_len &gt;= <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        check_sum += *pack++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> check_sum;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv_socket</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int32_t</span> iRet;</div><div class="line">    sz_pro_cntl.udp_fd = <span class="number">-1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">_Bool</span> optval = TRUE;</div><div class="line">    bzero(&amp;sz_pro_cntl.udp_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.udp_addr));</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_addr.sin_family = AF_INET;</div><div class="line">    sz_pro_cntl.udp_addr.sin_addr.s_addr = htonl(INADDR_ANY);</div><div class="line">    sz_pro_cntl.udp_addr.sin_port = htons(SERV_PORT_UDP);</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_fd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.udp_fd &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"sz_pro_cntl.udp_fd &lt; 0\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    setsockopt(sz_pro_cntl.udp_fd,SOL_SOCKET,SO_REUSEADDR,&amp;optval,<span class="keyword">sizeof</span>(optval));</div><div class="line">    iRet = bind(sz_pro_cntl.udp_fd, (struct sockaddr *)&amp;sz_pro_cntl.udp_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.udp_addr));</div><div class="line">    <span class="keyword">if</span>(iRet &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"bind err\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">send_socket</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int32_t</span> iRet;</div><div class="line">    sz_pro_cntl.udp_send_fd = <span class="number">-1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">_Bool</span> optval = TRUE;</div><div class="line">    bzero(&amp;sz_pro_cntl.server_send_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.server_send_addr));</div><div class="line">    </div><div class="line">    sz_pro_cntl.server_send_addr.sin_family = AF_INET;</div><div class="line">    sz_pro_cntl.server_send_addr.sin_addr.s_addr = htonl(INADDR_ANY);</div><div class="line">    sz_pro_cntl.server_send_addr.sin_port = htons(SERV_SEND_PORT_UDP);</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_send_fd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.udp_send_fd &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"sz_pro_cntl.udp_send_fd &lt; 0\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    setsockopt(sz_pro_cntl.udp_send_fd,SOL_SOCKET,SO_REUSEADDR,&amp;optval,<span class="keyword">sizeof</span>(optval));</div><div class="line">    iRet = bind(sz_pro_cntl.udp_send_fd, (struct sockaddr *)&amp;sz_pro_cntl.server_send_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.server_send_addr));</div><div class="line">    <span class="keyword">if</span>(iRet &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"bind err hh\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">ty_thread</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    &lt;!-- sz_udp_send_data(i,<span class="number">0</span>,<span class="literal">NULL</span>,<span class="number">0</span>,<span class="number">0</span>); --&gt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">sz_udp_recv_pro</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">client_addr</span>;</span></div><div class="line">    <span class="keyword">socklen_t</span> client_addr_len = <span class="keyword">sizeof</span>(client_addr);</div><div class="line">    INT count = <span class="number">0</span>;</div><div class="line">    count = recvfrom(sz_pro_cntl.udp_fd, (sz_pro_cntl.recv_buf + \</div><div class="line">        sz_pro_cntl.recv_cout), (<span class="number">1024</span> - sz_pro_cntl.recv_cout),<span class="number">0</span>,\</div><div class="line">        (struct sockaddr*)&amp;client_addr, &amp;client_addr_len);</div><div class="line">    sz_pro_cntl.recv_cout += count;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">STATIC VOID <span class="title">sz_udp_msg_proc</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"enter sz_udp_msg_proc\n"</span>);</div><div class="line">    INT fr_len = <span class="number">0</span>, offset = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span>((sz_pro_cntl.recv_cout-offset) &gt;= SZ_FR_LEN_MIN) &#123;</div><div class="line">        SZ_PRO_HEAD_S *head=(SZ_PRO_HEAD_S *)(sz_pro_cntl.recv_buf+offset);</div><div class="line">        head-&gt;fr_head = WORD_SWAP(head-&gt;fr_head);</div><div class="line">        <span class="keyword">if</span>(<span class="number">0x55aa</span> != head-&gt;fr_head) &#123;</div><div class="line">            offset += <span class="number">2</span>;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// if((head-&gt;fr_seq != (sz_pro_cntl.seq-1)) &amp;&amp; (head-&gt;fr_seq != 0)) &#123;</span></div><div class="line">        <span class="comment">//     offset += 3;</span></div><div class="line">        <span class="comment">//     continue;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line">        <span class="keyword">if</span>((head-&gt;fr_type &lt; <span class="number">0x00</span>) || (head-&gt;fr_type &gt; <span class="number">0x0b</span>)) &#123;</div><div class="line">            offset += <span class="number">4</span>;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(head-&gt;fr_ret != <span class="number">0x00</span>) &#123;</div><div class="line">            offset += <span class="number">5</span>;</div><div class="line">            <span class="keyword">continue</span>;  </div><div class="line">        &#125;</div><div class="line">        head-&gt;fr_len = WORD_SWAP(head-&gt;fr_len);</div><div class="line">        fr_len = SZ_FR_LEN_MIN + head-&gt;fr_len;</div><div class="line">        <span class="keyword">if</span>((sz_pro_cntl.recv_cout-offset) &lt; fr_len) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        UINT check_num = getCheckSum(head,fr_len<span class="number">-2</span>);</div><div class="line">        SZ_PRO_SUM_S *sum = (SZ_PRO_SUM_S *)(sz_pro_cntl.recv_buf+offset+fr_len<span class="number">-2</span>);</div><div class="line">        sum-&gt;fr_sum = WORD_SWAP(sum-&gt;fr_sum);</div><div class="line">        <span class="keyword">if</span>(check_num != sum-&gt;fr_sum) &#123;</div><div class="line">            offset += fr_len;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125; </div><div class="line">        <span class="built_in">printf</span>(<span class="string">"recv succ\n"</span>);</div><div class="line">        offset += fr_len;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(offset &gt; <span class="number">0</span>) &#123;</div><div class="line">        sz_pro_cntl.recv_cout -= offset;</div><div class="line">        memmove(sz_pro_cntl.recv_buf,sz_pro_cntl.recv_buf+ \</div><div class="line">            offset,sz_pro_cntl.recv_cout);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv_thread</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"enter ty_thread\n"</span>);</div><div class="line">    SZ_UDP_RECV_S status = SZ_UDP_RECV;</div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"status:%d\n"</span>,status);</div><div class="line">        <span class="keyword">switch</span>(status) &#123;</div><div class="line">            <span class="keyword">case</span> SZ_UDP_RECV: &#123;</div><div class="line">                sz_udp_recv_pro();</div><div class="line">                <span class="keyword">if</span>(sz_pro_cntl.recv_cout &gt;= SZ_FR_LEN_MIN) &#123;</div><div class="line">                    status = SZ_UDP_PROC;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> SZ_UDP_PROC: &#123;</div><div class="line">                sz_udp_msg_proc();</div><div class="line">                status = SZ_UDP_RECV;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">main</span><span class="params">(VOID)</span></span></div><div class="line">&#123;	</div><div class="line">	sz_pro_cntl.seq = <span class="number">1</span>;</div><div class="line">    sz_pro_cntl.recv_cout = <span class="number">0</span>;</div><div class="line">    send_socket();</div><div class="line">    recv_socket();</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> err;</div><div class="line">    <span class="keyword">pthread_t</span> thread_id;</div><div class="line">    err = pthread_create(&amp;thread_id, <span class="literal">NULL</span>, &amp;ty_thread, <span class="literal">NULL</span>);</div><div class="line">    <span class="keyword">if</span>(err != <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"pthread_create err\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">pthread_t</span> thread_id_recv;</div><div class="line">    err = pthread_create(&amp;thread_id_recv, <span class="literal">NULL</span>, &amp;recv_thread, <span class="literal">NULL</span>);</div><div class="line">    <span class="keyword">if</span>(err != <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"pthread_create thread_id_recv err\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    pthread_join(thread_id, <span class="literal">NULL</span>);</div><div class="line">    pthread_join(thread_id_recv, <span class="literal">NULL</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">STATIC <span class="keyword">int</span> <span class="title">sz_udp_send_data</span><span class="params">(BYTE fr_type,\</span></span></div><div class="line">                            BYTE fr_ret,BYTE *fr_data,\</div><div class="line">                            UINT fr_len,BYTE is_ret)</div><div class="line">&#123;</div><div class="line">    UINT send_da_len = <span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len + <span class="keyword">sizeof</span>(SZ_PRO_SUM_S);</div><div class="line">    BYTE *send_da = <span class="built_in">malloc</span>(send_da_len);</div><div class="line">    <span class="keyword">if</span>(send_da == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    SZ_PRO_HEAD_S *sz_head = (SZ_PRO_HEAD_S *)send_da;</div><div class="line">    sz_head-&gt;fr_head = WORD_SWAP(<span class="number">0x55aa</span>);</div><div class="line">    sz_head-&gt;fr_seq = sz_pro_cntl.seq;</div><div class="line">    sz_head-&gt;fr_type = fr_type;</div><div class="line">    sz_head-&gt;fr_len = WORD_SWAP(fr_len);</div><div class="line">    sz_head-&gt;fr_ret = fr_ret;</div><div class="line">    <span class="built_in">memcpy</span>(sz_head-&gt;fr_data,fr_data,fr_len);</div><div class="line">    SZ_PRO_SUM_S *sz_sum = (SZ_PRO_SUM_S *)(send_da + <span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len);</div><div class="line">    WORD fr_sum = getCheckSum(send_da, (<span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len));</div><div class="line">    sz_sum-&gt;fr_sum = WORD_SWAP(fr_sum);</div><div class="line">    UINT max = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.seq &gt;= (~max)) &#123;</div><div class="line">        sz_pro_cntl.seq = <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span> &#123;</div><div class="line">        sz_pro_cntl.seq += <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> ret = sendto(sz_pro_cntl.udp_send_fd,send_da,send_da_len,<span class="number">0</span>,\</div><div class="line">                     (struct sockaddr*)&amp;sz_pro_cntl.server_send_addr, SIZEOF(sz_pro_cntl.server_send_addr));</div><div class="line">    <span class="built_in">free</span>(send_da);  </div><div class="line">    <span class="keyword">if</span>(ret &lt;= <span class="number">0</span> || \</div><div class="line">       ret != send_da_len) &#123;</div><div class="line">       <span class="built_in">printf</span>(<span class="string">"sendto Failed,ret:%d,errno:%d"</span>,ret,errno);</div><div class="line">       close(sz_pro_cntl.udp_send_fd),sz_pro_cntl.udp_send_fd = <span class="number">-1</span>;</div><div class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/16/udp编程/" data-id="cj5l6ev6h00047mlu48vvrawm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-消息队列" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/01/消息队列/" class="article-date">
+  <time datetime="2016-02-01T09:23:16.000Z" itemprop="datePublished">2016-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/01/消息队列/">消息队列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h4 id="描述：创建一个消息队列，接收发送数据"><a href="#描述：创建一个消息队列，接收发送数据" class="headerlink" title="描述：创建一个消息队列，接收发送数据"></a>描述：创建一个消息队列，接收发送数据</h4><h3 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h3><h4 id="ftok函数原型"><a href="#ftok函数原型" class="headerlink" title="ftok函数原型"></a>ftok函数原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">key_t</span> ftok( <span class="keyword">const</span> <span class="keyword">char</span> * fname, <span class="keyword">int</span> id );</div><div class="line">fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；</div><div class="line">id是子序号。虽然是<span class="keyword">int</span>类型，但是只使用<span class="number">8b</span>its(<span class="number">1</span><span class="number">-255</span>）</div></pre></td></tr></table></figure>
+<h4 id="msgget函数原型"><a href="#msgget函数原型" class="headerlink" title="msgget函数原型"></a>msgget函数原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">msgget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">int</span> msgflag)</span></span></div></pre></td></tr></table></figure>
+<p>key：函数ftok的返回值或IPC_PRIVATE<br>msgflag： IPC_CREAT:创建新的消息队列。<br>          IPC_EXCL:与IPC_CREAT一同使用，表示如果要创建的消息队列已经存在，则返回错误。 IPC_NOWAIT:读写消息队列要求无法满足时，不阻塞。<br>返回值： 调用成功返回队列标识符,否则返回-1.</p>
+<h4 id="fgets函数原型"><a href="#fgets函数原型" class="headerlink" title="fgets函数原型"></a>fgets函数原型</h4><p>从文件结构体指针stream中读取数据，每次读取一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> bufsize, FILE *stream)</span></span>;</div></pre></td></tr></table></figure></p>
+<h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><p>*buf: 字符型指针，指向用来存储所得数据的地址<br>bufsize: 整型数据，指明存储数据的大小<br>stream: 文件结构体指针，将要读取的文件流。</p>
+<h5 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h5><p>成功，则返回第一个参数buf</p>
+<h3 id="发送代码"><a href="#发送代码" class="headerlink" title="发送代码"></a>发送代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">msg_buf</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">long</span> type;			<span class="comment">/*消息类型*/</span></div><div class="line">	<span class="keyword">char</span> buff[<span class="number">100</span>];		<span class="comment">/*消息内容*/</span></div><div class="line">&#125;msg_buf;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> key, qid;</div><div class="line">	msg_buf buf;</div><div class="line"></div><div class="line">	key = ftok(<span class="string">"tmp"</span>, <span class="number">10</span>);</div><div class="line">	qid = msgget(key, IPC_CREAT | <span class="number">0666</span>);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"key[%d], qid[%d]\n"</span>, key, qid);</div><div class="line">	buf.type = <span class="number">10</span>;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">		fgets(buf.buff, <span class="number">100</span>, <span class="built_in">stdin</span>);</div><div class="line">		<span class="keyword">if</span>(msgsnd(qid, (<span class="keyword">void</span> *)&amp;buf, <span class="number">100</span>, <span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"msgsnd error\n"</span>);</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="接收代码"><a href="#接收代码" class="headerlink" title="接收代码"></a>接收代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">msg_buf</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">long</span> type;			<span class="comment">/*消息类型*/</span></div><div class="line">	<span class="keyword">char</span> buff[<span class="number">100</span>];		<span class="comment">/*消息内容*/</span></div><div class="line">&#125;msg_buf;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> key, qid;</div><div class="line">	msg_buf buf;</div><div class="line"></div><div class="line">	key = ftok(<span class="string">"tmp"</span>, <span class="number">10</span>);</div><div class="line">	qid = msgget(key, IPC_CREAT | <span class="number">0666</span>);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"key[%d], qid[%d]\n"</span>, key, qid);</div><div class="line">	buf.type = <span class="number">10</span>;</div><div class="line"></div><div class="line">	<span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">if</span>(msgrcv(qid, (<span class="keyword">void</span> *)&amp;buf, <span class="number">100</span>, <span class="number">0</span>, <span class="number">0</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"msgsnd error\n"</span>);</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;<span class="keyword">else</span> &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"type[%d], get[%s]\n"</span>, buf.type, buf.buf);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/01/消息队列/" data-id="cj5l6ev6v00087mlu5lrx96s0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-链表的创建、打印与销毁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/链表的创建、打印与销毁/" class="article-date">
+  <time datetime="2016-01-27T11:48:27.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/27/链表的创建、打印与销毁/">链表的创建、打印与销毁</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h4 id="描述：创建一个长度为10的链表并打印出来"><a href="#描述：创建一个长度为10的链表并打印出来" class="headerlink" title="描述：创建一个长度为10的链表并打印出来"></a>描述：创建一个长度为10的链表并打印出来</h4><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">error</span> printf</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> num;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span> *<span class="title">next</span>;</span></div><div class="line">&#125;LIST_T, *pLIST_T;</div><div class="line"></div><div class="line"><span class="function">pLIST_T <span class="title">creat_list</span><span class="params">(pLIST_T head)</span></span>; </div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(pLIST_T head)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy_list</span><span class="params">(pLIST_T head)</span></span>;</div></pre></td></tr></table></figure>
+<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span></div><div class="line">&#123;</div><div class="line">	pLIST_T head;</div><div class="line">	head = <span class="literal">NULL</span>;</div><div class="line">	head = creat_list(head);</div><div class="line">	<span class="keyword">if</span>(head != <span class="literal">NULL</span>) &#123;</div><div class="line">		printList(head);</div><div class="line">	&#125;</div><div class="line">	destroy_list(head);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function">pLIST_T <span class="title">creat_list</span><span class="params">(pLIST_T head)</span> </span></div><div class="line">&#123;</div><div class="line">	pLIST_T p, pre;</div><div class="line">	p = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">	pre = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">	p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	pre = p;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span>(i != <span class="number">0</span>)&#123;</div><div class="line">			p = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">		&#125;</div><div class="line">		p-&gt;num = i;</div><div class="line">		<span class="keyword">if</span>(head == <span class="literal">NULL</span>) &#123;</div><div class="line">			head = p;</div><div class="line">		&#125;<span class="keyword">else</span> &#123;</div><div class="line">			pre-&gt;next = p;</div><div class="line">			pre = p;</div><div class="line">		&#125;</div><div class="line">		p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="打印链表"><a href="#打印链表" class="headerlink" title="打印链表"></a>打印链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(pLIST_T head)</span></span></div><div class="line">&#123;</div><div class="line">	pLIST_T p;</div><div class="line">	p = head;</div><div class="line">	<span class="keyword">while</span>(p) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, p-&gt;num);</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"-&gt;"</span>, p-&gt;num);</div><div class="line">		p = p-&gt;next;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="销毁链表"><a href="#销毁链表" class="headerlink" title="销毁链表"></a>销毁链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy_list</span><span class="params">(pLIST_T head)</span></span></div><div class="line">&#123;</div><div class="line">    pLIST_T p;</div><div class="line">    <span class="keyword">while</span>(head) &#123;</div><div class="line">        p = head-&gt;next;</div><div class="line">        <span class="built_in">free</span>(head);</div><div class="line">        head = p;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">➜  Desktop git:(master) ✗ ./l</div><div class="line"><span class="number">0</span>-&gt;<span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>-&gt;<span class="number">6</span>-&gt;<span class="number">7</span>-&gt;<span class="number">8</span>-&gt;<span class="number">9</span>-&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/" data-id="cj5l6ev6w00097mlu1g3n0sje" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-strtok分割时间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/strtok分割时间/" class="article-date">
+  <time datetime="2016-01-27T02:44:54.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/27/strtok分割时间/">strtok与sscanf</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>两者都可以分解字符串，下面用两个函数分别实现把”08:50:11”解析成对应的十分秒。</p>
+<h3 id="1-strtok函数"><a href="#1-strtok函数" class="headerlink" title="1.strtok函数"></a>1.strtok函数</h3><h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">char *strtok(char s[], const char *delim);</div></pre></td></tr></table></figure>
+<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>分解字符串为一组字符串。s为要分解的字符串，delim为分隔符字符串。<br>例如：strtok(“abc,def,ghi”,”,”)，最后可以分割成为abc def ghi.</p>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">error</span> printf</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">DATE_TIME_S</span>&#123;</span></div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> hour;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> min;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> sec;</div><div class="line">&#125;DATE_TIME_S;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">conv_time</span><span class="params">(<span class="keyword">char</span> *time_str,DATE_TIME_S *dt)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> *test = <span class="string">"08:50:11"</span>;</div><div class="line">	DATE_TIME_S *dt;</div><div class="line">	conv_time(test, dt);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"dt-&gt;hour[%d]\n"</span>, dt-&gt;hour);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"dt-&gt;min[%d]\n"</span>, dt-&gt;min);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"dt-&gt;sec[%d]\n"</span>, dt-&gt;sec);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">conv_time</span><span class="params">(<span class="keyword">char</span> *time_str,DATE_TIME_S *dt)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span>((time_str == <span class="literal">NULL</span>) || (dt == <span class="literal">NULL</span>)) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> len = <span class="built_in">strlen</span>(time_str);</div><div class="line">	<span class="keyword">if</span>((len &gt; <span class="number">8</span>) || (len &lt; <span class="number">3</span>)) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> offset = <span class="number">0</span>;</div><div class="line">	<span class="keyword">char</span> temp[<span class="number">9</span>];</div><div class="line">	<span class="built_in">memset</span>(temp, <span class="number">0</span>, <span class="keyword">sizeof</span>(temp));</div><div class="line">	<span class="built_in">strcpy</span>(temp, time_str);</div><div class="line"></div><div class="line">	<span class="keyword">char</span> *p = <span class="literal">NULL</span>;</div><div class="line">	<span class="keyword">char</span> *delim = <span class="string">":"</span>;</div><div class="line">	p = strtok(temp, delim);</div><div class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">		dt-&gt;hour = atoi(p);</div><div class="line">	&#125;</div><div class="line">	offset += <span class="built_in">strlen</span>(p) + <span class="number">1</span>;</div><div class="line">	<span class="built_in">strcpy</span>(temp, time_str + offset);</div><div class="line">	p = strtok(temp, delim);</div><div class="line">	<span class="keyword">if</span>(p != <span class="literal">NULL</span>) &#123;</div><div class="line">		dt-&gt;min = atoi(p);</div><div class="line">	&#125;</div><div class="line">	offset += <span class="built_in">strlen</span>(p) + <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span>(len &gt; offset) &#123;</div><div class="line">		<span class="built_in">strcpy</span>(temp, time_str + offset);</div><div class="line">		p = strtok(temp, delim);</div><div class="line">		<span class="keyword">if</span>(p) &#123;</div><div class="line">			dt-&gt;sec = atoi(p);</div><div class="line">		&#125;</div><div class="line">	&#125;<span class="keyword">else</span> &#123;</div><div class="line">		dt-&gt;sec = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  Desktop git:(master) ✗ ./t</div><div class="line">dt-&gt;hour[<span class="number">8</span>]</div><div class="line">dt-&gt;min[<span class="number">50</span>]</div><div class="line">dt-&gt;sec[<span class="number">11</span>]</div></pre></td></tr></table></figure>
+<h3 id="2-sscanf函数"><a href="#2-sscanf函数" class="headerlink" title="2.sscanf函数"></a>2.sscanf函数</h3><h4 id="原型-1"><a href="#原型-1" class="headerlink" title="原型"></a>原型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">int sscanf( const char *, const char *, ...);</div></pre></td></tr></table></figure>
+<h4 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h4><p>成功则返回参数数目，失败则返回-1，错误原因存于errno中。<br>sscanf(“1 2 3”,”%d %d %d”,buf1, buf2, buf3);<br>成功调用返回值为3，即buf1，buf2，buf3均成功转换。</p>
+<h3 id="代码部分-1"><a href="#代码部分-1" class="headerlink" title="代码部分"></a>代码部分</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">conv_time</span><span class="params">(<span class="keyword">char</span> *time_str,DATE_TIME_S *dt)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span>((time_str == <span class="literal">NULL</span>) || (dt == <span class="literal">NULL</span>)) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> num;</div><div class="line">	num = <span class="built_in">sscanf</span>(time_str,<span class="string">"%d:%d:%d"</span>,&amp;dt-&gt;hour,&amp;dt-&gt;min,&amp;dt-&gt;sec);</div><div class="line">	<span class="keyword">if</span>(num &lt; <span class="number">2</span>) &#123;</div><div class="line">		dt-&gt;hour = <span class="number">0</span>;</div><div class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(num &lt; <span class="number">3</span>)&#123;</div><div class="line">		dt-&gt;sec = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj5l6ev6c00027mlu3z2tfv64" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/udp编程/">udp编程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

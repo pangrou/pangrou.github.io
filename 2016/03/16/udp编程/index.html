@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>udp编程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="创建udp socket 监听2222端口接收数据发送数据端口为3333 代码部分123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+<meta property="og:type" content="article">
+<meta property="og:title" content="udp编程">
+<meta property="og:url" content="http://yoursite.com/2016/03/16/udp编程/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="创建udp socket 监听2222端口接收数据发送数据端口为3333 代码部分123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+<meta property="og:updated_time" content="2017-07-26T13:41:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="udp编程">
+<meta name="twitter:description" content="创建udp socket 监听2222端口接收数据发送数据端口为3333 代码部分123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-udp编程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/16/udp编程/" class="article-date">
+  <time datetime="2016-03-16T09:31:36.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      udp编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>创建udp socket 监听2222端口接收数据<br>发送数据端口为3333</p>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/socket.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;netinet/in.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;arpa/inet.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;errno.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;netdb.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;pthread.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SERV_PORT_UDP 2222</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SERV_SEND_PORT_UDP 3333</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> RECV_BUF_LMT 1024</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HEART_BEAT 10</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> QUEUE_MAX_EVENTS 5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SZ_FR_LEN_MIN 9 <span class="comment">//sizeof(SHUNZHOU_PRO_HEAD_S)+sizeof(SHUNZHOU_PRO_SUM_S)</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FALSE 0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> TRUE  1</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_HEART_BEAT 0</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_SINGLE_ADD_DEV 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_BATCH_ADD_DEV 2</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_BATCH_ADD_CLOSE 3</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_ADD_SUCC_TIP 4</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEL_DEV 5</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEV_GROUP 6</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DEV_STA_QUE 7</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_GET_DEV_STA 8</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_SINGLE_COMM_SEND 9</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_DATA_STA_UP 0x0a</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FR_GROUP_COMM_SEND 0x0b</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> VOID void</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STATIC static</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZEOF sizeof</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> BYTE;</div><div class="line"><span class="keyword">typedef</span> BYTE *PBYTE;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> WORD;</div><div class="line"><span class="keyword">typedef</span> WORD *PWORD;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> DWORD;</div><div class="line"><span class="keyword">typedef</span> DWORD *PDWORD;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> UINT;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> INT;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> *PUINT;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> WORD_SWAP(X) ((X <span class="meta-string">&lt;&lt;8) | (X &gt;&gt; 8))   //short</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DWORD_SWAP(X)(((X)&amp;0xff)&lt;&lt;24) + \</span></div><div class="line">                     (((X)&amp;0xff00)&lt;&lt;8) + \</div><div class="line">                     (((X)&amp;0xff0000)&gt;&gt;8) + \</div><div class="line">                     (((X)&amp;0xff000000)&gt;&gt;24)  <span class="comment">//int</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">    WORD fr_head; <span class="comment">// 0x55aa</span></div><div class="line">    BYTE fr_seq;</div><div class="line">    BYTE fr_type;</div><div class="line">    BYTE fr_ret;</div><div class="line">    WORD fr_len;</div><div class="line">    BYTE fr_data[<span class="number">0</span>];</div><div class="line">&#125;SZ_PRO_HEAD_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">    WORD fr_sum;</div><div class="line">&#125;SZ_PRO_SUM_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">    WORD len;       </div><div class="line">    BYTE is_ret;   </div><div class="line">    BYTE data[<span class="number">0</span>];  </div><div class="line">&#125;SZ_SEND_DATA_S;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">    INT udp_fd;</div><div class="line">    INT udp_send_fd;</div><div class="line">    INT time_out_cnt;</div><div class="line">    UINT recv_cout;</div><div class="line">    UINT seq;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">udp_addr</span>;</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">server_send_addr</span>;</span></div><div class="line">    BYTE recv_buf[RECV_BUF_LMT];</div><div class="line">&#125;SZ_PRO_CNTL_S;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123;</div><div class="line">    SZ_UDP_RECV = <span class="number">0</span>,</div><div class="line">    SZ_UDP_PROC,</div><div class="line">&#125;SZ_UDP_RECV_S;</div><div class="line"></div><div class="line"><span class="comment">/***********************************************************</span></div><div class="line">*************************variable define********************</div><div class="line">***********************************************************/</div><div class="line">STATIC SZ_PRO_CNTL_S sz_pro_cntl;</div><div class="line"><span class="function">STATIC <span class="keyword">int</span> <span class="title">sz_udp_send_data</span><span class="params">(BYTE fr_type,\</span></span></div><div class="line">                            BYTE fr_ret,BYTE *fr_data,\</div><div class="line">                            UINT fr_len,BYTE is_ret);</div><div class="line"><span class="comment">/***********************************************************</span></div><div class="line">*************************function define********************</div><div class="line">***********************************************************/</div><div class="line"><span class="function">STATIC WORD <span class="title">getCheckSum</span><span class="params">(BYTE *pack, INT pack_len)</span></span></div><div class="line">&#123;</div><div class="line">    WORD check_sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(--pack_len &gt;= <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        check_sum += *pack++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> check_sum;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv_socket</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int32_t</span> iRet;</div><div class="line">    sz_pro_cntl.udp_fd = <span class="number">-1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">_Bool</span> optval = TRUE;</div><div class="line">    bzero(&amp;sz_pro_cntl.udp_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.udp_addr));</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_addr.sin_family = AF_INET;</div><div class="line">    sz_pro_cntl.udp_addr.sin_addr.s_addr = htonl(INADDR_ANY);</div><div class="line">    sz_pro_cntl.udp_addr.sin_port = htons(SERV_PORT_UDP);</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_fd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.udp_fd &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"sz_pro_cntl.udp_fd &lt; 0\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    setsockopt(sz_pro_cntl.udp_fd,SOL_SOCKET,SO_REUSEADDR,&amp;optval,<span class="keyword">sizeof</span>(optval));</div><div class="line">    iRet = bind(sz_pro_cntl.udp_fd, (struct sockaddr *)&amp;sz_pro_cntl.udp_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.udp_addr));</div><div class="line">    <span class="keyword">if</span>(iRet &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"bind err\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">send_socket</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int32_t</span> iRet;</div><div class="line">    sz_pro_cntl.udp_send_fd = <span class="number">-1</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">_Bool</span> optval = TRUE;</div><div class="line">    bzero(&amp;sz_pro_cntl.server_send_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.server_send_addr));</div><div class="line">    </div><div class="line">    sz_pro_cntl.server_send_addr.sin_family = AF_INET;</div><div class="line">    sz_pro_cntl.server_send_addr.sin_addr.s_addr = htonl(INADDR_ANY);</div><div class="line">    sz_pro_cntl.server_send_addr.sin_port = htons(SERV_SEND_PORT_UDP);</div><div class="line">    </div><div class="line">    sz_pro_cntl.udp_send_fd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.udp_send_fd &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"sz_pro_cntl.udp_send_fd &lt; 0\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    setsockopt(sz_pro_cntl.udp_send_fd,SOL_SOCKET,SO_REUSEADDR,&amp;optval,<span class="keyword">sizeof</span>(optval));</div><div class="line">    iRet = bind(sz_pro_cntl.udp_send_fd, (struct sockaddr *)&amp;sz_pro_cntl.server_send_addr, <span class="keyword">sizeof</span>(sz_pro_cntl.server_send_addr));</div><div class="line">    <span class="keyword">if</span>(iRet &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"bind err hh\n"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">ty_thread</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    &lt;!-- sz_udp_send_data(i,<span class="number">0</span>,<span class="literal">NULL</span>,<span class="number">0</span>,<span class="number">0</span>); --&gt;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">sz_udp_recv_pro</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">client_addr</span>;</span></div><div class="line">    <span class="keyword">socklen_t</span> client_addr_len = <span class="keyword">sizeof</span>(client_addr);</div><div class="line">    INT count = <span class="number">0</span>;</div><div class="line">    count = recvfrom(sz_pro_cntl.udp_fd, (sz_pro_cntl.recv_buf + \</div><div class="line">        sz_pro_cntl.recv_cout), (<span class="number">1024</span> - sz_pro_cntl.recv_cout),<span class="number">0</span>,\</div><div class="line">        (struct sockaddr*)&amp;client_addr, &amp;client_addr_len);</div><div class="line">    sz_pro_cntl.recv_cout += count;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">STATIC VOID <span class="title">sz_udp_msg_proc</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"enter sz_udp_msg_proc\n"</span>);</div><div class="line">    INT fr_len = <span class="number">0</span>, offset = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span>((sz_pro_cntl.recv_cout-offset) &gt;= SZ_FR_LEN_MIN) &#123;</div><div class="line">        SZ_PRO_HEAD_S *head=(SZ_PRO_HEAD_S *)(sz_pro_cntl.recv_buf+offset);</div><div class="line">        head-&gt;fr_head = WORD_SWAP(head-&gt;fr_head);</div><div class="line">        <span class="keyword">if</span>(<span class="number">0x55aa</span> != head-&gt;fr_head) &#123;</div><div class="line">            offset += <span class="number">2</span>;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// if((head-&gt;fr_seq != (sz_pro_cntl.seq-1)) &amp;&amp; (head-&gt;fr_seq != 0)) &#123;</span></div><div class="line">        <span class="comment">//     offset += 3;</span></div><div class="line">        <span class="comment">//     continue;</span></div><div class="line">        <span class="comment">// &#125;</span></div><div class="line">        <span class="keyword">if</span>((head-&gt;fr_type &lt; <span class="number">0x00</span>) || (head-&gt;fr_type &gt; <span class="number">0x0b</span>)) &#123;</div><div class="line">            offset += <span class="number">4</span>;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(head-&gt;fr_ret != <span class="number">0x00</span>) &#123;</div><div class="line">            offset += <span class="number">5</span>;</div><div class="line">            <span class="keyword">continue</span>;  </div><div class="line">        &#125;</div><div class="line">        head-&gt;fr_len = WORD_SWAP(head-&gt;fr_len);</div><div class="line">        fr_len = SZ_FR_LEN_MIN + head-&gt;fr_len;</div><div class="line">        <span class="keyword">if</span>((sz_pro_cntl.recv_cout-offset) &lt; fr_len) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        UINT check_num = getCheckSum(head,fr_len<span class="number">-2</span>);</div><div class="line">        SZ_PRO_SUM_S *sum = (SZ_PRO_SUM_S *)(sz_pro_cntl.recv_buf+offset+fr_len<span class="number">-2</span>);</div><div class="line">        sum-&gt;fr_sum = WORD_SWAP(sum-&gt;fr_sum);</div><div class="line">        <span class="keyword">if</span>(check_num != sum-&gt;fr_sum) &#123;</div><div class="line">            offset += fr_len;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125; </div><div class="line">        <span class="built_in">printf</span>(<span class="string">"recv succ\n"</span>);</div><div class="line">        offset += fr_len;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(offset &gt; <span class="number">0</span>) &#123;</div><div class="line">        sz_pro_cntl.recv_cout -= offset;</div><div class="line">        memmove(sz_pro_cntl.recv_buf,sz_pro_cntl.recv_buf+ \</div><div class="line">            offset,sz_pro_cntl.recv_cout);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">recv_thread</span><span class="params">(VOID)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"enter ty_thread\n"</span>);</div><div class="line">    SZ_UDP_RECV_S status = SZ_UDP_RECV;</div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"status:%d\n"</span>,status);</div><div class="line">        <span class="keyword">switch</span>(status) &#123;</div><div class="line">            <span class="keyword">case</span> SZ_UDP_RECV: &#123;</div><div class="line">                sz_udp_recv_pro();</div><div class="line">                <span class="keyword">if</span>(sz_pro_cntl.recv_cout &gt;= SZ_FR_LEN_MIN) &#123;</div><div class="line">                    status = SZ_UDP_PROC;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> SZ_UDP_PROC: &#123;</div><div class="line">                sz_udp_msg_proc();</div><div class="line">                status = SZ_UDP_RECV;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">VOID <span class="title">main</span><span class="params">(VOID)</span></span></div><div class="line">&#123;	</div><div class="line">	sz_pro_cntl.seq = <span class="number">1</span>;</div><div class="line">    sz_pro_cntl.recv_cout = <span class="number">0</span>;</div><div class="line">    send_socket();</div><div class="line">    recv_socket();</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> err;</div><div class="line">    <span class="keyword">pthread_t</span> thread_id;</div><div class="line">    err = pthread_create(&amp;thread_id, <span class="literal">NULL</span>, &amp;ty_thread, <span class="literal">NULL</span>);</div><div class="line">    <span class="keyword">if</span>(err != <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"pthread_create err\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">pthread_t</span> thread_id_recv;</div><div class="line">    err = pthread_create(&amp;thread_id_recv, <span class="literal">NULL</span>, &amp;recv_thread, <span class="literal">NULL</span>);</div><div class="line">    <span class="keyword">if</span>(err != <span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"pthread_create thread_id_recv err\n"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    pthread_join(thread_id, <span class="literal">NULL</span>);</div><div class="line">    pthread_join(thread_id_recv, <span class="literal">NULL</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">STATIC <span class="keyword">int</span> <span class="title">sz_udp_send_data</span><span class="params">(BYTE fr_type,\</span></span></div><div class="line">                            BYTE fr_ret,BYTE *fr_data,\</div><div class="line">                            UINT fr_len,BYTE is_ret)</div><div class="line">&#123;</div><div class="line">    UINT send_da_len = <span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len + <span class="keyword">sizeof</span>(SZ_PRO_SUM_S);</div><div class="line">    BYTE *send_da = <span class="built_in">malloc</span>(send_da_len);</div><div class="line">    <span class="keyword">if</span>(send_da == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    SZ_PRO_HEAD_S *sz_head = (SZ_PRO_HEAD_S *)send_da;</div><div class="line">    sz_head-&gt;fr_head = WORD_SWAP(<span class="number">0x55aa</span>);</div><div class="line">    sz_head-&gt;fr_seq = sz_pro_cntl.seq;</div><div class="line">    sz_head-&gt;fr_type = fr_type;</div><div class="line">    sz_head-&gt;fr_len = WORD_SWAP(fr_len);</div><div class="line">    sz_head-&gt;fr_ret = fr_ret;</div><div class="line">    <span class="built_in">memcpy</span>(sz_head-&gt;fr_data,fr_data,fr_len);</div><div class="line">    SZ_PRO_SUM_S *sz_sum = (SZ_PRO_SUM_S *)(send_da + <span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len);</div><div class="line">    WORD fr_sum = getCheckSum(send_da, (<span class="keyword">sizeof</span>(SZ_PRO_HEAD_S) + fr_len));</div><div class="line">    sz_sum-&gt;fr_sum = WORD_SWAP(fr_sum);</div><div class="line">    UINT max = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(sz_pro_cntl.seq &gt;= (~max)) &#123;</div><div class="line">        sz_pro_cntl.seq = <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span> &#123;</div><div class="line">        sz_pro_cntl.seq += <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> ret = sendto(sz_pro_cntl.udp_send_fd,send_da,send_da_len,<span class="number">0</span>,\</div><div class="line">                     (struct sockaddr*)&amp;sz_pro_cntl.server_send_addr, SIZEOF(sz_pro_cntl.server_send_addr));</div><div class="line">    <span class="built_in">free</span>(send_da);  </div><div class="line">    <span class="keyword">if</span>(ret &lt;= <span class="number">0</span> || \</div><div class="line">       ret != send_da_len) &#123;</div><div class="line">       <span class="built_in">printf</span>(<span class="string">"sendto Failed,ret:%d,errno:%d"</span>,ret,errno);</div><div class="line">       close(sz_pro_cntl.udp_send_fd),sz_pro_cntl.udp_send_fd = <span class="number">-1</span>;</div><div class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/16/udp编程/" data-id="cj5l6ev6h00047mlu48vvrawm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/16/ios基础学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ios基础学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/02/01/消息队列/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">消息队列</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/udp编程/">udp编程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
