@@ -5,16 +5,17 @@
   
   <title>消息队列 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的">
+  <meta name="description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的返">
+<meta name="keywords" content="C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="消息队列">
 <meta property="og:url" content="http://yoursite.com/2016/02/01/消息队列/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的">
-<meta property="og:updated_time" content="2017-07-26T13:41:38.000Z">
+<meta property="og:description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的返">
+<meta property="og:updated_time" content="2017-07-27T13:30:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="消息队列">
-<meta name="twitter:description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的">
+<meta name="twitter:description" content="描述：创建一个消息队列，接收发送数据函数说明ftok函数原型123key_t ftok( const char * fname, int id );fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；id是子序号。虽然是int类型，但是只使用8bits(1-255） msgget函数原型1int msgget(key_t key, int msgflag) key：函数ftok的返">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -54,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -85,10 +86,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h4 id="描述：创建一个消息队列，接收发送数据"><a href="#描述：创建一个消息队列，接收发送数据" class="headerlink" title="描述：创建一个消息队列，接收发送数据"></a>描述：创建一个消息队列，接收发送数据</h4><h3 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h3><h4 id="ftok函数原型"><a href="#ftok函数原型" class="headerlink" title="ftok函数原型"></a>ftok函数原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">key_t</span> ftok( <span class="keyword">const</span> <span class="keyword">char</span> * fname, <span class="keyword">int</span> id );</div><div class="line">fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；</div><div class="line">id是子序号。虽然是<span class="keyword">int</span>类型，但是只使用<span class="number">8b</span>its(<span class="number">1</span><span class="number">-255</span>）</div></pre></td></tr></table></figure>
+        <h4 id="描述：创建一个消息队列，接收发送数据"><a href="#描述：创建一个消息队列，接收发送数据" class="headerlink" title="描述：创建一个消息队列，接收发送数据"></a>描述：创建一个消息队列，接收发送数据</h4><h3 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h3><h4 id="ftok函数原型"><a href="#ftok函数原型" class="headerlink" title="ftok函数原型"></a>ftok函数原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">key_t</span> ftok( <span class="keyword">const</span> <span class="keyword">char</span> * fname, <span class="keyword">int</span> id );</div><div class="line">fname就是你指定的文件名（已经存在的文件名），一般使用当前目录；</div><div class="line">id是子序号。虽然是<span class="keyword">int</span>类型，但是只使用<span class="number">8b</span>its(<span class="number">1</span><span class="number">-255</span>）</div></pre></td></tr></table></figure>
 <h4 id="msgget函数原型"><a href="#msgget函数原型" class="headerlink" title="msgget函数原型"></a>msgget函数原型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">msgget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">int</span> msgflag)</span></span></div></pre></td></tr></table></figure>
-<p>key：函数ftok的返回值或IPC_PRIVATE<br>msgflag： IPC_CREAT:创建新的消息队列。<br>          IPC_EXCL:与IPC_CREAT一同使用，表示如果要创建的消息队列已经存在，则返回错误。 IPC_NOWAIT:读写消息队列要求无法满足时，不阻塞。<br>返回值： 调用成功返回队列标识符,否则返回-1.</p>
+<p>key：函数ftok的返回值或IPC_PRIVATE<br>msgflag： IPC_CREAT:创建新的消息队列。<br>          IPC_EXCL:与IPC_CREAT一同使用，表示如果要创建的消息队列已经存在，则返回错误。 IPC_NOWAIT:读写消息队列要求无法满足时，不阻塞。<br>返回值： 调用成功返回队列标识符,否则返回-1.<br><a id="more"></a></p>
 <h4 id="fgets函数原型"><a href="#fgets函数原型" class="headerlink" title="fgets函数原型"></a>fgets函数原型</h4><p>从文件结构体指针stream中读取数据，每次读取一行<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> bufsize, FILE *stream)</span></span>;</div></pre></td></tr></table></figure></p>
 <h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><p>*buf: 字符型指针，指向用来存储所得数据的地址<br>bufsize: 整型数据，指明存储数据的大小<br>stream: 文件结构体指针，将要读取的文件流。</p>
 <h5 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h5><p>成功，则返回第一个参数buf</p>
@@ -97,9 +97,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/01/消息队列/" data-id="cj5mg5xoa000654lux9dks3sx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/02/01/消息队列/" data-id="cj5mha26l000dhhlup2h2jjbq" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
     </footer>
   </div>
   
@@ -137,7 +139,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -147,14 +149,14 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -164,7 +166,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         

@@ -5,16 +5,17 @@
   
   <title>链表的创建、打印与销毁 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LI">
+  <meta name="description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LIS">
+<meta name="keywords" content="C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="链表的创建、打印与销毁">
 <meta property="og:url" content="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LI">
-<meta property="og:updated_time" content="2017-07-26T13:41:38.000Z">
+<meta property="og:description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LIS">
+<meta property="og:updated_time" content="2017-07-27T13:30:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="链表的创建、打印与销毁">
-<meta name="twitter:description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LI">
+<meta name="twitter:description" content="描述：创建一个长度为10的链表并打印出来定义12345678910111213141516#ifdef __APPLE__#define error printf#endif#include&amp;lt;stdlib.h&amp;gt;#include&amp;lt;stdio.h&amp;gt;typedef struct LIST_T&amp;#123;	int num;	struct LIST_T *next;&amp;#125;LIS">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -54,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -85,9 +86,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h4 id="描述：创建一个长度为10的链表并打印出来"><a href="#描述：创建一个长度为10的链表并打印出来" class="headerlink" title="描述：创建一个长度为10的链表并打印出来"></a>描述：创建一个长度为10的链表并打印出来</h4><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">error</span> printf</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> num;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span> *<span class="title">next</span>;</span></div><div class="line">&#125;LIST_T, *pLIST_T;</div><div class="line"></div><div class="line"><span class="function">pLIST_T <span class="title">creat_list</span><span class="params">(pLIST_T head)</span></span>; </div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(pLIST_T head)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy_list</span><span class="params">(pLIST_T head)</span></span>;</div></pre></td></tr></table></figure>
-<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span></div><div class="line">&#123;</div><div class="line">	pLIST_T head;</div><div class="line">	head = <span class="literal">NULL</span>;</div><div class="line">	head = creat_list(head);</div><div class="line">	<span class="keyword">if</span>(head != <span class="literal">NULL</span>) &#123;</div><div class="line">		printList(head);</div><div class="line">	&#125;</div><div class="line">	destroy_list(head);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h4 id="描述：创建一个长度为10的链表并打印出来"><a href="#描述：创建一个长度为10的链表并打印出来" class="headerlink" title="描述：创建一个长度为10的链表并打印出来"></a>描述：创建一个长度为10的链表并打印出来</h4><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __APPLE__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">error</span> printf</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> num;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">LIST_T</span> *<span class="title">next</span>;</span></div><div class="line">&#125;LIST_T, *pLIST_T;</div><div class="line"></div><div class="line"><span class="function">pLIST_T <span class="title">creat_list</span><span class="params">(pLIST_T head)</span></span>; </div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(pLIST_T head)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy_list</span><span class="params">(pLIST_T head)</span></span>;</div></pre></td></tr></table></figure>
+<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><a id="more"></a>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span></div><div class="line">&#123;</div><div class="line">	pLIST_T head;</div><div class="line">	head = <span class="literal">NULL</span>;</div><div class="line">	head = creat_list(head);</div><div class="line">	<span class="keyword">if</span>(head != <span class="literal">NULL</span>) &#123;</div><div class="line">		printList(head);</div><div class="line">	&#125;</div><div class="line">	destroy_list(head);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function">pLIST_T <span class="title">creat_list</span><span class="params">(pLIST_T head)</span> </span></div><div class="line">&#123;</div><div class="line">	pLIST_T p, pre;</div><div class="line">	p = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">	pre = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">	p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	pre = p;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span>(i != <span class="number">0</span>)&#123;</div><div class="line">			p = (pLIST_T)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LIST_T));</div><div class="line">		&#125;</div><div class="line">		p-&gt;num = i;</div><div class="line">		<span class="keyword">if</span>(head == <span class="literal">NULL</span>) &#123;</div><div class="line">			head = p;</div><div class="line">		&#125;<span class="keyword">else</span> &#123;</div><div class="line">			pre-&gt;next = p;</div><div class="line">			pre = p;</div><div class="line">		&#125;</div><div class="line">		p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="打印链表"><a href="#打印链表" class="headerlink" title="打印链表"></a>打印链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printList</span><span class="params">(pLIST_T head)</span></span></div><div class="line">&#123;</div><div class="line">	pLIST_T p;</div><div class="line">	p = head;</div><div class="line">	<span class="keyword">while</span>(p) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, p-&gt;num);</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"-&gt;"</span>, p-&gt;num);</div><div class="line">		p = p-&gt;next;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="销毁链表"><a href="#销毁链表" class="headerlink" title="销毁链表"></a>销毁链表</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy_list</span><span class="params">(pLIST_T head)</span></span></div><div class="line">&#123;</div><div class="line">    pLIST_T p;</div><div class="line">    <span class="keyword">while</span>(head) &#123;</div><div class="line">        p = head-&gt;next;</div><div class="line">        <span class="built_in">free</span>(head);</div><div class="line">        head = p;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -96,9 +97,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/" data-id="cj5mg5xor000954lukxcqefce" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/" data-id="cj5mha26m000fhhlujm9m433k" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
     </footer>
   </div>
   
@@ -136,7 +139,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -146,14 +149,14 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -163,7 +166,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
