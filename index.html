@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,62 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Bag-of-Words-Meets-Bags-of-Popcorn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" class="article-date">
+  <time datetime="2017-07-27T11:43:36.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Bag-of-Words-Meets-Bags-of-Popcorn"><a href="#Bag-of-Words-Meets-Bags-of-Popcorn" class="headerlink" title="Bag of Words Meets Bags of Popcorn"></a>Bag of Words Meets Bags of Popcorn</h4><p>kaggle上的项目: <a href="https://www.kaggle.com/c/word2vec-nlp-tutorial" target="_blank" rel="external">https://www.kaggle.com/c/word2vec-nlp-tutorial</a> </p>
+<p>深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn</p>
+<h5 id="思路过程"><a href="#思路过程" class="headerlink" title="思路过程"></a>思路过程</h5><ol>
+<li>下载 Data 并读取</li>
+<li>对文本作 html 标签处理</li>
+<li>得到所有词语</li>
+<li>去除高频词</li>
+<li>文本词语变成词向量</li>
+<li>训练模型，得到条件概率</li>
+<li>对测试数据，Words2Vec 处理</li>
+<li>classifyNB() 得到分类结果</li>
+<li>to_csv() 保存</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj5mgah3u00005qlutthnw4jp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-朴素贝叶斯" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -115,209 +171,16 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
 对每个类别
     各词条的数目／所有词条数 -&gt;条件概率
 返回每个类别的条件概率(和各词条在某类中出现的概率)
-</code></pre><h3 id="代码分解"><a href="#代码分解" class="headerlink" title="代码分解"></a>代码分解</h3><p>样本</p>
-<pre><code>def loadDataSet():
-    postingList = [[&apos;my&apos;, &apos;dog&apos;, &apos;has&apos;, &apos;flea&apos;, &apos;problems&apos;, &apos;help&apos;, &apos;please&apos;],
-               [&apos;maybe&apos;, &apos;not&apos;, &apos;take&apos;, &apos;him&apos;, &apos;to&apos;, &apos;dog&apos;, &apos;park&apos;, &apos;stupid&apos;],
-               [&apos;my&apos;, &apos;dalmation&apos;, &apos;is&apos;, &apos;so&apos;, &apos;cute&apos;, &apos;I&apos;, &apos;love&apos;, &apos;him&apos;],
-               [&apos;stop&apos;, &apos;posting&apos;, &apos;stupid&apos;, &apos;worthless&apos;, &apos;garbage&apos;],
-               [&apos;mr&apos;, &apos;licks&apos;, &apos;ate&apos;, &apos;my&apos;, &apos;steak&apos;, &apos;how&apos;, &apos;to&apos;, &apos;stop&apos;, &apos;him&apos;],
-               [&apos;quit&apos;, &apos;buying&apos;, &apos;worthless&apos;, &apos;dog&apos;, &apos;food&apos;, &apos;stupid&apos;]]
-    classVec = [0,1,0,1,0,1]
-    return postingList,classVec
-</code></pre><p>分词</p>
-<pre><code>def testParse(bigString):
-    # 去掉单词、数字，字符串长度小于2
-    lisetOfToken = re.split(&apos;\\W*&apos;, bigString)
-    # 全部小写处理
-    return [tok.lower() for tok in lisetOfToken if len(tok) &gt; 2]
-</code></pre><p>取得所有词汇</p>
-<pre><code>def creatVocabList(dataSet):
-    vocabSet = set([])
-    for document in dataSet:
-        vocabSet = vocabSet | set(document)
-    return vocabSet
-</code></pre><p>取出前三十个高频字符串，去掉 (with and you for之类)    </p>
-<pre><code>#vocabList 所有词汇  fullText未去重过的词汇
-def calcMostFreq(vocabList, fullText):
-    freqDict = {}
-    for token in vocabList:
-        freqDict[token] = fullText.count(token)
-    # iteritems 排序
-    sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1),\
-                reverse=True)
-    return sortedFreq[:30]
-</code></pre><p>留存交叉验证： (随机取20个作为测试集 其他为训练集)</p>
-<pre><code>trainingSet = list(range(2 * minLen)); testSet = []
-for i in range(20):
-    randIndex = int(np.random.uniform(0, len(trainingSet)))
-    testSet.append(trainingSet[randIndex])    
-    del(trainingSet[randIndex])
-</code></pre><p>训练模型－词量模型:不计算重复词语出现的次数</p>
-<pre><code>def setOfWords2Vec(vocabList, inputSet):
-    returnVet = [1 if w in inputSet else 0 for w in vocabList]
-    return returnVet
-</code></pre><p>训练模型－词袋模型:计算重复词语出现的次数                </p>
-<pre><code>def bagOfWords2VecMN(vocabList, inputSet):
-    returnVet = [0] * len(vocabList)
-    for i in range(len(vocabList)):
-        if vocabList[i] in inputSet:
-            returnVet[i] += 1
-    return returnVet    
-</code></pre><p>训练算法<br>注：</p>
-<ol>
-<li>想求函数的最大值时,可以使用该函数的自然对数来替换原函数进行求解</li>
-<li>平滑处理：将所有词的出现数初始化为1,所有词条数初始化为2</li>
-</ol>
-<pre><code>
-# 训练算法：从词向量计算概率
-# trainMatrix：文档矩阵(数字向量)
-# trainCategory：文档对应的类别 0正常 1垃圾
-
-def trainNB0(trainMatrix, trainCategory):
-    # 文档数量
-    numTrainDocs = len(trainMatrix)
-    # 词汇量大小
-    numWords = len(trainMatrix[0])
-    # 垃圾文档的概率
-    pAbusive = sum(trainCategory)/float(numTrainDocs)
-    # 创建一个全部为0的矩阵p0Num
-    # [1,2,3,4,0,0,1]即第一个词在垃圾文档中出现的次数1次，第二个出现2次
-    # p1Denom 所有的词出现的总数 即1+2+3+4+1=11
-    p0Num = np.ones(numWords); p1Num = np.ones(numWords)
-    p0Denom = 2.0; p1Denom = 2.0
-
-    for i in range(numTrainDocs):
-        if trainCategory[i] == 1:
-            p1Num += trainMatrix[i]
-            p1Denom += sum(trainMatrix[i])
-        else:
-            p0Num += trainMatrix[i]
-            p0Denom += sum(trainMatrix[i])
-    # 得到每个词在垃圾文档中出现的频率[1/11,2/11,3/11,4/11,0,0,1/11]    
-    p1Vect = [math.log(x/p1Denom) for x in p1Num]
-    p0Vect = [math.log(x/p0Denom) for x in p0Num]
-    # p1Vect = p1Num/p1Denom
-    # p0Vect = p0Num/p0Denom
-    return p1Vect,p0Vect,pAbusive
-</code></pre><p>朴素贝叶斯分类函数</p>
-<pre><code>def classifyNB(vec2Classify, p0Vect,p1Vect,pClass1):
-    p1VecSum = 0; p0VecSum = 0
-    for i in range(len(p0Vect)):
-        p1VecSum += vec2Classify[i] * p1Vect[i]
-        p0VecSum += vec2Classify[i] * p0Vect[i]
-
-    p1 = p1VecSum + math.log(pClass1)
-    p0 = p0VecSum + math.log(1.0 - pClass1)
-    # p1 = sum(vec2Classify * p1Vect) + math.log(pClass1)
-    # p0 = sum(vec2Classify * p0Vect) + math.log(1.0 - pClass1)
-    if p1 &gt; p0:
-        return 1
-    else:
-        return 0
-</code></pre><h3 id="示例：使用naive-bayes从个人广告中获取区域倾向"><a href="#示例：使用naive-bayes从个人广告中获取区域倾向" class="headerlink" title="示例：使用naive bayes从个人广告中获取区域倾向"></a>示例：使用naive bayes从个人广告中获取区域倾向</h3><p>训练出模型后，获取各分类 词条出现概率较高的前十个单词    </p>
-<pre><code># -*- coding: utf-8 -*-
-# !/usr/bin/env python
-
-import feedparser
-import re
-import words2vec as bayes
-import numpy as np
-import operator    
-
-def testParse(bigString):
-    # 去掉单词、数字，字符串长度小于2
-    lisetOfToken = re.split(&apos;\\W*&apos;, bigString)
-    # 全部小写处理
-    return [tok.lower() for tok in lisetOfToken if len(tok) &gt; 2]
-
-# 取出前三十个高频字符串   with and you for之类
-def calcMostFreq(vocabList, fullText):
-    freqDict = {}
-    for token in vocabList:
-        freqDict[token] = fullText.count(token)
-    # iteritems 排序
-    sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1),\
-                    reverse=True)
-    return sortedFreq[:50]                    
-
-def localWords(feed1, feed0):
-    docList = []; classList = []; fullText = []
-    minLen = min(len(feed1[&apos;entries&apos;]), len(feed0[&apos;entries&apos;]))
-    # print(minLen)
-    for i in range(minLen):
-        wordList = testParse(feed1[&apos;entries&apos;][i][&apos;summary&apos;])
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(1)
-        wordList = testParse(feed0[&apos;entries&apos;][i][&apos;summary&apos;])
-        docList.append(wordList)
-        fullText.extend(wordList)
-        classList.append(0)
-    # 创建所有 词向量
-    vocabList = bayes.creatVocabList(docList)
-    # 取出前三十个高频字符串
-    top30Words = calcMostFreq(vocabList, fullText)
-    # print(top30Words)
-    # 去掉高频词
-    for pairW in top30Words:
-        if pairW[0] in vocabList:
-            vocabList.remove(pairW[0])
-    print(vocabList)
-    print(len(vocabList))        
-    # 留存交叉验证     随机取20个作为测试集 其他为训练集
-    trainingSet = list(range(2 * minLen)); testSet = []
-    for i in range(20):
-        randIndex = int(np.random.uniform(0, len(trainingSet)))
-        testSet.append(trainingSet[randIndex])    
-        del(trainingSet[randIndex])
-    # print(testSet)
-    # 训练模型
-    trainMat = []; trainClasses = []
-    for docIndex in trainingSet:
-        trainMat.append(bayes.bagOfWords2VecMN(list(vocabList),docList[docIndex]))
-        trainClasses.append(classList[docIndex])
-    p0V,p1V,pSpam = bayes.trainNB0(np.array(trainMat), np.array(trainClasses))
-    # print(&apos;pSpam: &apos;,pSpam)
-    # 测试数据 查看错误率
-    errorCount = 0
-    for docIndex in testSet:
-        wordVector = bayes.bagOfWords2VecMN(list(vocabList),docList[docIndex])
-        if bayes.classifyNB(wordVector,p0V,p1V,pSpam) != classList[docIndex]:
-            errorCount += 1
-            # print(docList[docIndex], &apos;error&apos;)
-    print(&apos;the error rate is: &apos;, float(errorCount)/len(testSet))    
-    return vocabList,p0V,p1V    
-
-def getTopWords(ny,sf):
-    vocabList,p0V,p1V = localWords(ny,sf)
-    topNY = []; topSF = []
-    for i in range(len(p0V)):
-        if p0V[i] &gt; -6.0:    
-            topSF.append((list(vocabList)[i],p0V[i]))
-        if p1V[i] &gt; -6.0:
-            topNY.append((list(vocabList)[i],p1V[i]))
-
-    sortedSF = sorted(topSF, key=lambda pair: pair[1], reverse=True)
-    print(&apos;SF *****   *****    *****&apos;)
-    top10SF = map(lambda x: x[0], sortedSF[:10])
-    for i in top10SF:
-        print(i)
-
-    sortedNY = sorted(topNY, key=lambda pair: pair[1], reverse=True)
-    print(&apos;NY *****   *****    *****&apos;)
-    for item in sortedNY[:10]:
-        print(item[0])
-
-if __name__ == &apos;__main__&apos;:
-    ny = feedparser.parse(&apos;http://newyork.craigslist.org/stp/index.rss&apos;)
-    sf = feedparser.parse(&apos;http://sfbay.craigslist.org/stp/index.rss&apos;)
-    getTopWords(ny,sf)
-</code></pre>
+</code></pre><h3 id="代码分解"><a href="#代码分解" class="headerlink" title="代码分解"></a>代码分解</h3>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/26/朴素贝叶斯/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5l6nxs30004a2ludur9991e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5mg5xnh000354lul6g5jwxg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -359,7 +222,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5l6nxrz0002a2lubujlymsv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5mg5xn2000054lurq5xo696" class="article-share-link">Share</a>
       
       
     </footer>
@@ -402,7 +265,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5l6nxs40005a2luphj2hql2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5mg5xod000754lu6q7rw55d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -442,7 +305,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/ios基础学习/" data-id="cj5l6nxs20003a2luzr90gcyh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/ios基础学习/" data-id="cj5mg5xn9000154lu6l72btew" class="article-share-link">Share</a>
       
       
     </footer>
@@ -479,7 +342,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/udp编程/" data-id="cj5l6nxsg0008a2lu4xf3cg0i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/udp编程/" data-id="cj5mg5xnx000454lukv06odul" class="article-share-link">Share</a>
       
       
     </footer>
@@ -523,7 +386,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/02/01/消息队列/" data-id="cj5l6nxsf0007a2luxf6vgulx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/02/01/消息队列/" data-id="cj5mg5xoa000654lux9dks3sx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -566,7 +429,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/" data-id="cj5l6nxsg0009a2lu499olff2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/链表的创建、打印与销毁/" data-id="cj5mg5xor000954lukxcqefce" class="article-share-link">Share</a>
       
       
     </footer>
@@ -611,7 +474,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj5l6nxrt0000a2lu0l4ucdwq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj5mg5xne000254luv0uhjcg0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -650,7 +513,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -660,9 +523,13 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+          </li>
         
           <li>
             <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
@@ -678,10 +545,6 @@ if __name__ == &apos;__main__&apos;:
         
           <li>
             <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/16/udp编程/">udp编程</a>
           </li>
         
       </ul>

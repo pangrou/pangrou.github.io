@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Bag-of-Words-Meets-Bags-of-Popcorn | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Bag of Words Meets Bags of Popcornkaggle上的项目: https://www.kaggle.com/c/word2vec-nlp-tutorial  深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn 思路过程 下载 Data 并读取 对文本作 html 标签处理 得到所有词语 去除高频词 文本词语变成词向量 训练模型，得到条件概率 对测试数据，Wo">
+<meta name="keywords" content="naive bayes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bag-of-Words-Meets-Bags-of-Popcorn">
+<meta property="og:url" content="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Bag of Words Meets Bags of Popcornkaggle上的项目: https://www.kaggle.com/c/word2vec-nlp-tutorial  深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn 思路过程 下载 Data 并读取 对文本作 html 标签处理 得到所有词语 去除高频词 文本词语变成词向量 训练模型，得到条件概率 对测试数据，Wo">
+<meta property="og:updated_time" content="2017-07-27T13:04:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bag-of-Words-Meets-Bags-of-Popcorn">
+<meta name="twitter:description" content="Bag of Words Meets Bags of Popcornkaggle上的项目: https://www.kaggle.com/c/word2vec-nlp-tutorial  深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn 思路过程 下载 Data 并读取 对文本作 html 标签处理 得到所有词语 去除高频词 文本词语变成词向量 训练模型，得到条件概率 对测试数据，Wo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Bag-of-Words-Meets-Bags-of-Popcorn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" class="article-date">
+  <time datetime="2017-07-27T11:43:36.000Z" itemprop="datePublished">2017-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Bag-of-Words-Meets-Bags-of-Popcorn
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Bag-of-Words-Meets-Bags-of-Popcorn"><a href="#Bag-of-Words-Meets-Bags-of-Popcorn" class="headerlink" title="Bag of Words Meets Bags of Popcorn"></a>Bag of Words Meets Bags of Popcorn</h4><p>kaggle上的项目: <a href="https://www.kaggle.com/c/word2vec-nlp-tutorial" target="_blank" rel="external">https://www.kaggle.com/c/word2vec-nlp-tutorial</a> </p>
+<p>深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn</p>
+<h5 id="思路过程"><a href="#思路过程" class="headerlink" title="思路过程"></a>思路过程</h5><ol>
+<li>下载 Data 并读取</li>
+<li>对文本作 html 标签处理</li>
+<li>得到所有词语</li>
+<li>去除高频词</li>
+<li>文本词语变成词向量</li>
+<li>训练模型，得到条件概率</li>
+<li>对测试数据，Words2Vec 处理</li>
+<li>classifyNB() 得到分类结果</li>
+<li>to_csv() 保存</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line"># https://www.kaggle.com/c/word2vec-nlp-tutorial</div><div class="line"></div><div class="line">import numpy as np</div><div class="line">import pandas as pd</div><div class="line">import re</div><div class="line">import math</div><div class="line">import operator</div><div class="line">from bs4 import BeautifulSoup  #html标签处理</div><div class="line"></div><div class="line">def creatVocabList(dataSet):</div><div class="line">	vocabSet = set([])</div><div class="line">	for document in dataSet:</div><div class="line">		vocabSet = vocabSet | set(document)</div><div class="line">	return vocabSet	</div><div class="line"></div><div class="line">def bagOfWords2VecMN(vocabList, inputSet):</div><div class="line">	returnVet = [0] * len(vocabList)</div><div class="line">	for i in range(len(vocabList)):</div><div class="line">		if vocabList[i] in inputSet:</div><div class="line">			returnVet[i] += 1</div><div class="line">	return returnVet</div><div class="line"></div><div class="line"># 训练算法：从词向量计算概率</div><div class="line"># trainMatrix：文档矩阵(数字向量)</div><div class="line"># trainCategory：文档对应的类别 0正常 1垃圾</div><div class="line">def trainNB0(trainMatrix, trainCategory):</div><div class="line">	# 文档数量</div><div class="line">	numTrainDocs = len(trainMatrix)</div><div class="line">	# 词汇量大小</div><div class="line">	numWords = len(trainMatrix[0])</div><div class="line">	# 垃圾文档的概率</div><div class="line">	pAbusive = sum(trainCategory)/float(numTrainDocs)</div><div class="line">	# 创建一个全部为0的矩阵p0Num</div><div class="line">	# [1,2,3,4,0,0,1]即第一个词在垃圾文档中出现的次数1次，第二个出现2次</div><div class="line">	# p1Denom 所有的词出现的总数 即1+2+3+4+1=11</div><div class="line">	p0Num = np.ones(numWords); p1Num = np.ones(numWords)</div><div class="line">	p0Denom = 2.0; p1Denom = 2.0</div><div class="line"></div><div class="line">	for i in range(numTrainDocs):</div><div class="line">		if trainCategory[i] == 1:</div><div class="line">			p1Num += trainMatrix[i]</div><div class="line">			p1Denom += sum(trainMatrix[i])</div><div class="line">		else:</div><div class="line">			p0Num += trainMatrix[i]</div><div class="line">			p0Denom += sum(trainMatrix[i])</div><div class="line">	# 得到每个词在垃圾文档中出现的频率[1/11,2/11,3/11,4/11,0,0,1/11]	</div><div class="line">	p1Vect = [math.log(x/p1Denom) for x in p1Num]</div><div class="line">	p0Vect = [math.log(x/p0Denom) for x in p0Num]</div><div class="line">	return p1Vect,p0Vect,pAbusive</div><div class="line"></div><div class="line">def classifyNB(vec2Classify, p0Vect,p1Vect,pClass1):</div><div class="line">	p1VecSum = 0; p0VecSum = 0</div><div class="line">	for i in range(len(p0Vect)):</div><div class="line">		p1VecSum += vec2Classify[i] * p1Vect[i]</div><div class="line">		p0VecSum += vec2Classify[i] * p0Vect[i]</div><div class="line">	p1 = p1VecSum + math.log(pClass1)</div><div class="line">	p0 = p0VecSum + math.log(1.0 - pClass1)</div><div class="line">	if p1 &gt; p0:</div><div class="line">		return 1</div><div class="line">	else:</div><div class="line">		return 0</div><div class="line"></div><div class="line"># 取出前2000个高频字符串   with and you for之类</div><div class="line">def calcMostFreq(vocabList, fullText):</div><div class="line">	freqDict = &#123;&#125;</div><div class="line">	for token in vocabList:</div><div class="line">		freqDict[token] = fullText.count(token)</div><div class="line">	# iteritems 排序</div><div class="line">	sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1),\</div><div class="line">					reverse=True)</div><div class="line">	return sortedFreq[:2000]</div><div class="line"></div><div class="line">def textParse(review):</div><div class="line">	# 去掉HTML 标签，拿到内容</div><div class="line">	wordList = BeautifulSoup(review).get_text()</div><div class="line">	# 用正则表达式取出符合规范的部分</div><div class="line">	wordList = re.sub(&quot;[^a-zA-Z]&quot;,&quot; &quot;, wordList)</div><div class="line">	# 小写化所有的词，并转成词list</div><div class="line">	[tok.lower().split() for tok in wordList if len(tok) &gt; 2]</div><div class="line">	return wordList</div><div class="line"></div><div class="line"></div><div class="line">def getDataSet():</div><div class="line">	trainingSet = pd.read_csv(&quot;labeledTrainData.tsv&quot;,header=0,delimiter=&quot;\t&quot;,quoting=3)</div><div class="line">	testSet = pd.read_csv(&quot;testData.tsv&quot;,header=0,delimiter=&quot;\t&quot;)</div><div class="line">	testSubmission = pd.read_csv(&quot;sampleSubmission.csv&quot;)</div><div class="line">	dataSet = pd.read_csv(&quot;unlabeledTrainData.tsv&quot;,header=0,delimiter=&quot;\t&quot;c)</div><div class="line">	return trainingSet,testSet,testSubmission,dataSet</div><div class="line"></div><div class="line">def bagsOfPopcorn(trainingSet,testSet):</div><div class="line">	docList = []; classList = []; fullText = []</div><div class="line">	for i in range(len(trainingSet[&apos;id&apos;])):</div><div class="line">		wordList = textParse(trainingSet[&apos;review&apos;][i])</div><div class="line">		docList.append(wordList)</div><div class="line">		fullText.extend(wordList)</div><div class="line">		classList.append(trainingSet[&apos;sentiment&apos;][i])</div><div class="line">	vocabList = creatVocabList(docList)	</div><div class="line">	top2000Words = calcMostFreq(vocabList, fullText)</div><div class="line">	for word in top2000Words:</div><div class="line">		if word[0] in vocabList:</div><div class="line">			vocabList.remove(word[0])</div><div class="line">	trainMat = []</div><div class="line">	for i in range(len(docList)):</div><div class="line">		trainMat.append(bagOfWords2VecMN(vocabList, docList[i]))</div><div class="line">	p1Vect,p0Vect,pAbusive = trainNB0(trainMat, classList)	</div><div class="line">	return vocabList,p1Vect,p0Vect,pAbusive</div><div class="line">	</div><div class="line">def getResult(vocabList,dataSet,p1V,p0V,pAb):</div><div class="line">	Result = []</div><div class="line">	for i in range(len(dataSet)):</div><div class="line">		wordList = textParse(dataSet[&apos;review&apos;][i])</div><div class="line">		testList = bagOfWords2VecMN(vocabList, wordList)</div><div class="line">		Result.append(classifyNB(testList,p1V,p0V,pAb))	</div><div class="line">	return Result</div><div class="line"></div><div class="line">def testModel(vocabList,testSet,p1V,p0V,pAb,testSubmission):</div><div class="line">	errorCount = 0; resultID = []</div><div class="line">	testResult = getResult(vocabList,testSet,p1V,p0V,pAb)</div><div class="line">	result = pd.DataFrame(&#123;&quot;id&quot;:testSet[&apos;id&apos;], &quot;sentiment&quot;:testResult&#125;)</div><div class="line">	result.to_csv(&quot;result.csv&quot;,index=False)</div><div class="line"></div><div class="line">	for i in range(len(testResult)):</div><div class="line">		if testResult[i] != testSubmission[&apos;sentiment&apos;][i]:</div><div class="line">			errorCount += 1</div><div class="line">	print(&apos;error rate is : &apos;, float(errorCount)/len(testResult))		</div><div class="line"></div><div class="line">def getSentiment(vocabList,dataSet,p1V,p0V,pAb):</div><div class="line">	Result = getResult(vocabList,dataSet,p1V,p0V,pAb)</div><div class="line">	output = pd.DataFrame(&#123;&quot;id&quot;:dataSet[&apos;id&apos;], &quot;sentiment&quot;:Result&#125;)</div><div class="line">	output.to_csv(&quot;result_test.csv&quot;,index=False)</div><div class="line">	# print(output.info())</div><div class="line">	# print(output[:3])</div><div class="line"></div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">	trainingSet,testSet,testSubmission,dataSet = getDataSet()</div><div class="line">	vocabList,p1V,p0V,pAb = bagsOfPopcorn(trainingSet,testSet)</div><div class="line">	testModel(vocabList,testSet,p1V,p0V,pAb,testSubmission)</div><div class="line">	getSentiment(vocabList,dataSet,p1V,p0V,pAb)</div></pre></td></tr></table></figure>
+<h4 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h4><ol>
+<li>取 testSet[‘id’] 时，tolist() 后变成[‘“12311_10”‘,’”8348_2”‘,..] <br><br>代码：testSet = pd.read_csv(“testData.tsv”,header=0,delimiter=”\t”,quoting=3) <br><br>把 quoting=3 去掉就行了</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj5mgah3u00005qlutthnw4jp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/26/朴素贝叶斯/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">朴素贝叶斯</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Arkiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Siste innlegg</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

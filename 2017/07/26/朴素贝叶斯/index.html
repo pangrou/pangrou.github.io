@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/26/朴素贝叶斯/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="公式P(Y|X) = P(X|Y)P(Y)/P(X) P(Y,X) = P(Y|X)P(X) = P(X|Y)P(Y) P(&amp;apos;属于某类&amp;apos; | &amp;apos;具有某特征&amp;apos;) 只需要找到一些包含已知特征标签的样本，即可训练。 思想贝叶斯的核心思想：高概率对应的类别。 如果    P(‘属于A类’| ‘具有某特征’) &amp;gt; P(‘属于B类’| ‘具有某特征’)，那么(x,">
-<meta property="og:updated_time" content="2017-07-26T15:31:16.000Z">
+<meta property="og:updated_time" content="2017-07-27T13:07:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯">
 <meta name="twitter:description" content="公式P(Y|X) = P(X|Y)P(Y)/P(X) P(Y,X) = P(Y|X)P(X) = P(X|Y)P(Y) P(&amp;apos;属于某类&amp;apos; | &amp;apos;具有某特征&amp;apos;) 只需要找到一些包含已知特征标签的样本，即可训练。 思想贝叶斯的核心思想：高概率对应的类别。 如果    P(‘属于A类’| ‘具有某特征’) &amp;gt; P(‘属于B类’| ‘具有某特征’)，那么(x,">
@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -118,7 +118,8 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
 对每个类别
     各词条的数目／所有词条数 -&gt;条件概率
 返回每个类别的条件概率(和各词条在某类中出现的概率)
-</code></pre><h3 id="代码分解"><a href="#代码分解" class="headerlink" title="代码分解"></a>代码分解</h3><p>样本</p>
+</code></pre><h3 id="代码分解"><a href="#代码分解" class="headerlink" title="代码分解"></a>代码分解</h3><a id="more"></a>
+<p>样本</p>
 <pre><code>def loadDataSet():
     postingList = [[&apos;my&apos;, &apos;dog&apos;, &apos;has&apos;, &apos;flea&apos;, &apos;problems&apos;, &apos;help&apos;, &apos;please&apos;],
                [&apos;maybe&apos;, &apos;not&apos;, &apos;take&apos;, &apos;him&apos;, &apos;to&apos;, &apos;dog&apos;, &apos;park&apos;, &apos;stupid&apos;],
@@ -320,7 +321,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5l6nxs30004a2ludur9991e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5mg5xnh000354lul6g5jwxg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -330,6 +331,15 @@ if __name__ == &apos;__main__&apos;:
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Bag-of-Words-Meets-Bags-of-Popcorn
+        
+      </div>
+    </a>
   
   
     <a href="/2016/04/29/ios之滑动条简单游戏/" id="article-nav-older" class="article-nav-link-wrap">
@@ -370,7 +380,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -380,9 +390,13 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+          </li>
         
           <li>
             <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
@@ -398,10 +412,6 @@ if __name__ == &apos;__main__&apos;:
         
           <li>
             <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
-          </li>
-        
-          <li>
-            <a href="/2016/03/16/udp编程/">udp编程</a>
           </li>
         
       </ul>
