@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,6 +80,55 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Logistic回归" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/03/Logistic回归/" class="article-date">
+  <time datetime="2017-08-03T10:49:56.000Z" itemprop="datePublished">2017-08-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/03/Logistic回归/">Logistic回归</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《机器学习实战》</p>
+<h4 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h4><p>概念：假设有一些数据点，我们用一条直线对这些点进行拟合，这个拟合过程成为回归。这条线称之为 最佳拟合直线。<br></p>
+<p>主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。<br></p>
+<p>“回归”一词源于最佳拟合，表示要找到最佳拟合参数集。    <br></p>
+<h4 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h4><pre><code>f(x) = 1/(1 + e(-x))
+</code></pre><p>当 x = 0时, f(x) = 0; 随着 x 的增大，f(x) 逼近于1；随着 x 的减小，f(x) 逼近于0。<br></p>
+<h3 id="2-Logistic回归分类器原理："><a href="#2-Logistic回归分类器原理：" class="headerlink" title="2.Logistic回归分类器原理："></a>2.Logistic回归分类器原理：</h3><p>  我们可以在每个特征上都乘以一个回归系数，然后把所有的结果值相加，将这个总和代入Sigmoid函数中，进而得到一个0～1之间的数值。 任何大于0.5的数据被分为1类，小于0.5则被归为0类。 所以，Logistic回归也可以被看成是一种概率估计。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/03/Logistic回归/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj5weoy740001nolu9zd8cdg3" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Bag-of-Words-Meets-Bags-of-Popcorn" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -125,7 +174,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj5mha25u0001hhluwnst9i6a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj5weoy7b0003nolu813nsl60" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -180,7 +229,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5mha26i000bhhluex4ci7cj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5weoy7j0007nolurcdtqy96" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -224,7 +273,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5mha2620003hhlu5fq6e6bo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5weoy7i0006nolup2mowwuo" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
@@ -268,53 +317,10 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5mha26h000ahhluatov36vo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5weoy7p000bnolu7zhi0ll5" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ios基础学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/16/ios基础学习/" class="article-date">
-  <time datetime="2016-03-16T09:52:17.000Z" itemprop="datePublished">2016-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/16/ios基础学习/">ios基础学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>swift实现一个简单的四则运算计算器<br>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/16/ios基础学习/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/ios基础学习/" data-id="cj5mha2680005hhluh6kj8t2z" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
 
     </footer>
   </div>
@@ -337,9 +343,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -347,9 +353,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 10px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
     </div>
   </div>
 
@@ -358,7 +364,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -366,9 +372,13 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/08/03/Logistic回归/">Logistic回归</a>
+          </li>
         
           <li>
             <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
@@ -386,10 +396,6 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
             <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
           </li>
         
-          <li>
-            <a href="/2016/03/16/ios基础学习/">ios基础学习</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -403,7 +409,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
