@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -126,7 +126,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj6m5oqyj000390luycjf2d2r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj6m5oqyj000390luycjf2d2r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -175,7 +175,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj6m5oqyp000590luljgk4kov" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj6m5oqyp000590luljgk4kov" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
@@ -231,7 +231,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj6m5oqyb000190lusmvr8h1o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj6m5oqyb000190lusmvr8h1o" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -286,7 +286,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj6m5oqz4000h90luv9jk34ig" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj6m5oqz4000h90luv9jk34ig" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -298,10 +298,10 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
 
 
   
-    <article id="post-ios之滑动条简单游戏" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-strtok分割时间" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/04/29/ios之滑动条简单游戏/" class="article-date">
-  <time datetime="2016-04-29T07:21:38.000Z" itemprop="datePublished">2016-04-29</time>
+    <a href="/2016/01/27/strtok分割时间/" class="article-date">
+  <time datetime="2016-01-27T02:44:54.000Z" itemprop="datePublished">2016-01-27</time>
 </a>
     
   </div>
@@ -312,7 +312,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+      <a class="article-title" href="/2016/01/27/strtok分割时间/">strtok与sscanf</a>
     </h1>
   
 
@@ -320,20 +320,22 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一个简单小游戏，但是并不主流，不推荐学习</p>
-<h3 id="拖动滑动条，会弹出分数的提示框"><a href="#拖动滑动条，会弹出分数的提示框" class="headerlink" title="拖动滑动条，会弹出分数的提示框"></a>拖动滑动条，会弹出分数的提示框</h3>
+        <p>两者都可以分解字符串，下面用两个函数分别实现把”08:50:11”解析成对应的十分秒。</p>
+<h3 id="1-strtok函数"><a href="#1-strtok函数" class="headerlink" title="1.strtok函数"></a>1.strtok函数</h3><h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">char *strtok(char s[], const char *delim);</div></pre></td></tr></table></figure>
+<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>分解字符串为一组字符串。s为要分解的字符串，delim为分隔符字符串。<br>例如：strtok(“abc,def,ghi”,”,”)，最后可以分割成为abc def ghi.</p>
+<h3 id="代码部分"><a href="#代码部分" class="headerlink" title="代码部分"></a>代码部分</h3>
         
           <p class="article-more-link">
-            <a href="/2016/04/29/ios之滑动条简单游戏/#more">Read More</a>
+            <a href="/2016/01/27/strtok分割时间/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj6m5oqyr000690lur1a8wvde" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj6m5oqyy000a90luv2zvp07g" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
 
     </footer>
   </div>
@@ -343,10 +345,6 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
 
   
 
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
@@ -356,9 +354,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -366,9 +364,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/naive-bayes/" style="font-size: 20px;">naive bayes</a>
     </div>
   </div>
 
@@ -377,7 +375,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -385,7 +383,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -406,7 +404,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
           </li>
         
           <li>
-            <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+            <a href="/2016/01/27/strtok分割时间/">strtok与sscanf</a>
           </li>
         
       </ul>
@@ -422,7 +420,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
