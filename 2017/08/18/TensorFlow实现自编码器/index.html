@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="TensorFlow实现自编码器 学习笔记 1. 了解概念自编码器(AutoEncoder)：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。 特征的稀疏表达(Sparse Coding): 使用少量的基本特征组合拼装得到更高层抽象的特征。 特点：  期望输入/输出一致 希望用高阶特征来重">
-<meta property="og:updated_time" content="2017-08-21T12:46:11.000Z">
+<meta property="og:updated_time" content="2017-08-21T12:50:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow实现自编码器">
 <meta name="twitter:description" content="TensorFlow实现自编码器 学习笔记 1. 了解概念自编码器(AutoEncoder)：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。 特征的稀疏表达(Sparse Coding): 使用少量的基本特征组合拼装得到更高层抽象的特征。 特点：  期望输入/输出一致 希望用高阶特征来重">
@@ -149,59 +149,37 @@ ga('send', 'pageview');
 <p><code>_initialize_weights</code> 初始化函数：<br><br>权重w1 需要使用 xavier_init，返回一个适合激活函数的权重初始分布。<br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def _initialize_weights(self):</div><div class="line">	all_weights = dict()</div><div class="line">	all_weights[&apos;w1&apos;] = tf.Variable(xavier_init(self.n_input,</div><div class="line">							self.n_hidden))</div><div class="line">	all_weights[&apos;b1&apos;] = tf.Variable(tf.zeros([self.n_hidden],</div><div class="line">							dtype = tf.float32))</div><div class="line">	all_weights[&apos;w2&apos;] = tf.Variable(tf.zeros([self.n_hidden,</div><div class="line">							self.n_input], dtype = tf.float32))</div><div class="line">	all_weights[&apos;b2&apos;] = tf.Variable(tf.zeros([self.n_input],</div><div class="line">							dtype = tf.float32))</div><div class="line">	return all_weights</div></pre></td></tr></table></figure>
 <h5 id="4-4-计算损失-cost"><a href="#4-4-计算损失-cost" class="headerlink" title="4.4 计算损失 cost"></a>4.4 计算损失 cost</h5><p><code>partial_fit</code> :就是用一个 batch 数据进行训练并返回当前的损失 cost。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">	def partial_fit(self, X):</div><div class="line">		cost, opt = self.sess.run((self.cost, self.optimizer),</div><div class="line">						feed_dict = &#123;self.x; X, self.scale: self.training_scale&#125;)</div><div class="line">		return cost</div><div class="line">```	</div><div class="line">	</div><div class="line">##### 4.5 模型性能评测</div><div class="line">不训练，只求 cost，在测试集上对模型性能进行评测。</div></pre></td></tr></table></figure>
-<pre><code>def calc_total_cost(self, X):
-    return self.sess.run(self.cost, feed_dict = {self.x; X, 
-        self.scale: self.training_scale})
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.6 获得隐含层的输出结果</div><div class="line">函数目的是提供一个接口来获取抽象后的特征。&lt;br /&gt;</div><div class="line">自编码器的隐含层的最主要功能是： 学习出数据中的高阶特征。</div></pre></td></tr></table></figure>
-<pre><code>def transform(self, X):
-    return self.sess.run(self.hidden, feed_dict = {self.x; X, 
-        self.scale: self.training_scale})
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.7 将高阶特征复原为原始数据</div><div class="line">函数将隐含层的输出结果作为输入，通过之后的重建层将提取到的高阶特征复原为原始数据。</div></pre></td></tr></table></figure>
-<pre><code>def generate(self, hidden = None):
-    if hidden is None:
-        hidden = np.random_normal(size = self.weights[&apos;b1&apos;])
-    return self.sess.run(self.reconstruction,
-             feed_dict = {self.hidden: hidden})
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.8 提取高阶特征并复原数据</div><div class="line">输入是 原数据， 输出是 复员后的数据。</div></pre></td></tr></table></figure>
-<pre><code>def reconstruct(self, X):
-    return self.sess.run(self.reconstruction,feed_dict = {self.x; X, 
-        self.scale: self.training_scale})
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.9 一些简单的函数</div><div class="line">获取隐含层的权重w1</div></pre></td></tr></table></figure>
-<pre><code>def getWeights(self):
-    return self.sess.run(self.weights[&apos;w1&apos;])
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">获取隐含层的偏置系数b1</div></pre></td></tr></table></figure>
-<pre><code>def getBiases(self):
-    return self.sess.run(self.weights[&apos;b1&apos;])
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 5. 在 MNIST 数据集上测试</div><div class="line">获取数据集并对其进行标准化处理：让数据变成0均值且标准差为1的分布。&lt;br /&gt;</div><div class="line">方法就是 先减去均值，再除以标准差。&lt;br /&gt;</div><div class="line">注意：必须保证训练、测试数据都使用完全相同的scaler，这样才能保证后面模型处理数据时的一致性。&lt;br /&gt;</div></pre></td></tr></table></figure>
-<p>def getDataSet():<br>    return input_data.read_data_sets(‘MNIST_data’, one_hot=True)</p>
-<p>def standard_scale(X_train, X_test):<br>    preprocessor = prep.StandardScaler().fit(X_train)<br>    X_train = preprocessor.transform(X_train)<br>    X_test = preprocessor.transform(X_test)<br>    return X_train, X_test<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">不放回抽样，获取随机block函数。</div></pre></td></tr></table></figure></p>
-<p>def get_random_block_from_data(data, batch_size):<br>    start_index = np.random.randint(0, len(data)-batch_size)<br>    return data[start_index:(start_index + batch_size)]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">创建实例：</div></pre></td></tr></table></figure></p>
-<pre><code>autoencoder = AdditiveGaussianNoiseAutoencoder(n_input = 784,
-                n_hidden = 200,
-                transfer_function = tf.nn.softplus,
-                optimizer = tf.train.AdamOptimizer(learning_rate = 0.001),
-                scale = 0.01)
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">接下来开始训练。</div><div class="line"></div><div class="line">1. 随机抽取一个 block 的数据</div><div class="line">2. 计算当前 cost</div><div class="line">3. 求出 avg_cost</div><div class="line">4. 显示当前的迭代数和每一轮的 avg_cost</div></pre></td></tr></table></figure>
-<pre><code>n_samples = int(mnist.train.num_examples)
-training_epochs = 10
-batch_size = 128
-display_step = 1
-
-for epoch in range(training_epochs):
-    avg_cost = 0
-    total_batch = int(n_samples / batch_size)
-    for i in range(total_batch):
-        batch_xs = get_random_block_from_data(X_train, batch_size)
-        cost = autoencoder.partial_fit(batch_xs)
-        avg_cost += cost / n_samples * batch_size
-
-    if epoch % display_step == 0:
-    print(&apos;Epoch:&apos;, &apos;%04d&apos; % (epoch+1), &apos;cost=:&apos;, &apos;{:.9%f}&apos; % format(avg_cost))
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后对训练完的模型进行性能测试。</div></pre></td></tr></table></figure>
-<pre><code>print(&apos;Total cost: &apos; + str(autoencoder.calc_total_cost(X_test)))
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 6. 运行结果</div></pre></td></tr></table></figure>
-<p>Epoch: 0001 cost=: 20285.325176136<br>Epoch: 0002 cost=: 13014.011207955<br>Epoch: 0003 cost=: 11046.426732955<br>Epoch: 0004 cost=: 10171.495172727<br>Epoch: 0005 cost=: 9557.693106818<br>Epoch: 0006 cost=: 8829.338232955<br>Epoch: 0007 cost=: 9524.017826136<br>Epoch: 0008 cost=: 8726.727809091<br>Epoch: 0009 cost=: 9077.717231818<br>Epoch: 0010 cost=: 7851.010675568<br>Total cost: 730917.0<br>```<br>最终结果 cost 大概为 7000 <br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def partial_fit(self, X):</div><div class="line">	cost, opt = self.sess.run((self.cost, self.optimizer),</div><div class="line">					feed_dict = &#123;self.x; X, self.scale: self.training_scale&#125;)</div><div class="line">	return cost</div></pre></td></tr></table></figure>
+<h5 id="4-5-模型性能评测"><a href="#4-5-模型性能评测" class="headerlink" title="4.5 模型性能评测"></a>4.5 模型性能评测</h5><p>不训练，只求 cost，在测试集上对模型性能进行评测。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def calc_total_cost(self, X):</div><div class="line">	return self.sess.run(self.cost, feed_dict = &#123;self.x; X, </div><div class="line">		self.scale: self.training_scale&#125;)</div></pre></td></tr></table></figure>
+<h5 id="4-6-获得隐含层的输出结果"><a href="#4-6-获得隐含层的输出结果" class="headerlink" title="4.6 获得隐含层的输出结果"></a>4.6 获得隐含层的输出结果</h5><p>函数目的是提供一个接口来获取抽象后的特征。<br><br>自编码器的隐含层的最主要功能是： 学习出数据中的高阶特征。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def transform(self, X):</div><div class="line">	return self.sess.run(self.hidden, feed_dict = &#123;self.x; X, </div><div class="line">		self.scale: self.training_scale&#125;)</div></pre></td></tr></table></figure>
+<h5 id="4-7-将高阶特征复原为原始数据"><a href="#4-7-将高阶特征复原为原始数据" class="headerlink" title="4.7 将高阶特征复原为原始数据"></a>4.7 将高阶特征复原为原始数据</h5><p>函数将隐含层的输出结果作为输入，通过之后的重建层将提取到的高阶特征复原为原始数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def generate(self, hidden = None):</div><div class="line">	if hidden is None:</div><div class="line">		hidden = np.random_normal(size = self.weights[&apos;b1&apos;])</div><div class="line">	return self.sess.run(self.reconstruction,</div><div class="line">			 feed_dict = &#123;self.hidden: hidden&#125;)</div></pre></td></tr></table></figure>
+<h5 id="4-8-提取高阶特征并复原数据"><a href="#4-8-提取高阶特征并复原数据" class="headerlink" title="4.8 提取高阶特征并复原数据"></a>4.8 提取高阶特征并复原数据</h5><p>输入是 原数据， 输出是 复员后的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def reconstruct(self, X):</div><div class="line">	return self.sess.run(self.reconstruction,feed_dict = &#123;self.x; X, </div><div class="line">		self.scale: self.training_scale&#125;)</div></pre></td></tr></table></figure>
+<h5 id="4-9-一些简单的函数"><a href="#4-9-一些简单的函数" class="headerlink" title="4.9 一些简单的函数"></a>4.9 一些简单的函数</h5><p>获取隐含层的权重w1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def getWeights(self):</div><div class="line">	return self.sess.run(self.weights[&apos;w1&apos;])</div></pre></td></tr></table></figure>
+<p>获取隐含层的偏置系数b1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def getBiases(self):</div><div class="line">	return self.sess.run(self.weights[&apos;b1&apos;])</div></pre></td></tr></table></figure>
+<h4 id="5-在-MNIST-数据集上测试"><a href="#5-在-MNIST-数据集上测试" class="headerlink" title="5. 在 MNIST 数据集上测试"></a>5. 在 MNIST 数据集上测试</h4><p>获取数据集并对其进行标准化处理：让数据变成0均值且标准差为1的分布。<br><br>方法就是 先减去均值，再除以标准差。<br><br>注意：必须保证训练、测试数据都使用完全相同的scaler，这样才能保证后面模型处理数据时的一致性。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def getDataSet():</div><div class="line">	return input_data.read_data_sets(&apos;MNIST_data&apos;, one_hot=True)</div><div class="line"></div><div class="line">def standard_scale(X_train, X_test):</div><div class="line">	preprocessor = prep.StandardScaler().fit(X_train)</div><div class="line">	X_train = preprocessor.transform(X_train)</div><div class="line">	X_test = preprocessor.transform(X_test)</div><div class="line">	return X_train, X_test</div></pre></td></tr></table></figure>
+<p>不放回抽样，获取随机block函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def get_random_block_from_data(data, batch_size):</div><div class="line">	start_index = np.random.randint(0, len(data)-batch_size)</div><div class="line">	return data[start_index:(start_index + batch_size)]</div></pre></td></tr></table></figure>
+<p>创建实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">autoencoder = AdditiveGaussianNoiseAutoencoder(n_input = 784,</div><div class="line">				n_hidden = 200,</div><div class="line">				transfer_function = tf.nn.softplus,</div><div class="line">				optimizer = tf.train.AdamOptimizer(learning_rate = 0.001),</div><div class="line">				scale = 0.01)</div></pre></td></tr></table></figure>
+<p>接下来开始训练。</p>
+<ol>
+<li>随机抽取一个 block 的数据</li>
+<li>计算当前 cost</li>
+<li>求出 avg_cost</li>
+<li>显示当前的迭代数和每一轮的 avg_cost</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">n_samples = int(mnist.train.num_examples)</div><div class="line">training_epochs = 10</div><div class="line">batch_size = 128</div><div class="line">display_step = 1</div><div class="line"></div><div class="line">for epoch in range(training_epochs):</div><div class="line">	avg_cost = 0</div><div class="line">	total_batch = int(n_samples / batch_size)</div><div class="line">	for i in range(total_batch):</div><div class="line">		batch_xs = get_random_block_from_data(X_train, batch_size)</div><div class="line">		cost = autoencoder.partial_fit(batch_xs)</div><div class="line">		avg_cost += cost / n_samples * batch_size</div><div class="line"></div><div class="line">	if epoch % display_step == 0:</div><div class="line">	print(&apos;Epoch:&apos;, &apos;%04d&apos; % (epoch+1), &apos;cost=:&apos;, &apos;&#123;:.9%f&#125;&apos; % format(avg_cost))</div></pre></td></tr></table></figure>
+<p>最后对训练完的模型进行性能测试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(&apos;Total cost: &apos; + str(autoencoder.calc_total_cost(X_test)))</div></pre></td></tr></table></figure>
+<h4 id="6-运行结果"><a href="#6-运行结果" class="headerlink" title="6. 运行结果"></a>6. 运行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Epoch: 0001 cost=: 20285.325176136</div><div class="line">Epoch: 0002 cost=: 13014.011207955</div><div class="line">Epoch: 0003 cost=: 11046.426732955</div><div class="line">Epoch: 0004 cost=: 10171.495172727</div><div class="line">Epoch: 0005 cost=: 9557.693106818</div><div class="line">Epoch: 0006 cost=: 8829.338232955</div><div class="line">Epoch: 0007 cost=: 9524.017826136</div><div class="line">Epoch: 0008 cost=: 8726.727809091</div><div class="line">Epoch: 0009 cost=: 9077.717231818</div><div class="line">Epoch: 0010 cost=: 7851.010675568</div><div class="line">Total cost: 730917.0</div></pre></td></tr></table></figure>
+<p>最终结果 cost 大概为 7000 <br></p>
 <h4 id="7-优化方法"><a href="#7-优化方法" class="headerlink" title="7. 优化方法"></a>7. 优化方法</h4><p>可以通过调整 batch_size、training_epochs、优化器、自编码器的隐含层数、隐含节点数来优化。</p>
 <h4 id="8-结语"><a href="#8-结语" class="headerlink" title="8. 结语"></a>8. 结语</h4><p>自编码器作为一种无监督学习的方法，它与其他无监督学习的主要不同在于，它不是对数据进行聚类，而是提取其中最有用、最频繁出现的高阶特征，根据这些高阶特征重构数据。</p>
 
