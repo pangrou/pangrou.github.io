@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,6 +80,63 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-TensorFlow实现自编码器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/18/TensorFlow实现自编码器/" class="article-date">
+  <time datetime="2017-08-18T09:40:21.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>TensorFlow实现自编码器 学习笔记</p>
+<h4 id="1-了解概念"><a href="#1-了解概念" class="headerlink" title="1. 了解概念"></a>1. 了解概念</h4><p><code>自编码器(AutoEncoder)</code>：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。<br></p>
+<p><code>特征的稀疏表达(Sparse Coding)</code>: 使用少量的基本特征组合拼装得到更高层抽象的特征。<br></p>
+<p>特点：</p>
+<ol>
+<li>期望输入/输出一致</li>
+<li>希望用高阶特征来重构自己，而不只是复制像素点</li>
+</ol>
+<h4 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h4><p>自编码器的作用不仅局限于给监督训练做预训练，也可以直接使用自编码器进行特征提取和分析。</p>
+<h4 id="3-对数据进行降维"><a href="#3-对数据进行降维" class="headerlink" title="3. 对数据进行降维"></a>3. 对数据进行降维</h4><p>自编码器的输入节点和输出节点是一致的，但如果只是单纯的复制节点则没有意义。自编码器通常使用少量稀疏的高阶特征来重构输入。所以可以加入以下限制：<br></p>
+<ol>
+<li>限制中间隐含层节点的数量。如果再给中间隐含层的权重加一个L1的正则，那就可以根据惩罚系数控制隐含节点的稀疏程度。</li>
+<li>给数据加入噪声，即 去躁自编码器(Denoising AutoEncoder)，从噪声中学习出数据的特征。最常使用的是 <code>加性高斯噪声(Additive Gaussian Noise, AGN)</code>.</li>
+</ol>
+<h4 id="4-TensorFlow-实现自编码器"><a href="#4-TensorFlow-实现自编码器" class="headerlink" title="4. TensorFlow 实现自编码器"></a>4. TensorFlow 实现自编码器</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/18/TensorFlow实现自编码器/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj6m5oqyj000390luycjf2d2r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Logistic回归" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -118,7 +175,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj5weoy740001nolu9zd8cdg3" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj6m5oqyp000590luljgk4kov" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
@@ -174,7 +231,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj5weoy7b0003nolu813nsl60" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj6m5oqyb000190lusmvr8h1o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -229,7 +286,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj5weoy7j0007nolurcdtqy96" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj6m5oqz4000h90luv9jk34ig" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -273,7 +330,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj5weoy7i0006nolup2mowwuo" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/04/29/ios之滑动条简单游戏/" data-id="cj6m5oqyr000690lur1a8wvde" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios/">ios</a></li></ul>
@@ -285,54 +342,10 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
 
 
   
-    <article id="post-学生成绩管理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/03/30/学生成绩管理/" class="article-date">
-  <time datetime="2016-03-30T09:21:14.000Z" itemprop="datePublished">2016-03-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>输入某个班每个学生的所有课程的成绩，对所有成绩作如下处理：<br>1.求每门课程的平均分<br>2.输出所有有不及格课程的学生的学号，全部课程的成绩、平均成绩。<br>3.输出所有平均分在90分以上（含90分）的学生的学号。</p>
-<h3 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h3>
-        
-          <p class="article-more-link">
-            <a href="/2016/03/30/学生成绩管理/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/30/学生成绩管理/" data-id="cj5weoy7p000bnolu7zhi0ll5" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -343,9 +356,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -353,9 +366,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
     </div>
   </div>
 
@@ -372,9 +385,13 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+          </li>
         
           <li>
             <a href="/2017/08/03/Logistic回归/">Logistic回归</a>
@@ -392,10 +409,6 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
             <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
           </li>
         
-          <li>
-            <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -409,7 +422,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

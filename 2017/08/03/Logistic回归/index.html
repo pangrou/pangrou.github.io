@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/03/Logistic回归/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="《机器学习实战》 回归概念：假设有一些数据点，我们用一条直线对这些点进行拟合，这个拟合过程成为回归。这条线称之为 最佳拟合直线。 主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。 “回归”一词源于最佳拟合，表示要找到最佳拟合参数集。     Sigmoid函数f(x) = 1/(1 + e(-x)) 当 x = 0时, f(x) = 0; 随着 x 的增大，f(x) 逼近于1；随着">
-<meta property="og:updated_time" content="2017-08-03T12:19:40.000Z">
+<meta property="og:updated_time" content="2017-08-04T06:31:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic回归">
 <meta name="twitter:description" content="《机器学习实战》 回归概念：假设有一些数据点，我们用一条直线对这些点进行拟合，这个拟合过程成为回归。这条线称之为 最佳拟合直线。 主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。 “回归”一词源于最佳拟合，表示要找到最佳拟合参数集。     Sigmoid函数f(x) = 1/(1 + e(-x)) 当 x = 0时, f(x) = 0; 随着 x 的增大，f(x) 逼近于1；随着">
@@ -70,9 +70,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -114,7 +114,7 @@ ga('send', 'pageview');
 <pre><code>Z = wOx0 + w1x1 + w2x2 + ... + wNxN 
 </code></pre><p>  可以写成    Z = wTx, 表示将这两个数值向量对应元素相乘然后全部加起来。 其中，x是分类器的输入参数，w就是最佳回归系数。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def Sigmoid(inX):</div><div class="line">	return 1.0/(1+math.exp(-inX))</div></pre></td></tr></table></figure>
-<h3 id="梯度上升算法"><a href="#梯度上升算法" class="headerlink" title="梯度上升算法"></a>梯度上升算法</h3><p>思想：<br><br>要找到某函数的最大值，最好的方法是沿着该函数的梯度方向探寻。<br><br>对于Logistic回归而言，损失函数为非凸函数。重新定义损失函数后得到梯度上升算法迭代公式。</p>
+<h3 id="梯度上升算法"><a href="#梯度上升算法" class="headerlink" title="梯度上升算法"></a>梯度上升算法</h3><p>我们需要寻找合适的参数 w 使得 wTx = 0 成为很好的分类判定边界。<br><br>思想：<br><br>要找到某函数的最大值，最好的方法是沿着该函数的梯度方向探寻。<br><br>对于Logistic回归而言，损失函数为非凸函数。重新定义损失函数后得到梯度上升算法迭代公式。</p>
 <h3 id="梯度上升算法伪代码"><a href="#梯度上升算法伪代码" class="headerlink" title="梯度上升算法伪代码"></a>梯度上升算法伪代码</h3><p>每个回归系数初始化为1<br>重复r次：<br>    计算整个数据集的梯度<br>    使用 alpha * gradient 更新回归系数<br>返回回归系数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">weights = np.ones((n,1))</div><div class="line">	for k in range(maxCycles):</div><div class="line">		h = sigmoid(np.dot(dataMatrix,weights))</div><div class="line">		error = labelMat - h</div><div class="line">		weights = weights + alpha*dataMatrix.transpose()*error</div><div class="line">	return weights</div></pre></td></tr></table></figure>
 <h3 id="Logistic回归-梯度上升优化算法"><a href="#Logistic回归-梯度上升优化算法" class="headerlink" title="Logistic回归 梯度上升优化算法"></a>Logistic回归 梯度上升优化算法</h3><p>1.读取数据并提取对应的类别标签</p>
@@ -126,6 +126,8 @@ ga('send', 'pageview');
 <p>得到的结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  logistic git:(master) ✗ python logistic.py</div><div class="line">[[ 4.12414349]</div><div class="line"> [ 0.48007329]</div><div class="line"> [-0.6168482 ]]</div></pre></td></tr></table></figure>
 <p>3.分析数据：画出决策边界</p>
+<p>对于hθ(x)=g(θTx)而言，θTx &gt; 0,y = 1;θTx &lt; 0, y = 0.所以我们认为θTx = 0是一个决策边界。<br></p>
+<p>hθ(x)=g(θ0+θ1X1+θ2X2) <br><br>-&gt; θ0+θ1X1+θ2X2 = 0 <br><br>-&gt; x2 = (-θ0-θ1X1)/θ2 <br><br>-&gt; y = (-θ0-θ1X)/θ2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">def plotBestFit(weights,dataMat,labelMat):</div><div class="line">	dataArr = np.mat(dataMat)</div><div class="line">	weights = weights.getA()</div><div class="line">	n = np.shape(dataArr)[0]</div><div class="line">	xcord1 = []; ycord1 = []</div><div class="line">	xcord2 = []; ycord2 = []</div><div class="line">	for i in range(n):</div><div class="line">		if int(labelMat[i]) == 1:</div><div class="line">			xcord1.append(dataArr[i,1])</div><div class="line">			ycord1.append(dataArr[i,2])</div><div class="line">		else:</div><div class="line">			xcord2.append(dataArr[i,1])</div><div class="line">			ycord2.append(dataArr[i,2])</div><div class="line">	fig = plt.figure()</div><div class="line">	ax = fig.add_subplot(111)</div><div class="line">	ax.scatter(xcord1, ycord1, s=30, c=&apos;red&apos;, marker=&apos;s&apos;)</div><div class="line">	ax.scatter(xcord2, ycord2, s=30, c=&apos;green&apos;)</div><div class="line">	x = np.arange(-3.0, 3.0, 0.1)</div><div class="line">	y = (-weights[0] - weights[1]*x)/weights[2]	</div><div class="line">	ax.plot(x, y)</div><div class="line">	plt.xlabel(&apos;X1&apos;); plt.ylabel(&apos;X2&apos;)</div><div class="line">	plt.show()</div></pre></td></tr></table></figure>
 <h3 id="随机梯度上升"><a href="#随机梯度上升" class="headerlink" title="随机梯度上升"></a>随机梯度上升</h3><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集，计算复杂度较高。<br><br>改进方法是 一次仅用一个样本点来更新回归系数。该方法称为随机梯度上升算法。<br></p>
 <p>伪代码：<br><br>所有回归系数初始化为1<br>对数据集的每个样本：<br>    计算该样本的梯度<br>    使用 alpha * gradient 更新回归系数<br>返回回归系数</p>
@@ -143,7 +145,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj5weoy740001nolu9zd8cdg3" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj6m5oqyp000590luljgk4kov" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
@@ -154,9 +156,18 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
+    <a href="/2017/08/18/TensorFlow实现自编码器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TensorFlow实现自编码器
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">Bag-of-Words-Meets-Bags-of-Popcorn</div>
     </a>
   
@@ -174,9 +185,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
     </div>
   </div>
 
@@ -184,9 +195,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
     </div>
   </div>
 
@@ -203,9 +214,13 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+          </li>
         
           <li>
             <a href="/2017/08/03/Logistic回归/">Logistic回归</a>
@@ -223,10 +238,6 @@ ga('send', 'pageview');
             <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
           </li>
         
-          <li>
-            <a href="/2016/03/30/学生成绩管理/">学生成绩管理</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -240,7 +251,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

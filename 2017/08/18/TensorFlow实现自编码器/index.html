@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TensorFlow实现自编码器 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TensorFlow实现自编码器 学习笔记 1. 了解概念自编码器(AutoEncoder)：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。 特征的稀疏表达(Sparse Coding): 使用少量的基本特征组合拼装得到更高层抽象的特征。 特点：  期望输入/输出一致 希望用高阶特征来重">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow实现自编码器">
+<meta property="og:url" content="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TensorFlow实现自编码器 学习笔记 1. 了解概念自编码器(AutoEncoder)：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。 特征的稀疏表达(Sparse Coding): 使用少量的基本特征组合拼装得到更高层抽象的特征。 特点：  期望输入/输出一致 希望用高阶特征来重">
+<meta property="og:updated_time" content="2017-08-21T12:46:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow实现自编码器">
+<meta name="twitter:description" content="TensorFlow实现自编码器 学习笔记 1. 了解概念自编码器(AutoEncoder)：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。 特征的稀疏表达(Sparse Coding): 使用少量的基本特征组合拼装得到更高层抽象的特征。 特点：  期望输入/输出一致 希望用高阶特征来重">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TensorFlow实现自编码器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/18/TensorFlow实现自编码器/" class="article-date">
+  <time datetime="2017-08-18T09:40:21.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TensorFlow实现自编码器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>TensorFlow实现自编码器 学习笔记</p>
+<h4 id="1-了解概念"><a href="#1-了解概念" class="headerlink" title="1. 了解概念"></a>1. 了解概念</h4><p><code>自编码器(AutoEncoder)</code>：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。<br></p>
+<p><code>特征的稀疏表达(Sparse Coding)</code>: 使用少量的基本特征组合拼装得到更高层抽象的特征。<br></p>
+<p>特点：</p>
+<ol>
+<li>期望输入/输出一致</li>
+<li>希望用高阶特征来重构自己，而不只是复制像素点</li>
+</ol>
+<h4 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h4><p>自编码器的作用不仅局限于给监督训练做预训练，也可以直接使用自编码器进行特征提取和分析。</p>
+<h4 id="3-对数据进行降维"><a href="#3-对数据进行降维" class="headerlink" title="3. 对数据进行降维"></a>3. 对数据进行降维</h4><p>自编码器的输入节点和输出节点是一致的，但如果只是单纯的复制节点则没有意义。自编码器通常使用少量稀疏的高阶特征来重构输入。所以可以加入以下限制：<br></p>
+<ol>
+<li>限制中间隐含层节点的数量。如果再给中间隐含层的权重加一个L1的正则，那就可以根据惩罚系数控制隐含节点的稀疏程度。</li>
+<li>给数据加入噪声，即 去躁自编码器(Denoising AutoEncoder)，从噪声中学习出数据的特征。最常使用的是 <code>加性高斯噪声(Additive Gaussian Noise, AGN)</code>.</li>
+</ol>
+<h4 id="4-TensorFlow-实现自编码器"><a href="#4-TensorFlow-实现自编码器" class="headerlink" title="4. TensorFlow 实现自编码器"></a>4. TensorFlow 实现自编码器</h4><a id="more"></a>
+<h5 id="4-1-导入库。"><a href="#4-1-导入库。" class="headerlink" title="4.1 导入库。"></a>4.1 导入库。</h5><p>NumPy、对数据进行预处理的preprocessing模块、MNIST数据的加载模块。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">import sklearn.preprocessing as prep</div><div class="line">import tensorflow as tf</div><div class="line">from tensorflow.examples.tutorials.mnist import input_data</div></pre></td></tr></table></figure>
+<h5 id="4-2-定义网络结构"><a href="#4-2-定义网络结构" class="headerlink" title="4.2 定义网络结构"></a>4.2 定义网络结构</h5><p>使用 TensorFlow 进行算法设计、训练的核心步骤：</p>
+<ol>
+<li>定义算法公式，也就是神经网络 forward 时的计算；</li>
+<li>定义 loss,选定优化器，并指定优化器优化 loss；</li>
+<li>迭代的对数据进行训练；</li>
+<li>在测试集或验证集上对准确率进行评测；</li>
+</ol>
+<p>构建函数：n_input(输入变量数)、n_hidden(隐含节点数)、transfer_function(隐含层激活函数，默认为softplus)、     optimizer(优化器，默认为Adam)、scale(高斯噪声系数，默认为0.1)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class AdditiveGaussianNoiseAutoencoder(object):</div><div class="line">	def __init__(self, n_input, n_hidden, transfer_function=tf.nn.softplus,</div><div class="line">		optimizer=tf.train.AdamOptimizer(), scale=0.1):</div><div class="line">		self.n_input = n_input</div><div class="line">		self.n_hidden = n_hidden</div><div class="line">		self.transfer = transfer_function</div><div class="line">		self.scale = tf.placeholder(tf.float32)</div><div class="line">		self.training_scale = scale</div><div class="line">		network_weights = self._initialize_weights()</div><div class="line">		self.weights = network_weights</div></pre></td></tr></table></figure>
+<p>接下来定义网络结构。</p>
+<pre><code>feature = Wx + b
+</code></pre><ol>
+<li>建立一个能提取特征的隐含层，先将输入 x 加上噪声: x + scale * tf.random_normal((n_input,))。</li>
+<li>使用 transfer 对 (wx+b) 进行激活函数处理。</li>
+<li>经过隐含层后，在输出层进行数据复原、重建操作（即建立 reconstruction层）</li>
+<li>注意：输出层没有使用激活函数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">self.x = tf.placeholder(tf.float32, [None, self.n_input])</div><div class="line">self.hidden = self.transfer(tf.add(tf.matmul(</div><div class="line">				self.x + scale * tf.random_normal((n_input,)),</div><div class="line">				self.weights[&apos;w1&apos;]), self.weights[&apos;b1&apos;])</div><div class="line">self.reconstruction = td.add(tf.matmul(self.hidden,</div><div class="line">						self.weights[&apos;w2&apos;]), self.weights[&apos;b2&apos;])</div></pre></td></tr></table></figure>
+<p>定义损失函数和优化器。<br><br>这里使用 平方误差(Squared Error) 作为 cost。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">self.cost = 0.5 * tf.reduce_sum(tf.pow(tf.subtract(self.reconstruction, self.x), 2.0))</div><div class="line">self.optimizer = optimizer.minimize(self.cost)</div></pre></td></tr></table></figure>
+<p>下一步使用 TensorFlow 的全局参数优化器 tf.global_variables_initializer，创建 session，并直接执行它的 run 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">init = tf.global_variables_initializer()</div><div class="line">self.sess = tf.Session()</div><div class="line">self.sess.run(init)</div></pre></td></tr></table></figure>
+<h5 id="4-3-参数初始化"><a href="#4-3-参数初始化" class="headerlink" title="4.3 参数初始化"></a>4.3 参数初始化</h5><p><code>xavier initialization</code> 初始化方法：<br></p>
+<p><code>概念</code>：Xavier 就是让权重满足0均值，同时方差为 2/(Nin+Nout),分布可以用均匀分布或者高斯分布。<br><br><code>特点</code>：它会根据某一层网络的输入、输出节点数量自动调整最合适的分布。<br></p>
+<p>fan_in 是输入节点的数量， fan_out 是输出节点的数量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def xavier_init(fan_in, fan_out, constant=1):</div><div class="line">	low = -constant * np.sqrt(6.0 / (fan_in+fan_out))</div><div class="line">	high =  constant * np.sqrt(6.0 / (fan_in+fan_out))</div><div class="line">	return tf.random_uniform((fan_in, fan_out),</div><div class="line">		minval = low, maxval = high,</div><div class="line">		dtype = tf.float32)</div></pre></td></tr></table></figure>
+<p><code>_initialize_weights</code> 初始化函数：<br><br>权重w1 需要使用 xavier_init，返回一个适合激活函数的权重初始分布。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def _initialize_weights(self):</div><div class="line">	all_weights = dict()</div><div class="line">	all_weights[&apos;w1&apos;] = tf.Variable(xavier_init(self.n_input,</div><div class="line">							self.n_hidden))</div><div class="line">	all_weights[&apos;b1&apos;] = tf.Variable(tf.zeros([self.n_hidden],</div><div class="line">							dtype = tf.float32))</div><div class="line">	all_weights[&apos;w2&apos;] = tf.Variable(tf.zeros([self.n_hidden,</div><div class="line">							self.n_input], dtype = tf.float32))</div><div class="line">	all_weights[&apos;b2&apos;] = tf.Variable(tf.zeros([self.n_input],</div><div class="line">							dtype = tf.float32))</div><div class="line">	return all_weights</div></pre></td></tr></table></figure>
+<h5 id="4-4-计算损失-cost"><a href="#4-4-计算损失-cost" class="headerlink" title="4.4 计算损失 cost"></a>4.4 计算损失 cost</h5><p><code>partial_fit</code> :就是用一个 batch 数据进行训练并返回当前的损失 cost。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">	def partial_fit(self, X):</div><div class="line">		cost, opt = self.sess.run((self.cost, self.optimizer),</div><div class="line">						feed_dict = &#123;self.x; X, self.scale: self.training_scale&#125;)</div><div class="line">		return cost</div><div class="line">```	</div><div class="line">	</div><div class="line">##### 4.5 模型性能评测</div><div class="line">不训练，只求 cost，在测试集上对模型性能进行评测。</div></pre></td></tr></table></figure>
+<pre><code>def calc_total_cost(self, X):
+    return self.sess.run(self.cost, feed_dict = {self.x; X, 
+        self.scale: self.training_scale})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.6 获得隐含层的输出结果</div><div class="line">函数目的是提供一个接口来获取抽象后的特征。&lt;br /&gt;</div><div class="line">自编码器的隐含层的最主要功能是： 学习出数据中的高阶特征。</div></pre></td></tr></table></figure>
+<pre><code>def transform(self, X):
+    return self.sess.run(self.hidden, feed_dict = {self.x; X, 
+        self.scale: self.training_scale})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.7 将高阶特征复原为原始数据</div><div class="line">函数将隐含层的输出结果作为输入，通过之后的重建层将提取到的高阶特征复原为原始数据。</div></pre></td></tr></table></figure>
+<pre><code>def generate(self, hidden = None):
+    if hidden is None:
+        hidden = np.random_normal(size = self.weights[&apos;b1&apos;])
+    return self.sess.run(self.reconstruction,
+             feed_dict = {self.hidden: hidden})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.8 提取高阶特征并复原数据</div><div class="line">输入是 原数据， 输出是 复员后的数据。</div></pre></td></tr></table></figure>
+<pre><code>def reconstruct(self, X):
+    return self.sess.run(self.reconstruction,feed_dict = {self.x; X, 
+        self.scale: self.training_scale})
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 4.9 一些简单的函数</div><div class="line">获取隐含层的权重w1</div></pre></td></tr></table></figure>
+<pre><code>def getWeights(self):
+    return self.sess.run(self.weights[&apos;w1&apos;])
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">获取隐含层的偏置系数b1</div></pre></td></tr></table></figure>
+<pre><code>def getBiases(self):
+    return self.sess.run(self.weights[&apos;b1&apos;])
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 5. 在 MNIST 数据集上测试</div><div class="line">获取数据集并对其进行标准化处理：让数据变成0均值且标准差为1的分布。&lt;br /&gt;</div><div class="line">方法就是 先减去均值，再除以标准差。&lt;br /&gt;</div><div class="line">注意：必须保证训练、测试数据都使用完全相同的scaler，这样才能保证后面模型处理数据时的一致性。&lt;br /&gt;</div></pre></td></tr></table></figure>
+<p>def getDataSet():<br>    return input_data.read_data_sets(‘MNIST_data’, one_hot=True)</p>
+<p>def standard_scale(X_train, X_test):<br>    preprocessor = prep.StandardScaler().fit(X_train)<br>    X_train = preprocessor.transform(X_train)<br>    X_test = preprocessor.transform(X_test)<br>    return X_train, X_test<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">不放回抽样，获取随机block函数。</div></pre></td></tr></table></figure></p>
+<p>def get_random_block_from_data(data, batch_size):<br>    start_index = np.random.randint(0, len(data)-batch_size)<br>    return data[start_index:(start_index + batch_size)]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">创建实例：</div></pre></td></tr></table></figure></p>
+<pre><code>autoencoder = AdditiveGaussianNoiseAutoencoder(n_input = 784,
+                n_hidden = 200,
+                transfer_function = tf.nn.softplus,
+                optimizer = tf.train.AdamOptimizer(learning_rate = 0.001),
+                scale = 0.01)
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">接下来开始训练。</div><div class="line"></div><div class="line">1. 随机抽取一个 block 的数据</div><div class="line">2. 计算当前 cost</div><div class="line">3. 求出 avg_cost</div><div class="line">4. 显示当前的迭代数和每一轮的 avg_cost</div></pre></td></tr></table></figure>
+<pre><code>n_samples = int(mnist.train.num_examples)
+training_epochs = 10
+batch_size = 128
+display_step = 1
+
+for epoch in range(training_epochs):
+    avg_cost = 0
+    total_batch = int(n_samples / batch_size)
+    for i in range(total_batch):
+        batch_xs = get_random_block_from_data(X_train, batch_size)
+        cost = autoencoder.partial_fit(batch_xs)
+        avg_cost += cost / n_samples * batch_size
+
+    if epoch % display_step == 0:
+    print(&apos;Epoch:&apos;, &apos;%04d&apos; % (epoch+1), &apos;cost=:&apos;, &apos;{:.9%f}&apos; % format(avg_cost))
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最后对训练完的模型进行性能测试。</div></pre></td></tr></table></figure>
+<pre><code>print(&apos;Total cost: &apos; + str(autoencoder.calc_total_cost(X_test)))
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 6. 运行结果</div></pre></td></tr></table></figure>
+<p>Epoch: 0001 cost=: 20285.325176136<br>Epoch: 0002 cost=: 13014.011207955<br>Epoch: 0003 cost=: 11046.426732955<br>Epoch: 0004 cost=: 10171.495172727<br>Epoch: 0005 cost=: 9557.693106818<br>Epoch: 0006 cost=: 8829.338232955<br>Epoch: 0007 cost=: 9524.017826136<br>Epoch: 0008 cost=: 8726.727809091<br>Epoch: 0009 cost=: 9077.717231818<br>Epoch: 0010 cost=: 7851.010675568<br>Total cost: 730917.0<br>```<br>最终结果 cost 大概为 7000 <br></p>
+<h4 id="7-优化方法"><a href="#7-优化方法" class="headerlink" title="7. 优化方法"></a>7. 优化方法</h4><p>可以通过调整 batch_size、training_epochs、优化器、自编码器的隐含层数、隐含节点数来优化。</p>
+<h4 id="8-结语"><a href="#8-结语" class="headerlink" title="8. 结语"></a>8. 结语</h4><p>自编码器作为一种无监督学习的方法，它与其他无监督学习的主要不同在于，它不是对数据进行聚类，而是提取其中最有用、最频繁出现的高阶特征，根据这些高阶特征重构数据。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj6m5oqyj000390luycjf2d2r" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/03/Logistic回归/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Logistic回归</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/03/Logistic回归/">Logistic回归</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/ios之滑动条简单游戏/">ios之滑动条简单游戏</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
