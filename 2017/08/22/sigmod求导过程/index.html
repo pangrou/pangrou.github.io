@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Mot-clé: naive bayes | Hexo</title>
+  <title>sigmod求导过程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/naive-bayes/index.html">
+  <meta name="description" content="sigmod 求导sigmod 公式： f(z) = 1 / (1 + exp(-z)) 结果 f(z)&amp;apos; = f(z)(1 − f(z)) 推导过程f(z) = 1 / (1 + exp(-z)) -&amp;gt;     exp(-z) = (1-f(z))/f(z)  f(z)&amp;apos; = (1 / (1 + exp(-z)))&amp;apos;       = ((1 + exp(-z)">
+<meta name="keywords" content="math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sigmod求导过程">
+<meta property="og:url" content="http://yoursite.com/2017/08/22/sigmod求导过程/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="sigmod 求导sigmod 公式： f(z) = 1 / (1 + exp(-z)) 结果 f(z)&amp;apos; = f(z)(1 − f(z)) 推导过程f(z) = 1 / (1 + exp(-z)) -&amp;gt;     exp(-z) = (1-f(z))/f(z)  f(z)&amp;apos; = (1 / (1 + exp(-z)))&amp;apos;       = ((1 + exp(-z)">
+<meta property="og:updated_time" content="2017-08-22T11:34:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="sigmod求导过程">
+<meta name="twitter:description" content="sigmod 求导sigmod 公式： f(z) = 1 / (1 + exp(-z)) 结果 f(z)&amp;apos; = f(z)(1 − f(z)) 推导过程f(z) = 1 / (1 + exp(-z)) -&amp;gt;     exp(-z) = (1-f(z))/f(z)  f(z)&amp;apos; = (1 / (1 + exp(-z)))&amp;apos;       = ((1 + exp(-z)">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,58 +81,69 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" class="archive-article-date">
-  <time datetime="2017-07-27T11:43:36.000Z" itemprop="datePublished">Jul 27</time>
+        <section id="main"><article id="post-sigmod求导过程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/22/sigmod求导过程/" class="article-date">
+  <time datetime="2017-08-22T06:38:19.000Z" itemprop="datePublished">2017-08-22</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
+    <h1 class="article-title" itemprop="name">
+      sigmod求导过程
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/26/朴素贝叶斯/" class="archive-article-date">
-  <time datetime="2017-07-26T14:17:19.000Z" itemprop="datePublished">Jul 26</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/26/朴素贝叶斯/">朴素贝叶斯</a>
-    </h1>
-  
+        <h4 id="sigmod-求导"><a href="#sigmod-求导" class="headerlink" title="sigmod 求导"></a>sigmod 求导</h4><p>sigmod 公式：</p>
+<pre><code>f(z) = 1 / (1 + exp(-z))
+</code></pre><p>结果</p>
+<pre><code>f(z)&apos; = f(z)(1 − f(z))
+</code></pre><h4 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h4><pre><code>f(z) = 1 / (1 + exp(-z)) -&gt;     exp(-z) = (1-f(z))/f(z)
 
-    </header>
+f(z)&apos; = (1 / (1 + exp(-z)))&apos;
+      = ((1 + exp(-z))^-1)&apos;
+      = (-1)*((1 + exp(-z))^-2)*(1 + exp(-z))&apos;
+      = -((1 + exp(-z))^-2)*exp(-z)&apos;
+      = -((1 + exp(-z))^-2)*(exp(z)^-1)&apos;
+      = -((1 + exp(-z))^-2)*(-1)(exp(z)^-2)exp(z)
+      = (1 + exp(-z))^-2)*(exp(z)^-1)
+      = (f(z)^2)*exp(-z)
+      = (f(z)^2)*(1-f(z))/f(z)
+      = f(z)*(1-f(z))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/22/sigmod求导过程/" data-id="cj6nikbkh0004azlunejgymfs" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/18/TensorFlow实现自编码器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">TensorFlow实现自编码器</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
