@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,6 +80,63 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-TensorFlow实现自编码器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/18/TensorFlow实现自编码器/" class="article-date">
+  <time datetime="2017-08-18T09:40:21.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>TensorFlow实现自编码器 学习笔记</p>
+<h4 id="1-了解概念"><a href="#1-了解概念" class="headerlink" title="1. 了解概念"></a>1. 了解概念</h4><p><code>自编码器(AutoEncoder)</code>：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。<br></p>
+<p><code>特征的稀疏表达(Sparse Coding)</code>: 使用少量的基本特征组合拼装得到更高层抽象的特征。<br></p>
+<p>特点：</p>
+<ol>
+<li>期望输入/输出一致</li>
+<li>希望用高阶特征来重构自己，而不只是复制像素点</li>
+</ol>
+<h4 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h4><p>自编码器的作用不仅局限于给监督训练做预训练，也可以直接使用自编码器进行特征提取和分析。</p>
+<h4 id="3-对数据进行降维"><a href="#3-对数据进行降维" class="headerlink" title="3. 对数据进行降维"></a>3. 对数据进行降维</h4><p>自编码器的输入节点和输出节点是一致的，但如果只是单纯的复制节点则没有意义。自编码器通常使用少量稀疏的高阶特征来重构输入。所以可以加入以下限制：<br></p>
+<ol>
+<li>限制中间隐含层节点的数量。如果再给中间隐含层的权重加一个L1的正则，那就可以根据惩罚系数控制隐含节点的稀疏程度。</li>
+<li>给数据加入噪声，即 去躁自编码器(Denoising AutoEncoder)，从噪声中学习出数据的特征。最常使用的是 <code>加性高斯噪声(Additive Gaussian Noise, AGN)</code>.</li>
+</ol>
+<h4 id="4-TensorFlow-实现自编码器"><a href="#4-TensorFlow-实现自编码器" class="headerlink" title="4. TensorFlow 实现自编码器"></a>4. TensorFlow 实现自编码器</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/18/TensorFlow实现自编码器/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj7j1y1uw0006g3lu8mtd4iqm" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Logistic回归" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -118,7 +175,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj78yuhl7000338lufxz8ytpu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj7j1y1uz0007g3lu2yl6nmiu" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
@@ -174,7 +231,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj78yuhl0000138luqk9k741s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj7j1y1uh0002g3lu0kwqjx6a" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -229,7 +286,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj78yuhlo000f38lukvdjkd23" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cj7j1y1v9000dg3lum2m8ctrk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -275,7 +332,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj78yuhlm000b38lu5xqbw7uw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cj7j1y1uu0005g3luty3u6m63" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
@@ -301,7 +358,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
@@ -311,9 +368,9 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 20px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
   </div>
 
@@ -330,9 +387,13 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/09/07/手写识别数字/">手写识别数字</a>
+          </li>
         
           <li>
             <a href="/2017/09/06/kNN/">kNN</a>
@@ -350,10 +411,6 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
             <a href="/2017/08/22/sigmod求导过程/">sigmod求导过程</a>
           </li>
         
-          <li>
-            <a href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -367,7 +424,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

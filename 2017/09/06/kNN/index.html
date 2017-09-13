@@ -5,17 +5,17 @@
   
   <title>kNN | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确定前 k 个点所在类别的出现概率 返回前">
+  <meta name="description" content="《机器学习实战》 k-近邻算法学习笔记 1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确">
 <meta name="keywords" content="knn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kNN">
 <meta property="og:url" content="http://yoursite.com/2017/09/06/kNN/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确定前 k 个点所在类别的出现概率 返回前">
-<meta property="og:updated_time" content="2017-09-06T11:49:09.000Z">
+<meta property="og:description" content="《机器学习实战》 k-近邻算法学习笔记 1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确">
+<meta property="og:updated_time" content="2017-09-07T10:36:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kNN">
-<meta name="twitter:description" content="1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确定前 k 个点所在类别的出现概率 返回前">
+<meta name="twitter:description" content="《机器学习实战》 k-近邻算法学习笔记 1. 概述  k-近邻算法采用测量不同特征值之间的距离方法进行分类。 2. 原理  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。  即 选择 k 个最相似数据中出现次数最多的分类。     3. 伪代码 计算已知类别数据集中的点与当前点之间的距离 按照距离递增次序排序 选取与当前点距离最小的 k 个点 确">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -70,9 +70,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -103,7 +103,8 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>  k-近邻算法采用测量不同特征值之间的距离方法进行分类。</p>
+        <p>《机器学习实战》 k-近邻算法学习笔记</p>
+<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>  k-近邻算法采用测量不同特征值之间的距离方法进行分类。</p>
 <h3 id="2-原理"><a href="#2-原理" class="headerlink" title="2. 原理"></a>2. 原理</h3><p>  将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据的分类标签。<br><br>  即 选择 k 个最相似数据中出现次数最多的分类。    </p>
 <h3 id="3-伪代码"><a href="#3-伪代码" class="headerlink" title="3. 伪代码"></a>3. 伪代码</h3><ol>
 <li>计算已知类别数据集中的点与当前点之间的距离</li>
@@ -138,48 +139,26 @@ ga('send', 'pageview');
 <p>Python3.5中：<code>iteritems变为items</code>。   </p>
 <h5 id="6-6-数值归一化"><a href="#6-6-数值归一化" class="headerlink" title="6.6 数值归一化"></a>6.6 数值归一化</h5><p>在处理不同取值范围的特征值时，我们通常采用的方法是将数值归一化。     </p>
 <p><code>newvalue = (oldvalue - min)/(max - min)</code>        </p>
-<h3 id="7-完整代码"><a href="#7-完整代码" class="headerlink" title="7. 完整代码"></a>7. 完整代码</h3><pre><code># -*- coding: utf-8 -*-
-# !/usr/bin/env python
+<h3 id="7-完整代码"><a href="#7-完整代码" class="headerlink" title="7. 完整代码"></a>7. 完整代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line">import numpy as np</div><div class="line">import operator</div><div class="line"></div><div class="line">def CreatDataSet():</div><div class="line">	group = np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])</div><div class="line">	labels = [&apos;A&apos;,&apos;A&apos;,&apos;B&apos;,&apos;B&apos;]</div><div class="line">	return group,labels</div><div class="line"></div><div class="line">def classify0(inX, dataSet, labels, k):</div><div class="line">	# 计算欧式距离</div><div class="line">	dataSetSize = dataSet.shape[0]</div><div class="line">	diffMat = np.tile(inX, (dataSetSize,1)) </div><div class="line">	sqDiffMat = np.square(diffMat - dataSet)</div><div class="line">	distances = np.sqrt(sqDiffMat.sum(axis=1))</div><div class="line">	# 排序</div><div class="line">	sortedDistIndicies = distances.argsort()</div><div class="line">	# print(distances)</div><div class="line">	# print(sortedDistIndicies)</div><div class="line">	# 选择距离最小的k个点 和每个类别出现的次数</div><div class="line">	classCount = &#123;&#125;</div><div class="line">	for i in range(k):</div><div class="line">		voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">		classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1</div><div class="line">	print(classCount)	</div><div class="line">	# 对每个类别出现的次数进行排序</div><div class="line">	sortedClassCount = sorted(classCount.items(),</div><div class="line">				key = operator.itemgetter(1),reverse=True)</div><div class="line">	return sortedClassCount[0][0]</div><div class="line"></div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">	group,labels = CreatDataSet()</div><div class="line">	result = classify0([0,0], group, labels, 3)</div><div class="line">	print(result)</div><div class="line">```       </div><div class="line">        </div><div class="line">### 8.使用k-近邻算法识别手写数字</div></pre></td></tr></table></figure>
+<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><h1 id="usr-bin-env-python"><a href="#usr-bin-env-python" class="headerlink" title="!/usr/bin/env python"></a>!/usr/bin/env python</h1><p>import numpy as np<br>import pandas as pd<br>from os import listdir<br>import operator</p>
+<h1 id="3232-转-11024向量"><a href="#3232-转-11024向量" class="headerlink" title="3232 转 11024向量"></a>32<em>32 转 1</em>1024向量</h1><p>def img2vector(filename):<br>    returnVet = np.zeros((1, 1024))<br>    fr = open(filename)<br>    for i in range(32):<br>        lineStr = fr.readline()<br>        for j in range(32):<br>            returnVet[0,i*32+j] = int(lineStr[j])<br>    return returnVet    </p>
+<h1 id="使用-listdir-读取数据"><a href="#使用-listdir-读取数据" class="headerlink" title="使用 listdir 读取数据"></a>使用 listdir 读取数据</h1><p>def getDataSet(filePath):<br>    FileList = listdir(filePath)<br>    DataLen = len(FileList)<br>    DataMat = np.zeros((DataLen, 1024))<br>    Labels = []<br>    for i in range(DataLen):<br>        filename = FileList[i]<br>        fileStr = filename.split(‘.’)[0]<br>        fileLabel = fileStr.split(‘_’)[0]<br>        Labels.append(fileLabel)<br>        DataMat[i] = img2vector(‘%s/%s’ % (filePath,filename))<br>    return DataMat,Labels</p>
+<h1 id="计算欧式距离"><a href="#计算欧式距离" class="headerlink" title="计算欧式距离"></a>计算欧式距离</h1><p>def getEucDistance(trainSet, dataSet):<br>    dataSetSize = dataSet.shape[0]<br>    inX = np.tile(trainSet, (dataSetSize, 1))<br>    dist = np.sqrt((np.square(inX - dataSet)).sum(axis=1))<br>    return dist</p>
+<h1 id="分类器"><a href="#分类器" class="headerlink" title="分类器"></a>分类器</h1><p>def classify(inX, dataSet, labels, k):<br>    dist = getEucDistance(inX, dataSet)<br>    SortDit = dist.argsort()<br>    classCount = {}<br>    for i in range(k):<br>        voterIlabel = labels[SortDit[i]]<br>        classCount[voterIlabel] = classCount.get(voterIlabel, 0) + 1<br>    sortedclassCount = sorted(classCount.items(),<br>        key=operator.itemgetter(1),reverse=True)<br>    return sortedclassCount[0][0]</p>
+<h1 id="测试分类器"><a href="#测试分类器" class="headerlink" title="测试分类器"></a>测试分类器</h1><p>def handWriteClassTest():<br>    trainingMat,trainingLabels = getDataSet(‘digits/trainingDigits’)<br>    testMat,testLables = getDataSet(‘digits/testDigits’)<br>    errorCount = 0<br>    for i in range(testMat.shape[0]):<br>        classifieRet = classify(testMat[i], trainingMat, trainingLabels, 10)<br>        if(classifieRet != testLables[i]):<br>            errorCount += 1<br>            print(‘ret: %s, label:%s’ % (classifieRet,testLables[i]))<br>    print(‘errCnt:%d,errRat:%.6s’ % (errorCount, errorCount/testMat.shape[0]))</p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    handWriteClassTest()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">        </div><div class="line">##### listdir</div><div class="line"></div><div class="line">os.listdir() 方法用于返回指定的文件夹包含的文件或文件夹的名字的列表</div><div class="line"></div><div class="line">使用方法：</div></pre></td></tr></table></figure>
+<p>from os import listdir</p>
+<p>FileList = listdir(filePath)</p>
+<pre><code>#输出所有文件和文件夹
+</code></pre><p>for file in FileList:<br>    print(file)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">参数：</div><div class="line"></div><div class="line">* filePath -- 需要列出的目录路径</div><div class="line"></div><div class="line">#### 总结</div><div class="line"></div><div class="line">`测试发现错误率为74%`</div><div class="line"></div><div class="line">原因如下：</div></pre></td></tr></table></figure></p>
+<p>def img2vector(filename):<br>    returnVet = np.zeros((1, 1024))<br>    for i in range(32):<br>        lineStr = open(filename).readline()<br>        for j in range(32):<br>            returnVet[0,i*32+j] = int(lineStr[j])<br>    return returnVet<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">导致对于每条数据，lineStr读到的都是第一行的数据。&lt;br /&gt;</div><div class="line"></div><div class="line">改正：</div></pre></td></tr></table></figure></p>
+<p>def img2vector(filename):<br>    returnVet = np.zeros((1, 1024))<br>    fr = open(filename)<br>    for i in range(32):<br>        lineStr = fr.readline()<br>        for j in range(32):<br>            returnVet[0,i*32+j] = int(lineStr[j])<br>    return returnVet<br>```</p>
 
-import numpy as np
-import operator
-
-def CreatDataSet():
-    group = np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
-    labels = [&apos;A&apos;,&apos;A&apos;,&apos;B&apos;,&apos;B&apos;]
-    return group,labels
-
-def classify0(inX, dataSet, labels, k):
-    # 计算欧式距离
-    dataSetSize = dataSet.shape[0]
-    diffMat = np.tile(inX, (dataSetSize,1)) 
-    sqDiffMat = np.square(diffMat - dataSet)
-    distances = np.sqrt(sqDiffMat.sum(axis=1))
-    # 排序
-    sortedDistIndicies = distances.argsort()
-    # print(distances)
-    # print(sortedDistIndicies)
-    # 选择距离最小的k个点 和每个类别出现的次数
-    classCount = {}
-    for i in range(k):
-        voteIlabel = labels[sortedDistIndicies[i]]
-        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
-    print(classCount)    
-    # 对每个类别出现的次数进行排序
-    sortedClassCount = sorted(classCount.items(),
-                key = operator.itemgetter(1),reverse=True)
-    return sortedClassCount[0][0]
-
-
-if __name__ == &apos;__main__&apos;:
-    group,labels = CreatDataSet()
-    result = classify0([0,0], group, labels, 3)
-    print(result)
-</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/06/kNN/" data-id="cj78yuhle000638lunbivyu8n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/06/kNN/" data-id="cj7j1y1v6000bg3lu5kfrevir" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
@@ -190,9 +169,18 @@ if __name__ == &apos;__main__&apos;:
     
 <nav id="article-nav">
   
+    <a href="/2017/09/07/手写识别数字/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          手写识别数字
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/09/06/基于用户的协同过滤算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">基于用户的协同过滤算法</div>
     </a>
   
@@ -210,7 +198,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
@@ -220,9 +208,9 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 20px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
   </div>
 
@@ -239,9 +227,13 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/09/07/手写识别数字/">手写识别数字</a>
+          </li>
         
           <li>
             <a href="/2017/09/06/kNN/">kNN</a>
@@ -259,10 +251,6 @@ if __name__ == &apos;__main__&apos;:
             <a href="/2017/08/22/sigmod求导过程/">sigmod求导过程</a>
           </li>
         
-          <li>
-            <a href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -276,7 +264,7 @@ if __name__ == &apos;__main__&apos;:
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
