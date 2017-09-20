@@ -81,6 +81,56 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-movieLens推荐电影2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/movieLens推荐电影2/" class="article-date">
+  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据集与上篇文章相同。本篇文章是<code>基于用户推荐算法</code>。<br></p>
+<p>思路也与上篇大致一样。<br><br>只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。</p>
+<h4 id="与基于物品推荐不同点"><a href="#与基于物品推荐不同点" class="headerlink" title="与基于物品推荐不同点"></a>与基于物品推荐不同点</h4><p>过程：</p>
+<ol>
+<li>遍历相似的用户</li>
+<li>得到每个相似用户所评价过的电影</li>
+<li>计算每个电影的评分</li>
+<li>取评分前k个
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/movieLens推荐电影2/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/20/movieLens推荐电影2/" data-id="cj7t3b9tu0000wilu0vwl3l31" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-movieLens推荐电影" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/14/movieLens推荐电影/" class="article-date">
@@ -290,56 +340,6 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-python实现图片转字符串" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/05/python实现图片转字符串/" class="article-date">
-  <time datetime="2017-09-05T11:04:48.000Z" itemprop="datePublished">2017-09-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/05/python实现图片转字符串/">python实现图片转字符串</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学习pillow库 argparse库<br></p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>我们需要把一张彩色的图片对应到单色的字符画上。<br><br><code>灰度值</code>：指黑白图像中点的颜色深度，范围一般从0到255，白色为255，黑色为0，故黑白图片也称为灰度图像<br></p>
-<p>公式：</p>
-<pre><code>gray = int(0.2126*r+0.7152*g+0.0722*b)
-</code></pre><h4 id="安装pillow库"><a href="#安装pillow库" class="headerlink" title="安装pillow库"></a>安装pillow库</h4><pre><code>pip install pillow
-</code></pre><h4 id="获取图片"><a href="#获取图片" class="headerlink" title="获取图片"></a>获取图片</h4><pre><code>wget http://labfile.oss.aliyuncs.com/courses/370/ascii_dora.png
-</code></pre><h4 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h4><pre><code>ascii_char = list(&quot;$@B%8&amp;WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\()1{}[]?-_+~i!lI;:,\&quot;^`&apos;.&quot;)
-</code></pre><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4>
-        
-          <p class="article-more-link">
-            <a href="/2017/09/05/python实现图片转字符串/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/05/python实现图片转字符串/" data-id="cj7sypbqm000bhvluad2ah0va" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -388,6 +388,10 @@ ga('send', 'pageview');
       <ul>
         
           <li>
+            <a href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+          </li>
+        
+          <li>
             <a href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
           </li>
         
@@ -401,10 +405,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/09/06/基于用户的协同过滤算法/">基于用户的协同过滤算法</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/05/python实现图片转字符串/">python实现图片转字符串</a>
           </li>
         
       </ul>

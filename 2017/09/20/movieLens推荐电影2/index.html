@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>movieLens推荐电影(二) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据集与上篇文章相同。本篇文章是基于用户推荐算法。 思路也与上篇大致一样。只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。 与基于物品推荐不同点过程：  遍历相似的用户 得到每个相似用户所评价过的电影 计算每个电影的评分 取评分前k个">
+<meta name="keywords" content="knn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="movieLens推荐电影(二)">
+<meta property="og:url" content="http://yoursite.com/2017/09/20/movieLens推荐电影2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数据集与上篇文章相同。本篇文章是基于用户推荐算法。 思路也与上篇大致一样。只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。 与基于物品推荐不同点过程：  遍历相似的用户 得到每个相似用户所评价过的电影 计算每个电影的评分 取评分前k个">
+<meta property="og:updated_time" content="2017-09-20T13:55:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="movieLens推荐电影(二)">
+<meta name="twitter:description" content="数据集与上篇文章相同。本篇文章是基于用户推荐算法。 思路也与上篇大致一样。只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。 与基于物品推荐不同点过程：  遍历相似的用户 得到每个相似用户所评价过的电影 计算每个电影的评分 取评分前k个">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-movieLens推荐电影2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/movieLens推荐电影2/" class="article-date">
+  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      movieLens推荐电影(二)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据集与上篇文章相同。本篇文章是<code>基于用户推荐算法</code>。<br></p>
+<p>思路也与上篇大致一样。<br><br>只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。</p>
+<h4 id="与基于物品推荐不同点"><a href="#与基于物品推荐不同点" class="headerlink" title="与基于物品推荐不同点"></a>与基于物品推荐不同点</h4><p>过程：</p>
+<ol>
+<li>遍历相似的用户</li>
+<li>得到每个相似用户所评价过的电影</li>
+<li>计算每个电影的评分</li>
+<li>取评分前k个<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 遍历相似的用户 &#123;用户：相关系数&#125;</div><div class="line">	for u, upear in matchNear[user]:</div><div class="line">		# &#123;电影：评分&#125;</div><div class="line">		for mov, mpear in data[u].items():</div><div class="line">			if mov in userRating.keys():</div><div class="line">				continue</div><div class="line">			if mov not in scores.keys():</div><div class="line">				scores[mov] = upear * mpear</div><div class="line">				totalSco[mov] = upear</div><div class="line">			scores[mov] += upear * mpear</div><div class="line">			totalSco[mov] += upear</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h4><p>输入的用户id与上篇文章一致。 不同的推荐算法对于推荐的电影也是不同的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">➜  movieLens git:(master) ✗ python movielens2.py</div><div class="line">input userid:1</div><div class="line">near: [&quot;Dante&apos;s Peak (1997)&quot;, &apos;Thousand Acres, A (1997)&apos;, &apos;Murder at 1600 (1997)&apos;, &apos;Spice World (1997)&apos;, &apos;Scream 2 (1997)&apos;]</div><div class="line">input userid:12</div><div class="line">near: [&apos;Usual Suspects, The (1995)&apos;, &apos;Once Were Warriors (1994)&apos;, &apos;Star Maps (1997)&apos;, &apos;Chinatown (1974)&apos;, &apos;Fallen (1998)&apos;]</div><div class="line">input userid:13</div><div class="line">near: [&apos;Laura (1944)&apos;, &apos;Reservoir Dogs (1992)&apos;, &apos;Mrs. Dalloway (1997)&apos;, &apos;Four Days in September (1997)&apos;, &apos;Third Man, The (1949)&apos;]</div><div class="line">input userid:exit</div><div class="line">➜  movieLens git:(master) ✗</div></pre></td></tr></table></figure>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line">import sys</div><div class="line">import numpy as np</div><div class="line">import pandas as pd</div><div class="line"></div><div class="line">def loadTrainSet():</div><div class="line">	movieList = &#123;&#125;</div><div class="line">	for line in open(&quot;data/ml-100k/u.item&quot;, encoding=&apos;ISO-8859-1&apos;).readlines():</div><div class="line">		# u.item 包含电影id,电影名称</div><div class="line">		(movieId, title) = line.split(&apos;|&apos;)[0:2]</div><div class="line">		movieList[movieId] = title</div><div class="line"></div><div class="line">	userInfo = &#123;&#125;</div><div class="line">	for line in open(&quot;data/ml-100k/u.data&quot;).readlines():</div><div class="line">		# u.data 包含用户id,电影id,评分</div><div class="line">		(uid, mid, rating) = line.split(&apos;\t&apos;)[0:3]</div><div class="line">		if uid not in userInfo.keys():</div><div class="line">			userInfo[uid] = &#123;&#125;</div><div class="line">		userInfo[uid][movieList[mid]] = int(rating)</div><div class="line">	return 	movieList,userInfo</div><div class="line"></div><div class="line"># 皮尔逊相关系数评价:</div><div class="line">def pearson(data, user1, user2):</div><div class="line">	movList = [mov for mov in data[user1].keys() if mov in data[user2].keys()]</div><div class="line">	mLen = len(movList)	</div><div class="line">	if mLen == 0:</div><div class="line">		return 0</div><div class="line">	# print(&apos;user1: ,user2:&apos;,user1,user2)</div><div class="line">	# print(&apos;movList:&apos;,movList)</div><div class="line"></div><div class="line">	# 计算评价和 评价平方和 评价成绩和</div><div class="line">	sum_x = sum([data[user1][mov] for mov in movList])</div><div class="line">	sum_y = sum([data[user2][mov] for mov in movList])</div><div class="line">	sum_x2 = sum([data[user1][mov]**2 for mov in movList])</div><div class="line">	sum_y2 = sum([data[user2][mov]**2 for mov in movList])	</div><div class="line">	sum_xy = sum([data[user1][mov] * data[user2][mov] for mov in movList])</div><div class="line"></div><div class="line">	# 皮尔逊相关系数计算</div><div class="line">	num = sum_xy - (sum_x * sum_y) / mLen</div><div class="line">	den = np.sqrt((sum_x2 - np.square(sum_x)/mLen) * (sum_y2 - np.square(sum_y)/mLen))</div><div class="line"></div><div class="line">	if den == 0:</div><div class="line">		return 0</div><div class="line">	return num/den</div><div class="line"></div><div class="line">def topRating(data, user, k = 5):</div><div class="line">	# 计算用户与每个用户之间的皮尔逊相关系数</div><div class="line">	scores = &#123;&#125;</div><div class="line">	for u in data.keys():</div><div class="line">		if u != user:</div><div class="line">			scores[u] = pearson(data, user, u)</div><div class="line">	scoSorted = sorted(scores.items(),key=lambda scores:scores[1],reverse=True)		</div><div class="line">	# print(&apos;user &#123;0&#125;, scoSorted: top &#123;1&#125;, &#123;2&#125;&apos;.format(user, k, scoSorted[:k]))</div><div class="line">	return scoSorted[:k]</div><div class="line">	</div><div class="line">def NearUserList(data):</div><div class="line">	matchUserList = &#123;&#125;</div><div class="line">	for u in data.keys():</div><div class="line">		matchUserList[u] = topRating(data, u, 5)</div><div class="line">	return matchUserList</div><div class="line"></div><div class="line">def getRecommendMov(data, matchNear, user, k=5):</div><div class="line">	try:</div><div class="line">		userRating = data[user]</div><div class="line">	except KeyError:</div><div class="line">		print(&apos;No User&apos;)</div><div class="line">		return 0</div><div class="line"></div><div class="line">	scores = &#123;&#125;  #记录加权和	</div><div class="line">	totalSco = &#123;&#125; #记录评分和</div><div class="line"></div><div class="line">	# 遍历相似的用户 &#123;用户：相关系数&#125;</div><div class="line">	for u, upear in matchNear[user]:</div><div class="line">		# &#123;电影：评分&#125;</div><div class="line">		for mov, mpear in data[u].items():</div><div class="line">			if mov in userRating.keys():</div><div class="line">				continue</div><div class="line">			if mov not in scores.keys():</div><div class="line">				scores[mov] = upear * mpear</div><div class="line">				totalSco[mov] = upear</div><div class="line">			scores[mov] += upear * mpear</div><div class="line">			totalSco[mov] += upear</div><div class="line"></div><div class="line">	rankings = [(scores[mov]/totalSco[mov],mov) for mov in  scores.keys() if totalSco[mov] != 0]</div><div class="line">	rankings.sort(key=lambda x:x[0], reverse=True)</div><div class="line">	recommendMov = [rankings[i][1] for i in range(k)]</div><div class="line">	return recommendMov</div><div class="line"></div><div class="line">def movielensClass():</div><div class="line">	movieList,userInfo = loadTrainSet()</div><div class="line">	matchNear = NearUserList(userInfo)</div><div class="line">	return matchNear,userInfo</div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">	matchNear,userInfo = movielensClass()</div><div class="line">	while True:</div><div class="line">		userid = input(&quot;input userid:&quot;)</div><div class="line">		if userid == &apos;exit&apos;:</div><div class="line">			break</div><div class="line">		else:</div><div class="line">			near = getRecommendMov(userInfo, matchNear, userid)</div><div class="line">			print(&apos;near:&apos;,near)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/20/movieLens推荐电影2/" data-id="cj7t3b9tu0000wilu0vwl3l31" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/14/movieLens推荐电影/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">movieLens推荐电影(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/07/手写识别数字/">手写识别数字</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/06/kNN/">kNN</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/06/基于用户的协同过滤算法/">基于用户的协同过滤算法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
