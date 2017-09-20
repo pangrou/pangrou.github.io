@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/14/movieLens推荐电影/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="下载数据集地址： https://grouplens.org/datasets/movielens/ 基于物品推荐算法：  获取数据集 用皮尔逊系数求每部电影的前k个相似电影 根据用户id，求出用户评价过的电影 得到评价过的电影的相似电影 对于这些相似电影，求评分的加权平均数 取前k个，即为推荐的电影  1. 数据集介绍这里使用 ml-100k 的数据  This data set consist">
-<meta property="og:updated_time" content="2017-09-20T11:44:59.000Z">
+<meta property="og:updated_time" content="2017-09-20T11:57:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="movieLens推荐电影(一)">
 <meta name="twitter:description" content="下载数据集地址： https://grouplens.org/datasets/movielens/ 基于物品推荐算法：  获取数据集 用皮尔逊系数求每部电影的前k个相似电影 根据用户id，求出用户评价过的电影 得到评价过的电影的相似电影 对于这些相似电影，求评分的加权平均数 取前k个，即为推荐的电影  1. 数据集介绍这里使用 ml-100k 的数据  This data set consist">
@@ -70,9 +70,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -157,16 +157,18 @@ The data was collected through the MovieLens web site<br>(movielens.umn.edu) dur
 <li>得分高的前k名就是推荐的电影</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">def getRecommendMov(data, matchmov, userid, k=5):</div><div class="line">	try:</div><div class="line">		userRating = data[userid]</div><div class="line">	except KeyError:</div><div class="line">		print(&apos;No User&apos;)</div><div class="line">		return 0</div><div class="line">	scores = &#123;&#125;  #记录加权和	</div><div class="line">	totalSco = &#123;&#125; #记录评分和</div><div class="line"></div><div class="line">	# 用户所有评过分的电影</div><div class="line">	for mov, rating in userRating.items():</div><div class="line">		# 遍历当前电影的所有相似电影</div><div class="line">		for nearMov, nearPear in matchmov[mov]:</div><div class="line">			if nearMov in userRating.keys():</div><div class="line">				continue</div><div class="line">			if nearMov not in scores.keys():</div><div class="line">				scores[nearMov] = nearPear * rating</div><div class="line">				totalSco[nearMov] = nearPear</div><div class="line">			scores[nearMov] += nearPear * rating</div><div class="line">			totalSco[nearMov] += nearPear</div><div class="line"></div><div class="line">	rankings = [(scores[nearMov]/totalSco[nearMov],nearMov) for nearMov in  scores.keys() if totalSco[nearMov] != 0]</div><div class="line">	rankings.sort(key=lambda x:x[0], reverse=True)</div><div class="line">	recommendMov = [rankings[i][1] for i in range(k)]</div><div class="line">	return recommendMov</div></pre></td></tr></table></figure>
-<h4 id="7-其他"><a href="#7-其他" class="headerlink" title="7. 其他"></a>7. 其他</h4><h5 id="7-1-读取-u-item-解码错误"><a href="#7-1-读取-u-item-解码错误" class="headerlink" title="7.1.读取 u.item 解码错误"></a>7.1.读取 u.item 解码错误</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeDecodeError: &apos;utf-8&apos; codec can&apos;t decode byte 0xe9 in position 2892: invalid continuation byte</div></pre></td></tr></table></figure>
+<h4 id="7-输出结果"><a href="#7-输出结果" class="headerlink" title="7. 输出结果"></a>7. 输出结果</h4><p>输入 <code>用户id</code>，即可得到5部推荐电影。 输入 <code>exit</code> 退出。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">➜  movieLens git:(master) ✗ python movieLens.py</div><div class="line">input userid:1</div><div class="line">near: [&apos;Best of the Best 3: No Turning Back (1995)&apos;, &apos;Senseless (1998)&apos;, &apos;Shadow, The (1994)&apos;, &apos;Turbulence (1997)&apos;, &apos;Fear of a Black Hat (1993)&apos;]</div><div class="line">input userid:12</div><div class="line">near: [&apos;Wild Bill (1995)&apos;, &apos;Year of the Horse (1997)&apos;, &apos;Telling Lies in America (1997)&apos;, &apos;In Love and War (1996)&apos;, &apos;Metisse (Café au Lait) (1993)&apos;]</div><div class="line">input userid:13</div><div class="line">near: [&apos;Caro Diario (Dear Diary) (1994)&apos;, &apos;Even Cowgirls Get the Blues (1993)&apos;, &apos;Senseless (1998)&apos;, &apos;Love Serenade (1996)&apos;, &apos;Herbie Rides Again (1974)&apos;]</div><div class="line">input userid:exit</div><div class="line">➜  movieLens git:(master) ✗</div></pre></td></tr></table></figure>
+<h4 id="8-其他"><a href="#8-其他" class="headerlink" title="8. 其他"></a>8. 其他</h4><h5 id="8-1-读取-u-item-解码错误"><a href="#8-1-读取-u-item-解码错误" class="headerlink" title="8.1.读取 u.item 解码错误"></a>8.1.读取 u.item 解码错误</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeDecodeError: &apos;utf-8&apos; codec can&apos;t decode byte 0xe9 in position 2892: invalid continuation byte</div></pre></td></tr></table></figure>
 <p>总不能把原文件的错误地方找出来删了吧。<br></p>
 <p>解决办法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">for line in open(&quot;data/ml-100k/u.item&quot;, encoding=&apos;ISO-8859-1&apos;).readlines():</div></pre></td></tr></table></figure>
 <p>新增 <code>encoding=&#39;ISO-8859-1&#39;</code></p>
-<h5 id="7-2-sys-setdefaultencoding-‘utf-8’-报错"><a href="#7-2-sys-setdefaultencoding-‘utf-8’-报错" class="headerlink" title="7.2. sys.setdefaultencoding(‘utf-8’) 报错"></a>7.2. sys.setdefaultencoding(‘utf-8’) 报错</h5><p><code>AttributeError: module &#39;sys&#39; has no attribute &#39;setdefaultencoding&#39;</code></p>
+<h5 id="8-2-sys-setdefaultencoding-‘utf-8’-报错"><a href="#8-2-sys-setdefaultencoding-‘utf-8’-报错" class="headerlink" title="8.2. sys.setdefaultencoding(‘utf-8’) 报错"></a>8.2. sys.setdefaultencoding(‘utf-8’) 报错</h5><p><code>AttributeError: module &#39;sys&#39; has no attribute &#39;setdefaultencoding&#39;</code></p>
 <p>python 3.3 开始已经移除了这个方法。默认 ‘utf-8’ 编码。<br></p>
 <p>可以通过 <code>sys.getdefaultencoding()</code> 得知：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print(sys.getdefaultencoding())</div><div class="line"></div><div class="line">➜  movieLens git:(master) ✗ python movieLens.py</div><div class="line">utf-8</div></pre></td></tr></table></figure>
-<h4 id="8-代码"><a href="#8-代码" class="headerlink" title="8. 代码"></a>8. 代码</h4><pre><code># -*- coding: utf-8 -*-
+<h4 id="9-代码"><a href="#9-代码" class="headerlink" title="9. 代码"></a>9. 代码</h4><pre><code># -*- coding: utf-8 -*-
 # !/usr/bin/env python
 
 import sys
@@ -287,7 +289,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/14/movieLens推荐电影/" data-id="cj7sypbqd0007hvlur8snflw6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/14/movieLens推荐电影/" data-id="cj7sypbqd0007hvlur8snflw6" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
@@ -300,7 +302,7 @@ if __name__ == &apos;__main__&apos;:
   
   
     <a href="/2017/09/07/手写识别数字/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">手写识别数字</div>
     </a>
   
@@ -318,7 +320,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
@@ -328,7 +330,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 10px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
     </div>
@@ -347,7 +349,7 @@ if __name__ == &apos;__main__&apos;:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -384,7 +386,7 @@ if __name__ == &apos;__main__&apos;:
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
