@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TensorFlow实现 Softmax Regression 识别手写数字 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里使用 MNIST 数据集，它是由几万张 28像素 * 28像素 的手写数字组成。 流程：  参数初始化： w，b 定义算法公式：y = Softmax(Wx + b) 定义 loss function： cross-entropy 选定优化器，并指定优化器优化 loss：随机梯度下降SGD 随机选取样本，迭代训练 在测试集上对准确率进行评测  1. 加载数据集TensorFlow 已经为我们提">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow实现 Softmax Regression 识别手写数字">
+<meta property="og:url" content="http://yoursite.com/2017/09/28/TensorFlow实现识别手写数字/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这里使用 MNIST 数据集，它是由几万张 28像素 * 28像素 的手写数字组成。 流程：  参数初始化： w，b 定义算法公式：y = Softmax(Wx + b) 定义 loss function： cross-entropy 选定优化器，并指定优化器优化 loss：随机梯度下降SGD 随机选取样本，迭代训练 在测试集上对准确率进行评测  1. 加载数据集TensorFlow 已经为我们提">
+<meta property="og:updated_time" content="2017-09-29T09:28:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow实现 Softmax Regression 识别手写数字">
+<meta name="twitter:description" content="这里使用 MNIST 数据集，它是由几万张 28像素 * 28像素 的手写数字组成。 流程：  参数初始化： w，b 定义算法公式：y = Softmax(Wx + b) 定义 loss function： cross-entropy 选定优化器，并指定优化器优化 loss：随机梯度下降SGD 随机选取样本，迭代训练 在测试集上对准确率进行评测  1. 加载数据集TensorFlow 已经为我们提">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TensorFlow实现识别手写数字" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="article-date">
+  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">2017-09-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TensorFlow实现 Softmax Regression 识别手写数字
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里使用 MNIST 数据集，它是由几万张 <code>28像素 * 28像素</code> 的手写数字组成。<br></p>
+<p>流程：</p>
+<ol>
+<li>参数初始化： w，b</li>
+<li>定义算法公式：y = Softmax(Wx + b)</li>
+<li>定义 loss function： cross-entropy</li>
+<li>选定优化器，并指定优化器优化 loss：随机梯度下降SGD</li>
+<li>随机选取样本，迭代训练</li>
+<li>在测试集上对准确率进行评测</li>
+</ol>
+<h3 id="1-加载数据集"><a href="#1-加载数据集" class="headerlink" title="1. 加载数据集"></a>1. 加载数据集</h3><p>TensorFlow 已经为我们提供了一个封装，可以直接加载。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from tensorflow.examples.tutorials.mnist import input_data</div><div class="line"></div><div class="line">dataSet = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>查看数据集的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(dataSet.train.images.shape,dataSet.train.labels.shape)</div><div class="line">print(dataSet.test.images.shape,dataSet.test.labels.shape)</div><div class="line">print(dataSet.validation.images.shape,dataSet.validation.labels.shape)</div></pre></td></tr></table></figure>
+<p>打印结果： 训练集有55000个样本，测试集有10000个样本，验证集有5000个样本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">➜  handswrite_mnist git:(master) ✗ python mnist.py</div><div class="line">Extracting MNIST_data/train-images-idx3-ubyte.gz</div><div class="line">Extracting MNIST_data/train-labels-idx1-ubyte.gz</div><div class="line">Extracting MNIST_data/t10k-images-idx3-ubyte.gz</div><div class="line">Extracting MNIST_data/t10k-labels-idx1-ubyte.gz</div><div class="line">(55000, 784) (55000, 10)</div><div class="line">(10000, 784) (10000, 10)</div><div class="line">(5000, 784) (5000, 10)</div></pre></td></tr></table></figure>
+<p>我们将在训练集上训练模型，在验证集上检验效果，最后在测试集上评测模型的效果。</p>
+<h4 id="2-准备数据"><a href="#2-准备数据" class="headerlink" title="2. 准备数据"></a>2. 准备数据</h4><p>首先需要将 28*28 的图片转为一维向量。<br></p>
+<p>我们训练的<code>特征</code>是一个<code>55000＊784</code>的 Tensor，第一个维度是图片的编号，第二个维度是图片中像素点的编号。<br></p>
+<p>我们训练的<code>label</code>是一个<code>55000＊10</code>的 Tensor，先对 10 种标签进行 one-hot 编码，label 是一个十维向量，数字 0 代表的是 <code>[1,0,0,0,0,0,0,0,0,0]</code>，数字 n 代表对应位置的值为1。<br></p>
+<h4 id="3-设计算法"><a href="#3-设计算法" class="headerlink" title="3. 设计算法"></a>3. 设计算法</h4><p>这里使用 Softmax Regression 算法来训练分类模型：<br></p>
+<p>当我们的模型对一张图片进行预测时，Softmax Regression 会对每一种类别估算一个概率，最后取概率最大的那个数字作为模型的输出结果。<br></p>
+<p>原理：<code>将可以判定为某类的特征相加，然后将这些特征转化为判定时这一类的概率。</code></p>
+<p>我们可以将这些特征写成以下公式：</p>
+<pre><code>feature = Wx + b
+</code></pre><p>接下来对特征计算 Softmax: 都计算一个 exp 函数，然后再进行标准化（让所有类别输出的概率值和为1）</p>
+<pre><code>Softmax(x) = normalize(exp(x))
+
+y = Softmax(Wx + b)
+</code></pre><h4 id="4-初始化"><a href="#4-初始化" class="headerlink" title="4. 初始化"></a>4. 初始化</h4><p>首先注册 session， 并创建一个 placeholder。 第二个参数代表 tensor 的 shape。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sess = tf.InteractiveSession()</div><div class="line">x = tf.placeholder(tf.float32, [None, 784])</div></pre></td></tr></table></figure>
+<p>接下来给 weights 和 bias 创建 Variable 对象。其中 W 的 shape 是[784，10]。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">W = tf.Variable(tf.zeros([784,10]))</div><div class="line">b = tf.Variable(tf.zeros([10]))</div></pre></td></tr></table></figure>
+<h4 id="5-实现算法"><a href="#5-实现算法" class="headerlink" title="5. 实现算法"></a>5. 实现算法</h4><p>tf.nn 包含了大量神经网络的组件， softmax 是 tf.nn下的一个函数。tf.matmul 为矩阵乘法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y = tf.nn.softmax(tf.matmul(x, W) + b)</div></pre></td></tr></table></figure>
+<h4 id="6-定义-loss-函数"><a href="#6-定义-loss-函数" class="headerlink" title="6. 定义 loss 函数"></a>6. 定义 loss 函数</h4><p>我们需要定义一个 loss function 来描述模型的分类精度。<br></p>
+<p>对于多分类问题，通常使用 cross-entropy 来作为 loss function。<br></p>
+<pre><code>H(y) = - y&apos; * log(y) 
+
+其中， y&apos; 是真实结果，y是预测结果
+</code></pre><p>reduce_sum 为求和， reduce_mean 对每个 batch 数据求均值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yLabel = tf.placeholder(tf.float32, [None, 10])</div><div class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(yLabel * tf.log(y),</div><div class="line">								reduction_indices=[1]))</div></pre></td></tr></table></figure>
+<h4 id="7-优化算法"><a href="#7-优化算法" class="headerlink" title="7. 优化算法"></a>7. 优化算法</h4><p>  我们采用常见的随机梯度下降，tensorflow 根据我们定义的整个计算图自动求导，并根据反向传播算法进行训练，在每一轮迭代时更新参数来减少 loss 。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 设置学习速率为0.5，优化目标设定为cross_entropy</div><div class="line">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)</div></pre></td></tr></table></figure>
+<h4 id="8-开始训练"><a href="#8-开始训练" class="headerlink" title="8. 开始训练"></a>8. 开始训练</h4><p>随机取 100 个样本进行迭代训练。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for i in range(1000):</div><div class="line">	batch_xs, batch_ys = dataSet.train.next_batch(100)</div><div class="line">	train_step.run(&#123;x: batch_xs, yLabel: batch_ys&#125;)</div></pre></td></tr></table></figure>
+<h4 id="9-查看准确率"><a href="#9-查看准确率" class="headerlink" title="9. 查看准确率"></a>9. 查看准确率</h4><p>tf.cast 将 bool 型转换为 float32。<code>tf.argmax(y, 1)</code>是求各个预测的数字中概率最大的那一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">correctPred = tf.equal(tf.argmax(y, 1), tf.argmax(yLabel, 1))</div><div class="line">accuracy = tf.reduce_mean(tf.cast(correctPred, tf.float32))</div></pre></td></tr></table></figure>
+<h4 id="10-测试数据"><a href="#10-测试数据" class="headerlink" title="10. 测试数据"></a>10. 测试数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(accuracy.eval(&#123;x: dataSet.test.images, yLabel: dataSet.test.labels&#125;))</div></pre></td></tr></table></figure>
+<h4 id="11-运行结果"><a href="#11-运行结果" class="headerlink" title="11. 运行结果"></a>11. 运行结果</h4><p>准确率<code>0.9162</code>  <br><br>即有 <code>92%</code> 的准确率</p>
+<h4 id="12-其他"><a href="#12-其他" class="headerlink" title="12. 其他"></a>12. 其他</h4><p>我们定义的各个公式其实只是 <code>Computation Graph</code>，在执行这行代码时，计算还没有实际发生，只有等调用 <code>run</code> 方法，并 <code>feed</code> 数据时计算才真正执行。 比如 <code>cross_entropy</code>、<code>train_step</code>、<code>accuracy</code> 等都是计算图中的节点，而并不是数据结果，我们可以通过调用 <code>run</code> 方法执行这些节点或者说运算操作来调取结果。</p>
+<h4 id="13-完整代码"><a href="#13-完整代码" class="headerlink" title="13. 完整代码"></a>13. 完整代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line">from tensorflow.examples.tutorials.mnist import input_data</div><div class="line">import tensorflow as tf</div><div class="line"></div><div class="line">dataSet = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</div><div class="line"># print(dataSet.train.images.shape,dataSet.train.labels.shape)</div><div class="line"># print(dataSet.test.images.shape,dataSet.test.labels.shape)</div><div class="line"># print(dataSet.validation.images.shape,dataSet.validation.labels.shape)</div><div class="line"></div><div class="line">sess = tf.InteractiveSession()</div><div class="line">x = tf.placeholder(tf.float32, [None, 784])</div><div class="line"></div><div class="line">W = tf.Variable(tf.zeros([784,10]))</div><div class="line">b = tf.Variable(tf.zeros([10]))</div><div class="line"></div><div class="line">y = tf.nn.softmax(tf.matmul(x, W) + b)</div><div class="line"></div><div class="line">yLabel = tf.placeholder(tf.float32, [None, 10])</div><div class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(yLabel * tf.log(y),</div><div class="line">								reduction_indices=[1]))</div><div class="line"># 设置学习速率为0.5，优化目标设定为cross_entropy</div><div class="line">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)</div><div class="line">tf.global_variables_initializer().run()</div><div class="line"></div><div class="line">for i in range(1000):</div><div class="line">	batch_xs, batch_ys = dataSet.train.next_batch(100)</div><div class="line">	train_step.run(&#123;x: batch_xs, yLabel: batch_ys&#125;)</div><div class="line"></div><div class="line">correctPred = tf.equal(tf.argmax(y, 1), tf.argmax(yLabel, 1))</div><div class="line">accuracy = tf.reduce_mean(tf.cast(correctPred, tf.float32))</div><div class="line"></div><div class="line"># 将测试数据输入到评测流程</div><div class="line">print(accuracy.eval(&#123;x: dataSet.test.images, yLabel: dataSet.test.labels&#125;))</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/28/TensorFlow实现识别手写数字/" data-id="cj85o85ko0001qilupa6em8c0" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/20/movieLens推荐电影2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">movieLens推荐电影(二)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/07/手写识别数字/">手写识别数字</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/06/kNN/">kNN</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
