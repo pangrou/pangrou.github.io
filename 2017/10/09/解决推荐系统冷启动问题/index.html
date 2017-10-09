@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives | Hexo</title>
+  <title>解决推荐系统冷启动问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="对于冷启动问题，一般分为三类：  用户冷启动： 对新用户做个性化推荐 物品冷启动： 把新物品推荐给用户 系统冷启动： 给新开发的应用设计推荐系统  通过不同的维度获取用户的基本特征，操作习惯，从而进行粗粒度的推荐。 1 注册信息获取用户的注册国家/时区/地区/年龄/性别等 2 获取社交信息进行冷启动尝试将注册路径改为 QQ/微信/微博/twitter等社交平台登陆，可以获取用户的关注列表，根据最近">
+<meta name="keywords" content="recommend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决推荐系统冷启动问题">
+<meta property="og:url" content="http://yoursite.com/2017/10/09/解决推荐系统冷启动问题/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="对于冷启动问题，一般分为三类：  用户冷启动： 对新用户做个性化推荐 物品冷启动： 把新物品推荐给用户 系统冷启动： 给新开发的应用设计推荐系统  通过不同的维度获取用户的基本特征，操作习惯，从而进行粗粒度的推荐。 1 注册信息获取用户的注册国家/时区/地区/年龄/性别等 2 获取社交信息进行冷启动尝试将注册路径改为 QQ/微信/微博/twitter等社交平台登陆，可以获取用户的关注列表，根据最近">
+<meta property="og:updated_time" content="2017-10-09T07:19:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="解决推荐系统冷启动问题">
+<meta name="twitter:description" content="对于冷启动问题，一般分为三类：  用户冷启动： 对新用户做个性化推荐 物品冷启动： 把新物品推荐给用户 系统冷启动： 给新开发的应用设计推荐系统  通过不同的维度获取用户的基本特征，操作习惯，从而进行粗粒度的推荐。 1 注册信息获取用户的注册国家/时区/地区/年龄/性别等 2 获取社交信息进行冷启动尝试将注册路径改为 QQ/微信/微博/twitter等社交平台登陆，可以获取用户的关注列表，根据最近">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,120 +81,67 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/09/解决推荐系统冷启动问题/" class="archive-article-date">
-  <time datetime="2017-10-09T03:07:55.000Z" itemprop="datePublished">Oct 9</time>
+        <section id="main"><article id="post-解决推荐系统冷启动问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/09/解决推荐系统冷启动问题/" class="article-date">
+  <time datetime="2017-10-09T03:07:55.000Z" itemprop="datePublished">2017-10-09</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
+    <h1 class="article-title" itemprop="name">
+      解决推荐系统冷启动问题
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="archive-article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">Sep 28</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
-    </h1>
-  
+        <p>对于冷启动问题，一般分为三类：</p>
+<ol>
+<li>用户冷启动： 对新用户做个性化推荐</li>
+<li>物品冷启动： 把新物品推荐给用户</li>
+<li>系统冷启动： 给新开发的应用设计推荐系统</li>
+</ol>
+<p>通过不同的维度获取用户的基本特征，操作习惯，从而进行粗粒度的推荐。</p>
+<h4 id="1-注册信息"><a href="#1-注册信息" class="headerlink" title="1 注册信息"></a>1 注册信息</h4><p>获取用户的注册国家/时区/地区/年龄/性别等</p>
+<h4 id="2-获取社交信息进行冷启动"><a href="#2-获取社交信息进行冷启动" class="headerlink" title="2 获取社交信息进行冷启动"></a>2 获取社交信息进行冷启动</h4><p>尝试将注册路径改为 QQ/微信/微博/twitter等社交平台登陆，可以获取用户的关注列表，根据最近的转发/评论/点赞等获取用户的偏好，从而获得推荐系统的冷启动数据。<br><a id="more"></a></p>
+<h4 id="3-获取手机应用"><a href="#3-获取手机应用" class="headerlink" title="3 获取手机应用"></a>3 获取手机应用</h4><p>读取用户安装了哪些应用。也可以获取用户每天开启应用的频率等等。</p>
+<h4 id="4-注册时有兴趣选项"><a href="#4-注册时有兴趣选项" class="headerlink" title="4 注册时有兴趣选项"></a>4 注册时有兴趣选项</h4><p>文案引导，回答一些问题，可以知道用户的一些属性。但是用户体验相对较差。</p>
+<h4 id="5-以内容为基础"><a href="#5-以内容为基础" class="headerlink" title="5 以内容为基础"></a>5 以内容为基础</h4><p>先随机放几个内容(热门，具有代表性/区分性/多样性)，让用户随意点击。接下来就推荐该点击内容相似和相关的内容</p>
+<h4 id="6-热门排行榜"><a href="#6-热门排行榜" class="headerlink" title="6 热门排行榜"></a>6 热门排行榜</h4><p>新用户在冷启动阶段是更倾向于热门排行榜</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/20/movieLens推荐电影2/" class="archive-article-date">
-  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">Sep 20</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/14/movieLens推荐电影/" class="archive-article-date">
-  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">Sep 14</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/09/解决推荐系统冷启动问题/" data-id="cj8juhd2s000lg9luavw0bkcg" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/07/手写识别数字/" class="archive-article-date">
-  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">Sep 7</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommend/">recommend</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/28/TensorFlow实现识别手写数字/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">TensorFlow实现 Softmax Regression 识别手写数字</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
