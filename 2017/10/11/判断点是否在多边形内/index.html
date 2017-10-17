@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>判断点是否在多边形内 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="问题描述地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。 解决算法 － 射线法思想： 从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。 特殊情况：  射线经过顶点 点在边上  思路流程">
+<meta name="keywords" content="test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="判断点是否在多边形内">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/判断点是否在多边形内/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="问题描述地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。 解决算法 － 射线法思想： 从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。 特殊情况：  射线经过顶点 点在边上  思路流程">
+<meta property="og:updated_time" content="2017-10-17T17:34:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="判断点是否在多边形内">
+<meta name="twitter:description" content="问题描述地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。 解决算法 － 射线法思想： 从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。 特殊情况：  射线经过顶点 点在边上  思路流程">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-判断点是否在多边形内" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/11/判断点是否在多边形内/" class="article-date">
+  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">2017-10-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      判断点是否在多边形内
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。<br></p>
+<h4 id="解决算法-－-射线法"><a href="#解决算法-－-射线法" class="headerlink" title="解决算法 － 射线法"></a>解决算法 － 射线法</h4><p>思想： <code>从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。</code></p>
+<p>特殊情况：</p>
+<ol>
+<li>射线经过顶点</li>
+<li>点在边上</li>
+</ol>
+<h4 id="思路流程"><a href="#思路流程" class="headerlink" title="思路流程"></a>思路流程</h4><a id="more"></a>
+<p>1.首先获得数据集在横坐标和纵坐标的最大/小值，判断测试点是否在该四边形内。快速排除，提高效率。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">for i in range(1, pointLen):</div><div class="line">	if points[i].lng &gt; top.lng:</div><div class="line">		top = points[i]</div><div class="line">	elif points[i].lng &lt; down.lng:</div><div class="line">		down = points[i]</div><div class="line">		</div><div class="line">	if points[i].lat &gt; right.lat:</div><div class="line">		right = points[i]</div><div class="line">	elif points[i].lat &lt; left.lat:</div><div class="line">		left = points[i]</div></pre></td></tr></table></figure>
+<p>2.接下来，取相邻的两个点与测试点，判断测试点是否为顶点<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 点与多边形顶点重合</div><div class="line">if (p.lng == p1.lng and p.lat == p1.lat) or \</div><div class="line">	(p.lng == p2.lng and p.lat == p2.lat):</div></pre></td></tr></table></figure>
+<p>3.判断测试点是否在两个相邻点的纵坐标范围之内，<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">if (p2.lat &lt; p.lat and p1.lat &gt;= p.lat) or \</div><div class="line">					(p1.lat &lt; p.lat and p2.lat &gt;= p.lat)</div></pre></td></tr></table></figure>
+<p>4.判断测试点是否在相邻点的连线之间<br><br>5.判断测试点是否穿过线段<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">if (p2.lat &lt; p.lat and p1.lat &gt;= p.lat) or \</div><div class="line">		(p1.lat &lt; p.lat and p2.lat &gt;= p.lat):</div><div class="line">		print(&quot;on both sides&quot;)</div><div class="line">		# 线段上与射线y坐标相同的点的x 的坐标</div><div class="line">		if p1.lat == p2.lat:</div><div class="line">			x = (p1.lng + p2.lng)/2</div><div class="line">		else:</div><div class="line">			x = p2.lng - (p2.lat - p.lat)*(p2.lng - p1.lng)/(p2.lat - p1.lat) </div><div class="line">		# 点在多边形的边上</div><div class="line">		if x == p.lng:</div><div class="line">			print(&quot;on the edge&quot;)</div><div class="line">			inpolygonList.append(p)</div><div class="line">			break</div><div class="line">		# 射线穿过多边形的边界</div><div class="line">		if x &gt; p.lng:</div><div class="line">			print(&quot;throw&quot;)</div><div class="line">			flag = not flag</div><div class="line">		else:</div><div class="line">			pass</div><div class="line"></div><div class="line">	else:</div><div class="line">		pass</div></pre></td></tr></table></figure>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line">class Point:</div><div class="line">	lng = &apos;&apos;</div><div class="line">	lat = &apos;&apos;</div><div class="line"></div><div class="line">	def __init__(self, lng, lat):</div><div class="line">		self.lng = lng</div><div class="line">		self.lat = lat</div><div class="line"></div><div class="line">	def show(self):	</div><div class="line">		print(self.lng,&quot;\t&quot;,self.lat)</div><div class="line"></div><div class="line"># 外包矩形</div><div class="line">def getPolygonBounds(points):</div><div class="line">	pointLen = len(points)</div><div class="line">	top = down = left = right = points[0]</div><div class="line">	for i in range(1, pointLen):</div><div class="line">		if points[i].lng &gt; top.lng:</div><div class="line">			top = points[i]</div><div class="line">		elif points[i].lng &lt; down.lng:</div><div class="line">			down = points[i]</div><div class="line"></div><div class="line">		if points[i].lat &gt; right.lat:</div><div class="line">			right = points[i]</div><div class="line">		elif points[i].lat &lt; left.lat:</div><div class="line">			left = points[i]</div><div class="line">	point0 = Point(top.lng,  left.lat)</div><div class="line">	point1 = Point(top.lng,  right.lat)</div><div class="line">	point2 = Point(down.lng, right.lat)</div><div class="line">	point3 = Point(down.lng, left.lat)</div><div class="line">	polygonBounds = [point0,point1,point2,point3]</div><div class="line">	return polygonBounds</div><div class="line"></div><div class="line">def isPointInRect(point, polygonBounds):</div><div class="line">	if point.lng &gt;= polygonBounds[3].lng and \</div><div class="line">		point.lng &lt;= polygonBounds[0].lng and \</div><div class="line">		point.lat &gt;= polygonBounds[3].lat and \</div><div class="line">		point.lat &lt;= polygonBounds[2].lat:</div><div class="line">		return True</div><div class="line">	else:</div><div class="line">		return False</div><div class="line"></div><div class="line"># 射线法判断点集里的每个点是否在多边形集内，返回在多边形集内的点集</div><div class="line">def isPointsInPolygons(xyset, polygonset):</div><div class="line">	inpolygonList = []</div><div class="line">	for points in polygonset:</div><div class="line">		# 外包矩形</div><div class="line">		polygonBounds = getPolygonBounds(points)</div><div class="line">		for point in xyset:</div><div class="line">			if not isPointInRect(point, polygonBounds):</div><div class="line">				print(&quot;out of the Rect&quot;)</div><div class="line">				continue</div><div class="line"></div><div class="line">			pointLen = len(points)</div><div class="line">			p = point</div><div class="line">			p1 = points[0]</div><div class="line">			flag = False</div><div class="line"></div><div class="line">			for i in range(1, pointLen):</div><div class="line">				p2 = points[i]</div><div class="line">				# 点与多边形顶点重合</div><div class="line">				if (p.lng == p1.lng and p.lat == p1.lat) or \</div><div class="line">					(p.lng == p2.lng and p.lat == p2.lat):</div><div class="line">					print(&quot;on the Vertex&quot;)</div><div class="line">					inpolygonList.append(p)</div><div class="line">					break</div><div class="line"></div><div class="line">				# 判断线段两端是否在射线两侧</div><div class="line">				if (p2.lat &lt; p.lat and p1.lat &gt;= p.lat) or \</div><div class="line">					(p1.lat &lt; p.lat and p2.lat &gt;= p.lat):</div><div class="line">					print(&quot;on both sides&quot;)</div><div class="line">					# 线段上与射线y坐标相同的点的x 的坐标</div><div class="line">					if p1.lat == p2.lat:</div><div class="line">						x = (p1.lng + p2.lng)/2</div><div class="line">					else:</div><div class="line">						x = p2.lng - (p2.lat - p.lat)*(p2.lng - p1.lng)/(p2.lat - p1.lat) </div><div class="line">					# 点在多边形的边上</div><div class="line">					if x == p.lng:</div><div class="line">						print(&quot;on the edge&quot;)</div><div class="line">						inpolygonList.append(p)</div><div class="line">						break</div><div class="line">					# 射线穿过多边形的边界</div><div class="line">					if x &gt; p.lng:</div><div class="line">						print(&quot;throw&quot;)</div><div class="line">						flag = not flag</div><div class="line">					else:</div><div class="line">						pass</div><div class="line"></div><div class="line">				else:</div><div class="line">					pass</div><div class="line"></div><div class="line">				p1 = p2</div><div class="line">			</div><div class="line">			if flag:</div><div class="line">				inpolygonList.append(p)</div><div class="line">	return inpolygonList		</div><div class="line"></div><div class="line">def polygon():</div><div class="line">	xyset = []</div><div class="line">	polygonset = []</div><div class="line"></div><div class="line">	# 加载所有多边形到polygonset</div><div class="line"></div><div class="line">	polyList = [&quot;116.325011 31.068331 116.441755 31.525895 117.184675 31.290317 116.882203 30.927891 116.500131 31.086453 116.325011 31.068331&quot;,</div><div class="line">				&quot;116.393091 39.921916 116.393413 39.914510 116.393091 39.921916&quot;]</div><div class="line">	for line in polyList:</div><div class="line">		strList = line.strip().split()</div><div class="line">		# print(&apos;strList:&apos;,strList)</div><div class="line">		pointsLen = len(strList)</div><div class="line">		if pointsLen%2 != 0:</div><div class="line">			print(&apos;error: invalid pointsLen:&apos;, pointsLen)</div><div class="line">			continue</div><div class="line"></div><div class="line">		points = []</div><div class="line">		for i in range(0,pointsLen,2):</div><div class="line">			axesPoint = Point(float(strList[i]),float(strList[i+1]))	</div><div class="line">			points.append(axesPoint)</div><div class="line">		midAxes = int(pointsLen/2) - 1</div><div class="line">		if (points[0].lng != points[midAxes].lng or \</div><div class="line">			points[0].lat != points[midAxes].lat):</div><div class="line">			# print(&apos;points[0].lng:&apos;,points[0].lng)</div><div class="line">			# print(&apos;points[0].lat:&apos;,points[0].lat)</div><div class="line">			# print(&apos;points[midAxes].lng:&apos;,points[midAxes].lng)</div><div class="line">			# print(&apos;points[midAxes].lat:&apos;,points[midAxes].lat)</div><div class="line">			continue</div><div class="line">		polygonset.append(points)	</div><div class="line">		# print(&apos;polygonset:&apos;, polygonset)</div><div class="line"></div><div class="line">	# 加载map的所有输入点到点集xyset</div><div class="line">	xyList = [&quot;116.860971 31.467001&quot;,&quot;116.256027 32.074063&quot;,&quot;116.616875 31.195181&quot;]</div><div class="line">	for line in xyList:</div><div class="line">		xy = line.strip().split()</div><div class="line">		if len(xy) != 2:</div><div class="line">			continue</div><div class="line">		try:</div><div class="line">			x = float(xy[0])</div><div class="line">			y = float(xy[1])</div><div class="line">		except ValueError:</div><div class="line">			continue</div><div class="line">		point = Point(x,y)</div><div class="line">		xyset.append(point)		</div><div class="line"></div><div class="line">	if len(xyset) == 0:</div><div class="line">		sys.exit(0)</div><div class="line"></div><div class="line">	inpolygonList = isPointsInPolygons(xyset, polygonset)</div><div class="line"></div><div class="line">	for point in inpolygonList:</div><div class="line">		point.show()</div><div class="line"></div><div class="line"></div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">	polygon()</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cj8vw6jxy000jdflus1wrn9qo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/09/解决推荐系统冷启动问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">解决推荐系统冷启动问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
