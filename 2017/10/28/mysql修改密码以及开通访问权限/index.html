@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2017/9 | Hexo</title>
+  <title>mac mysql修改密码以及开通访问权限 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+  <meta name="description" content="修改密码关闭数据库mysql.server stop 进入到 mysql 所在的 bin 目录cd /usr/local/Cellar/mysql/5.7.17/bin 具体还是要看自己电脑里的路径 开通管理员权限sudo su 禁止 mysql 验证功能./mysqld_safe --skip-grant-tables &amp;amp;">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mac mysql修改密码以及开通访问权限">
+<meta property="og:url" content="http://yoursite.com/2017/10/28/mysql修改密码以及开通访问权限/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="修改密码关闭数据库mysql.server stop 进入到 mysql 所在的 bin 目录cd /usr/local/Cellar/mysql/5.7.17/bin 具体还是要看自己电脑里的路径 开通管理员权限sudo su 禁止 mysql 验证功能./mysqld_safe --skip-grant-tables &amp;amp;">
+<meta property="og:updated_time" content="2017-10-28T10:00:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="mac mysql修改密码以及开通访问权限">
+<meta name="twitter:description" content="修改密码关闭数据库mysql.server stop 进入到 mysql 所在的 bin 目录cd /usr/local/Cellar/mysql/5.7.17/bin 具体还是要看自己电脑里的路径 开通管理员权限sudo su 禁止 mysql 验证功能./mysqld_safe --skip-grant-tables &amp;amp;">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,120 +81,79 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="archive-article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">Sep 28</time>
+        <section id="main"><article id="post-mysql修改密码以及开通访问权限" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/28/mysql修改密码以及开通访问权限/" class="article-date">
+  <time datetime="2017-10-28T09:38:28.000Z" itemprop="datePublished">2017-10-28</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+    <h1 class="article-title" itemprop="name">
+      mac mysql修改密码以及开通访问权限
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/20/movieLens推荐电影2/" class="archive-article-date">
-  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">Sep 20</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
-    </h1>
-  
+        <h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><h3 id="关闭数据库"><a href="#关闭数据库" class="headerlink" title="关闭数据库"></a>关闭数据库</h3><pre><code>mysql.server stop
+</code></pre><h3 id="进入到-mysql-所在的-bin-目录"><a href="#进入到-mysql-所在的-bin-目录" class="headerlink" title="进入到 mysql 所在的 bin 目录"></a>进入到 mysql 所在的 bin 目录</h3><pre><code>cd /usr/local/Cellar/mysql/5.7.17/bin
+</code></pre><p>具体还是要看自己电脑里的路径</p>
+<h3 id="开通管理员权限"><a href="#开通管理员权限" class="headerlink" title="开通管理员权限"></a>开通管理员权限</h3><pre><code>sudo su
+</code></pre><h3 id="禁止-mysql-验证功能"><a href="#禁止-mysql-验证功能" class="headerlink" title="禁止 mysql 验证功能"></a>禁止 mysql 验证功能</h3><pre><code>./mysqld_safe --skip-grant-tables &amp;
+</code></pre><a id="more"></a>    
+<h3 id="输入命令"><a href="#输入命令" class="headerlink" title="输入命令"></a>输入命令</h3><pre><code>./mysql
+</code></pre><h3 id="输入命令-1"><a href="#输入命令-1" class="headerlink" title="输入命令"></a>输入命令</h3><pre><code>FLUSH PRIVILEGES;
+</code></pre><p>注意：最后的 <code>;</code> 不能少，不然会报语法错误。 </p>
+<h3 id="修改密码-1"><a href="#修改密码-1" class="headerlink" title="修改密码"></a>修改密码</h3><pre><code>SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos; = passwd(&apos;你的新密码&apos;);
+</code></pre><h3 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h3><pre><code>\q
+</code></pre><h3 id="启动-mysql-可忽略"><a href="#启动-mysql-可忽略" class="headerlink" title="启动 mysql(可忽略)"></a>启动 mysql(可忽略)</h3><pre><code>mysql.server start
+</code></pre><h3 id="输入以下命令"><a href="#输入以下命令" class="headerlink" title="输入以下命令"></a>输入以下命令</h3><pre><code>/usr/local/Cellar/mysql/5.7.17/bin/mysql -u root -p
+</code></pre><p>接着输入你刚刚设置的密码就可以启动 mysql 了。</p>
+<h2 id="访问数据库受限"><a href="#访问数据库受限" class="headerlink" title="访问数据库受限"></a>访问数据库受限</h2><p>问题描述：别人无法访问到你的数据库。</p>
+<h3 id="设置对外开放"><a href="#设置对外开放" class="headerlink" title="设置对外开放"></a>设置对外开放</h3><ol>
+<li>首先点击 select database ，选择 mysql。</li>
+<li>找到 <code>user</code> 表</li>
+<li>点击 content</li>
+<li>把 host 下的 local 改成 %</li>
+<li>终端下输入 /usr/local/Cellar/mysql/5.7.17/bin/mysql -u root -p(根据自己的路径)</li>
+<li>输入 FLUSH PRIVILEGES;</li>
+<li>输入 \q</li>
+</ol>
+<p>如果这个时候依旧发现无法访问，那么就检查下本机的防火墙有没有关闭了。</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/14/movieLens推荐电影/" class="archive-article-date">
-  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">Sep 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/07/手写识别数字/" class="archive-article-date">
-  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">Sep 7</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/28/mysql修改密码以及开通访问权限/" data-id="cj9b5wh7d000bx4lucfibds8e" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/06/kNN/" class="archive-article-date">
-  <time datetime="2017-09-06T09:36:50.000Z" itemprop="datePublished">Sep 6</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/kNN/">kNN</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/18/pandas-melt/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">pandas_melt</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2017/09/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/09/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
