@@ -81,6 +81,58 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-基于用户的协同过滤算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/06/基于用户的协同过滤算法/" class="article-date">
+  <time datetime="2017-09-06T03:18:07.000Z" itemprop="datePublished">2017-09-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/06/基于用户的协同过滤算法/">基于用户的协同过滤算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>推荐电影。<br></p>
+<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><p>文件格式： 用户 电影 评分…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fp = open(&quot;uid_score_bid&quot;,&quot;r&quot;)</div><div class="line">users = &#123;&#125;</div><div class="line">for line in fp:</div><div class="line">	lines = line.strip().split(&quot;,&quot;)</div><div class="line">	if lines[0] not in users:</div><div class="line">		users[lines[0]] = &#123;&#125;</div><div class="line">	users[lines[0]][lines[2]] = float(lines[1])</div></pre></td></tr></table></figure>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h4><p>利用<code>皮尔逊相关系数计算公式</code> 计算用户间的相似距离<br></p>
+<ol>
+<li>计算出user与其他所有用户的相似度</li>
+<li>将与uesr最相近的k个人中user没有看过的书推荐给user,分数排名</li>
+<li>第i个人的与user的相似度，转换到[0,1]之间</li>
+<li>第i个用户看过的书和相应的打分</li>
+<li>排序
+        
+          <p class="article-more-link">
+            <a href="/2017/09/06/基于用户的协同过滤算法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/06/基于用户的协同过滤算法/" data-id="cj9nsa5x50018zjluwqfbtat4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python实现图片转字符串" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/05/python实现图片转字符串/" class="article-date">
@@ -119,7 +171,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/05/python实现图片转字符串/" data-id="cj9b5wh7g000fx4ludu90tu5a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/05/python实现图片转字符串/" data-id="cj9nsa5vo000gzjlucprjnufs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
@@ -171,7 +223,7 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/22/sigmod求导过程/" data-id="cj9b5wh7k000kx4lulmo6br98" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/22/sigmod求导过程/" data-id="cj9nsa5vy000mzjluvdxw4g9a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li></ul>
@@ -228,7 +280,7 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj9b5wh710006x4lu72mtf4wm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cj9nsa5ve0006zjluvbv1juwa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
@@ -277,66 +329,10 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj9b5wh6h0001x4lu24vdbzzi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cj9nsa5va0004zjluy0r2hiea" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Bag-of-Words-Meets-Bags-of-Popcorn" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" class="article-date">
-  <time datetime="2017-07-27T11:43:36.000Z" itemprop="datePublished">2017-07-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/">Bag-of-Words-Meets-Bags-of-Popcorn</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Bag-of-Words-Meets-Bags-of-Popcorn"><a href="#Bag-of-Words-Meets-Bags-of-Popcorn" class="headerlink" title="Bag of Words Meets Bags of Popcorn"></a>Bag of Words Meets Bags of Popcorn</h4><p>kaggle上的项目: <a href="https://www.kaggle.com/c/word2vec-nlp-tutorial" target="_blank" rel="external">https://www.kaggle.com/c/word2vec-nlp-tutorial</a> </p>
-<p>深入了解情感分析，用了朴素贝叶斯来做。没有用sk-learn</p>
-<h5 id="思路过程"><a href="#思路过程" class="headerlink" title="思路过程"></a>思路过程</h5><ol>
-<li>下载 Data 并读取</li>
-<li>对文本作 html 标签处理</li>
-<li>得到所有词语</li>
-<li>去除高频词</li>
-<li>文本词语变成词向量</li>
-<li>训练模型，得到条件概率</li>
-<li>对测试数据，Words2Vec 处理</li>
-<li>classifyNB() 得到分类结果</li>
-<li>to_csv() 保存</li>
-</ol>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4>
-        
-          <p class="article-more-link">
-            <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cj9b5wh6t0003x4ludb5xjnz2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
 
     </footer>
   </div>
@@ -361,7 +357,7 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -371,7 +367,7 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -380,7 +376,7 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -391,6 +387,10 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/11/06/SQL学习笔记/">SQL学习笔记</a>
+          </li>
         
           <li>
             <a href="/2017/10/28/mysql修改密码以及开通访问权限/">mac mysql修改密码以及开通访问权限</a>
@@ -406,10 +406,6 @@ f(z)&apos; = (1 / (1 + exp(-z)))&apos;
         
           <li>
             <a href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
           </li>
         
       </ul>

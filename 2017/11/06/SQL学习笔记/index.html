@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SQL学习笔记 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SELECT * FROM Websites; 读取数据表的信息。 SELECT name,country FROM Websites; SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值 SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站 SELECT * FROM We">
+<meta name="keywords" content="SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/11/06/SQL学习笔记/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SELECT * FROM Websites; 读取数据表的信息。 SELECT name,country FROM Websites; SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值 SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站 SELECT * FROM We">
+<meta property="og:updated_time" content="2017-11-06T06:06:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL学习笔记">
+<meta name="twitter:description" content="SELECT * FROM Websites; 读取数据表的信息。 SELECT name,country FROM Websites; SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值 SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站 SELECT * FROM We">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SQL学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/06/SQL学习笔记/" class="article-date">
+  <time datetime="2017-11-06T06:04:47.000Z" itemprop="datePublished">2017-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SQL学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>SELECT * FROM Websites; 读取数据表的信息。</li>
+<li>SELECT name,country FROM Websites;</li>
+<li>SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值</li>
+<li>SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站</li>
+<li>SELECT * FROM Websites WHERE country=’CN’ AND alexa &gt; 50;选取国家为 “CN” 且alexa排名大于 “50” 的所有网站</li>
+<li>SELECT * FROM Websites WHERE country=’USA’ OR country=’CN’;选取国家为 “USA” 或者 “CN” 的所有客户</li>
+<li>SELECT * FROM Websites WHERE alexa &gt; 15 AND (country=’CN’ OR country=’USA’);</li>
+<li>SELECT * FROM Websites ORDER BY alexa;按照 “alexa” 列排序</li>
+<li>SELECT * FROM Websites ORDER BY alexa DESC;按照 “alexa” 列降序排序</li>
+<li>SELECT * FROM Websites ORDER BY country,alexa;按照 “country” 和 “alexa” 列排序</li>
+<li>INSERT INTO Websites (name, url, alexa, country) VALUES (‘百度’,’<a href="https://www.baidu.com/&#39;,&#39;4&#39;,&#39;CN" target="_blank" rel="external">https://www.baidu.com/&#39;,&#39;4&#39;,&#39;CN</a>‘); 向 “Websites” 表中插入一个新行<a id="more"></a></li>
+<li>UPDATE Websites SET alexa=’5000’, country=’USA’ WHERE name=’菜鸟教程’;</li>
+<li>DELETE FROM Websites WHERE name=’百度’ AND country=’CN’;</li>
+<li>SELECT * FROM Websites LIMIT 2; 选取头两条记录</li>
+<li>SELECT TOP 50 PERCENT * FROM Websites; 选取前面 50% 的记录</li>
+<li>SELECT * FROM Websites WHERE name LIKE ‘G%’; 以字母 “G” 开始的所有客户</li>
+<li>SELECT * FROM Websites WHERE name LIKE ‘%k’; 以字母 “k” 结尾的所有客户</li>
+<li>SELECT * FROM Websites WHERE name LIKE ‘%oo%’;  name 包含模式 “oo” 的所有客户</li>
+<li>SELECT * FROM Websites WHERE name NOT LIKE ‘%oo%’;</li>
+<li>SELECT * FROM Websites WHERE name LIKE ‘_oogle’;一个任意字符开始</li>
+<li>SELECT * FROM Websites WHERE name REGEXP ‘^[GFs]’;以 “G”、”F” 或 “s” 开始的所有网站</li>
+<li>SELECT * FROM Websites WHERE name IN (‘Google’,’菜鸟教程’);选取 name 为 “Google” 或 “菜鸟教程” 的所有网站</li>
+<li>SELECT * FROM Websites WHERE alexa BETWEEN 1 AND 20;alexa 介于 1 和 20 之间的所有网站</li>
+<li>SELECT * FROM Websites WHERE alexa NOT BETWEEN 1 AND 20;</li>
+<li>SELECT * FROM Websites WHERE (alexa BETWEEN 1 AND 20) AND NOT country IN (‘USA’, ‘IND’);</li>
+<li>SELECT * FROM Websites WHERE name BETWEEN ‘A’ AND ‘H’;’A’ 和 ‘H’ 之间字母开始的所有网站</li>
+<li>SELECT * FROM access_log WHERE date BETWEEN ‘2016-05-10’ AND ‘2016-05-14’;</li>
+<li>SELECT name AS n, country AS c FROM Websites; 列的别名实例</li>
+<li>SELECT name, CONCAT(url, ‘, ‘, alexa, ‘, ‘, country) AS site_info FROM Websites;我们把三个列（url、alexa 和 country）结合在一起，并创建一个名为 “site_info” 的别名</li>
+<li>SELECT w.name, w.url, a.count, a.date  FROM Websites AS w, access_log AS a  WHERE<br>a.site_id=w.id and w.name=”菜鸟教程”;</li>
+<li>SELECT Websites.id, Websites.name, access_log.count, access_log.date FROM Websites INNER JOIN access_log ON Websites.id=access_log.site_id;</li>
+<li>SELECT country FROM Websites UNION SELECT country FROM apps ORDER BY country;从 “Websites” 和 “apps” 表中选取所有不同的country（只有不同的值）</li>
+<li>SELECT country FROM Websites UNION ALL SELECT country FROM apps ORDER BY country;有重复的值</li>
+<li>INSERT INTO Websites (name, country) SELECT app_name, country FROM apps;复制 “apps” 中的数据插入到 “Websites” 中</li>
+<li>CREATE DATABASE my_db; 创建一个名为 “my_db” 的数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE Persons</div><div class="line">(</div><div class="line">	PersonID int NOT NULL AUTO_INCREMENT, //CHECK (P_Id&gt;0)</div><div class="line">	LastName varchar(255),</div><div class="line">	FirstName varchar(255),</div><div class="line">	Address varchar(255),</div><div class="line">	City varchar(255) DEFAULT &apos;Sandnes&apos;,</div><div class="line">	//UNIQUE (P_Id) </div><div class="line">	//CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName)</div><div class="line">	PRIMARY KEY (P_Id)</div><div class="line">	//CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>在 SQL 中，我们有如下约束:</p>
+<ul>
+<li>NOT NULL - 指示某列不能存储 NULL 值。</li>
+<li>UNIQUE - 保证某列的每行必须有唯一的值。</li>
+<li>PRIMARY KEY - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</li>
+<li>FOREIGN KEY - 保证一个表中的数据匹配另一个表中的值的参照完整性。</li>
+<li>CHECK - 保证列中的值符合指定的条件。</li>
+<li>DEFAULT - 规定没有给列赋值时的默认值。</li>
+</ul>
+<p>CREATE INDEX 语句用于在表中创建索引。<br><br>AUTO_INCREMENT 的开始值是 1，每条新记录递增 1</p>
+<ul>
+<li>DROP TABLE table_name; 用于删除表</li>
+<li>DROP DATABASE database_name 删除数据库</li>
+<li>ALTER TABLE table_name DROP INDEX index_name</li>
+<li>ALTER TABLE table_name ADD column_name datatype 在表中添加列</li>
+<li>ALTER TABLE table_name DROP COLUMN column_name 删除</li>
+<li>ALTER TABLE Persons ADD DateOfBirth date; 添加一个名为 “DateOfBirth” 的列</li>
+<li>ALTER TABLE Persons ALTER COLUMN DateOfBirth year 改变 “Persons” 表中 “DateOfBirth” 列的数据类型</li>
+<li>ALTER TABLE Persons DROP COLUMN DateOfBirth; 删除</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cj9nsa5v30002zjluda28plp4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/28/mysql修改密码以及开通访问权限/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mac mysql修改密码以及开通访问权限</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/06/SQL学习笔记/">SQL学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/28/mysql修改密码以及开通访问权限/">mac mysql修改密码以及开通访问权限</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
