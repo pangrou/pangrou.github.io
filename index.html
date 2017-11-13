@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,6 +80,101 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Kibana-discover新增索引" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/08/Kibana-discover新增索引/" class="article-date">
+  <time datetime="2017-11-08T01:52:34.000Z" itemprop="datePublished">2017-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Dev Tools 里新增数据之后，想要在 Discover 里能够直观的看到数据。<br></p>
+<ol>
+<li>Management</li>
+<li>Index Patterns</li>
+<li>Creat Index Pattern</li>
+<li>在 Index name or pattern 下的方框里填上 index </li>
+<li>Creat</li>
+<li>回到 Discover 点击 New</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/08/Kibana-discover新增索引/" data-id="cj9xzg3ih0002k2luxm4r6aml" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Elasticsearch数据迁移到new-index" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/08/Elasticsearch数据迁移到new-index/" class="article-date">
+  <time datetime="2017-11-08T01:51:27.000Z" itemprop="datePublished">2017-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/08/Elasticsearch数据迁移到new-index/">Elasticsearch数据迁移到new_index</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><pre><code>brew services start elasticsearch
+
+curl &apos;http://localhost:9200/?pretty&apos;
+</code></pre><h4 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h4><p>之前是一个 _index，多 _type，多 _id，搜索效率不高，现在想把 多 type 变成 多 index，_type默认，_id 保持不变。<br></p>
+<p>试着用 pyes 写过，不过读不到 hits 里的数据。</p>
+<h4 id="reindex"><a href="#reindex" class="headerlink" title="reindex"></a>reindex</h4><p>官方文档 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html</a></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/11/08/Elasticsearch数据迁移到new-index/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cj9xzg3ip0004k2luwxnt1usa" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-elasticsearch—基础入门学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -113,10 +208,10 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/elasticsearch—基础入门学习笔记/" data-id="cj9o59v0u0007okluwmxm86yi" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/06/elasticsearch—基础入门学习笔记/" data-id="cj9xzg3j1000ck2luqvliep5j" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -167,7 +262,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cj9o59v0q0005okluiy6hasxp" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cj9xzg3ir0006k2lue5m81vj7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
@@ -215,7 +310,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/28/mysql修改密码以及开通访问权限/" data-id="cj9o59v14000foklu65awjl39" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/10/28/mysql修改密码以及开通访问权限/" data-id="cj9xzg3j7000hk2lugu5z0fg4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -227,120 +322,10 @@ ga('send', 'pageview');
 
 
   
-    <article id="post-pandas-melt" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/18/pandas-melt/" class="article-date">
-  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">2017-10-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原型：<br></p>
-<pre><code>pandas.melt(frame, id_vars=None, value_vars=None, var_name=None, value_name=&apos;value&apos;, col_level=None)
-</code></pre><p>参数：</p>
-<ul>
-<li><p><code>frame</code> : DataFrame</p>
-</li>
-<li><p><code>id_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to use as identifier variables.</p>
-</li>
-<li><p><code>value_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to unpivot. If not specified, uses all columns that are not set as id_vars.</p>
-</li>
-<li><p><code>var_name</code> : scalar <br><br>Name to use for the ‘variable’ column. If None it uses frame.columns.name or ‘variable’.</p>
-</li>
-<li><p><code>value_name</code> : scalar, default ‘value’ <br><br>Name to use for the ‘value’ column.</p>
-</li>
-<li><p><code>col_level</code> : int or string, optional <br><br>If columns are a MultiIndex then use this level to melt.</p>
-</li>
-</ul>
-<p>举个简单的例子：<br><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/18/pandas-melt/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cj9o59v19000joklu5ecc6orr" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-判断点是否在多边形内" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/11/判断点是否在多边形内/" class="article-date">
-  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">2017-10-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。<br></p>
-<h4 id="解决算法-－-射线法"><a href="#解决算法-－-射线法" class="headerlink" title="解决算法 － 射线法"></a>解决算法 － 射线法</h4><p>思想： <code>从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。</code></p>
-<p>特殊情况：</p>
-<ol>
-<li>射线经过顶点</li>
-<li>点在边上</li>
-</ol>
-<h4 id="思路流程"><a href="#思路流程" class="headerlink" title="思路流程"></a>思路流程</h4>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/11/判断点是否在多边形内/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cj9o59v1e000noklupda3if7d" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -351,9 +336,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -361,9 +346,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 15px;">Elasticsearch</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -380,9 +365,17 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/Elasticsearch数据迁移到new-index/">Elasticsearch数据迁移到new_index</a>
+          </li>
         
           <li>
             <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
@@ -394,14 +387,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/10/28/mysql修改密码以及开通访问权限/">mac mysql修改密码以及开通访问权限</a>
-          </li>
-        
-          <li>
-            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
-          </li>
-        
-          <li>
-            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
           </li>
         
       </ul>
@@ -417,7 +402,7 @@ ga('send', 'pageview');
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 pangrou<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
