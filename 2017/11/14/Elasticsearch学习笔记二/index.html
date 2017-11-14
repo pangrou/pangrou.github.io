@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Elasticsearch学习笔记二 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考官方文档： https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html 取回一个文档从 Elasticsearch 中检索出文档 pretty-print   GET /website/blog/123?pretty  返回文档的一部分 1GET website/blog/123?_source=title,te">
+<meta name="keywords" content="Elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch学习笔记二">
+<meta property="og:url" content="http://yoursite.com/2017/11/14/Elasticsearch学习笔记二/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考官方文档： https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html 取回一个文档从 Elasticsearch 中检索出文档 pretty-print   GET /website/blog/123?pretty  返回文档的一部分 1GET website/blog/123?_source=title,te">
+<meta property="og:updated_time" content="2017-11-14T02:42:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch学习笔记二">
+<meta name="twitter:description" content="参考官方文档： https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html 取回一个文档从 Elasticsearch 中检索出文档 pretty-print   GET /website/blog/123?pretty  返回文档的一部分 1GET website/blog/123?_source=title,te">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Elasticsearch学习笔记二" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/14/Elasticsearch学习笔记二/" class="article-date">
+  <time datetime="2017-11-14T02:39:46.000Z" itemprop="datePublished">2017-11-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Elasticsearch学习笔记二
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考官方文档： <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html</a></p>
+<h4 id="取回一个文档"><a href="#取回一个文档" class="headerlink" title="取回一个文档"></a>取回一个文档</h4><p>从 Elasticsearch 中检索出文档 <code>pretty-print</code>  <br></p>
+<p><code>GET /website/blog/123?pretty</code> </p>
+<p><code>返回文档的一部分</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET website/blog/123?_source=title,text</div></pre></td></tr></table></figure>
+<p><code>只想得到 _source 字段，不需要任何元数据</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /website/blog/123/_source</div></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;title&quot;: &quot;My first blog entry&quot;,</div><div class="line">  &quot;text&quot;: &quot;Just trying this out...&quot;,</div><div class="line">  &quot;date&quot;: &quot;2014/01/01&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="删除文档"><a href="#删除文档" class="headerlink" title="删除文档"></a>删除文档</h4><p><code>DELETE /website/blog/123</code></p>
+<h4 id="乐观并发控制"><a href="#乐观并发控制" class="headerlink" title="乐观并发控制"></a>乐观并发控制</h4><p>每个文档都有一个 _version （版本）号，当文档被修改时版本号递增。Elasticsearch 使用这个 _version 号来确保变更以正确顺序得到执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">PUT /website/blog/1?version=1</div><div class="line">&#123;</div><div class="line">  &quot;title&quot; : &quot;My first blog entry&quot;,</div><div class="line">  &quot;text&quot; : &quot;Starting to get the hang of this...&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果该版本不是当前版本号，我们的请求将会失败。</p>
+<h4 id="通过外部系统使用版本控制"><a href="#通过外部系统使用版本控制" class="headerlink" title="通过外部系统使用版本控制"></a>通过外部系统使用版本控制</h4><p>创建一个新的具有外部版本号 5 的博客文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">PUT /website/blog/2?version=5&amp;version_type=external</div><div class="line">&#123;</div><div class="line">  &quot;title&quot; : &quot;My first blog entry&quot;,</div><div class="line">  &quot;text&quot; : &quot;Starting to get the hang of this...&quot;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="文档的部分更新"><a href="#文档的部分更新" class="headerlink" title="文档的部分更新"></a>文档的部分更新</h4><p>update 请求最简单的一种形式是接收文档的一部分作为 doc 的参数， 它只是与现有的文档进行合并。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">POST /website/blog/1/_update</div><div class="line">&#123;</div><div class="line">  &quot;doc&quot;: &#123;</div><div class="line">    &quot;tags&quot; : [&quot;testing&quot;],</div><div class="line">    &quot;views&quot; : 0</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用脚本部分更新文档"><a href="#使用脚本部分更新文档" class="headerlink" title="使用脚本部分更新文档"></a>使用脚本部分更新文档</h4><p>脚本可以在 update API中用来改变 _source 的字段内容， 它在更新脚本中称为 ctx._source 。 例如，我们可以使用脚本来增加博客文章中 views 的数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST /website/blog/1/_update</div><div class="line">&#123;</div><div class="line">  &quot;script&quot;: &quot;ctx._source.views+=1&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="更新的文档可能尚不存在"><a href="#更新的文档可能尚不存在" class="headerlink" title="更新的文档可能尚不存在"></a>更新的文档可能尚不存在</h4><p>指定如果文档不存在就应该先创建它 <code>upsert</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">POST /website/pageviews/1/_update</div><div class="line">&#123;</div><div class="line">  &quot;script&quot;: &quot;ctx._source.views+=1&quot;,</div><div class="line">  &quot;upsert&quot;: &#123;</div><div class="line">    &quot;views&quot; : 1</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="重试"><a href="#重试" class="headerlink" title="重试"></a>重试</h4><p><code>retry_on_conflict</code> 设置重试次数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">POST /website/pageviews/1/_update?retry_on_conflict=5</div><div class="line">&#123;</div><div class="line">  &quot;script&quot; : &quot;ctx._source.views+=1&quot;,</div><div class="line">  &quot;upsert&quot; : &#123;</div><div class="line">    &quot;views&quot; : 0</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="取回多个文档"><a href="#取回多个文档" class="headerlink" title="取回多个文档"></a>取回多个文档</h4><p><code>mget</code> mget API 要求有一个 docs 数组作为参数，每个 元素包含需要检索文档的元数据，通过 _source 参数来指定特定字段的名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">GET /_mget</div><div class="line">&#123;</div><div class="line">  &quot;docs&quot; : [</div><div class="line">    &#123;</div><div class="line">      &quot;_index&quot; : &quot;website&quot;,</div><div class="line">      &quot;_type&quot; : &quot;blog&quot;,</div><div class="line">      &quot;_id&quot; : 2</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      &quot;_index&quot; : &quot;website&quot;,</div><div class="line">      &quot;_type&quot; : &quot;pageviews&quot;,</div><div class="line">      &quot;_id&quot; : 1,</div><div class="line">      &quot;_source&quot; : &quot;views&quot;</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>如果想检索的数据都在相同的 _index 中（甚至相同的 _type 中）</code>，则可以在 URL 中指定默认的 /_index 或者默认的 /_index/_type,可以通过单独请求覆盖这些值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET /website/blog/_mget</div><div class="line">&#123;</div><div class="line">  &quot;docs&quot; : [</div><div class="line">    &#123; &quot;_id&quot; : 2 &#125;,</div><div class="line">    &#123; &quot;_type&quot; : &quot;pageviews&quot;, &quot;_id&quot; : 1&#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果所有文档的 _index 和 _type 都是相同的，你可以只传一个 <code>ids</code> 数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GET /website/blog/_mget</div><div class="line">&#123;</div><div class="line">  &quot;ids&quot;: [&quot;2&quot;, &quot;1&quot;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="bulk"><a href="#bulk" class="headerlink" title="bulk"></a>bulk</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">POST /_bulk</div><div class="line">&#123;&quot;delete&quot;: &#123;&quot;_index&quot; : &quot;website&quot;, &quot;_type&quot; : &quot;blog&quot;, &quot;_id&quot; : 123&#125;&#125;</div><div class="line">&#123;&quot;create&quot;: &#123;&quot;_index&quot; : &quot;website&quot;, &quot;_type&quot; : &quot;blog&quot;, &quot;_id&quot; : 123&#125;&#125;</div><div class="line">&#123;&quot;title&quot;: &quot;My first blog post&quot;&#125;</div><div class="line">&#123;&quot;index&quot; : &#123;&quot;_index&quot; : &quot;website&quot;, &quot;_type&quot; : &quot;blog&quot;&#125;&#125;</div><div class="line">&#123;&quot;title&quot;: &quot;My second blog post&quot;&#125;</div><div class="line">&#123;&quot;update&quot; : &#123;&quot;_index&quot; : &quot;website&quot;, &quot;_type&quot; : &quot;blog&quot;, &quot;_id&quot; : 123, &quot;_retry_on_conflict&quot; : 3&#125;&#125;</div><div class="line">&#123;&quot;doc&quot; : &#123;&quot;title&quot;: &quot;My updated blog post&quot;&#125;&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>create 如果文档不存在，那么就创建它</li>
+<li>index 创建一个新文档或者替换一个现有的文档</li>
+<li>update 部分更新一个文档</li>
+<li>delete 删除一个文档。</li>
+</ul>
+<h4 id="空搜索"><a href="#空搜索" class="headerlink" title="空搜索"></a>空搜索</h4><p><code>GET /_search</code></p>
+<ul>
+<li>hits 包含 total 字段来表示匹配到的文档总数</li>
+<li>_score 它衡量了文档与查询的匹配程度</li>
+<li>max_score 与查询所匹配文档的 _score 的最大值</li>
+<li>took 执行整个搜索请求耗费了多少毫秒</li>
+<li>_shards 在查询中参与分片的总数</li>
+<li>timed_out 我们查询是否超时<ul>
+<li>GET /_search?timeout=10ms 可以指定 timeout 为 10 或者 10ms（10毫秒）</li>
+</ul>
+</li>
+</ul>
+<h4 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h4><p><code>GET /_search?size=5&amp;from=10</code></p>
+<ul>
+<li>size 显示应该返回的结果数量，默认是 10</li>
+<li>from 显示应该跳过的初始结果数量，默认是 0</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/14/Elasticsearch学习笔记二/" data-id="cj9z0im5p0002kolu4ac8gr1l" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/08/Kibana-discover新增索引/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Kibana_discover新增索引</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Labels</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/Elasticsearch数据迁移到new-index/">Elasticsearch数据迁移到new_index</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/SQL学习笔记/">SQL学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
