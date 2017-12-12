@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2017/10 | Hexo</title>
+  <title>Java_从map中取出list | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/10/index.html">
+  <meta name="description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java_从map中取出list">
+<meta property="og:url" content="http://yoursite.com/2017/12/12/Java-从map中取出list/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
+<meta property="og:updated_time" content="2017-12-12T03:30:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="Java_从map中取出list">
+<meta name="twitter:description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,96 +81,56 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/28/mysql修改密码以及开通访问权限/" class="archive-article-date">
-  <time datetime="2017-10-28T09:38:28.000Z" itemprop="datePublished">Oct 28</time>
+        <section id="main"><article id="post-Java-从map中取出list" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/12/Java-从map中取出list/" class="article-date">
+  <time datetime="2017-12-12T03:23:41.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/28/mysql修改密码以及开通访问权限/">mac mysql修改密码以及开通访问权限</a>
+    <h1 class="article-title" itemprop="name">
+      Java_从map中取出list
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/18/pandas-melt/" class="archive-article-date">
-  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">Oct 18</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/11/判断点是否在多边形内/" class="archive-article-date">
-  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">Oct 11</time>
-</a>
+        <h4 id="1-list-放入到-map中"><a href="#1-list-放入到-map中" class="headerlink" title="1. list 放入到 map中"></a>1. list 放入到 map中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, Object&gt; param = new HashMap&lt;&gt;();</div><div class="line">param.put(&quot;1&quot;, &quot;a&quot;);</div><div class="line">param.put(&quot;2&quot;, &quot;b&quot;);</div><div class="line">List&lt;String&gt; c = Arrays.asList(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;);</div><div class="line">param.put(&quot;3&quot;, c);</div></pre></td></tr></table></figure>
+<h4 id="1-取出-map-里的-list"><a href="#1-取出-map-里的-list" class="headerlink" title="1. 取出 map 里的 list"></a>1. 取出 map 里的 list</h4><h5 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h5><p>这样写会有 warning，不推荐。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = (List&lt;String&gt;) param.get(&quot;3&quot;);</div></pre></td></tr></table></figure>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = JSONArray.parseArray(JSONObject.toJSONString(param.get(&quot;3&quot;)), String.class);</div></pre></td></tr></table></figure>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/09/解决推荐系统冷启动问题/" class="archive-article-date">
-  <time datetime="2017-10-09T03:07:55.000Z" itemprop="datePublished">Oct 9</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/12/Java-从map中取出list/" data-id="cjb32nqxf00034vluy097k4oz" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
-    </h1>
-  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/14/Elasticsearch学习笔记二/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Elasticsearch学习笔记二</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         

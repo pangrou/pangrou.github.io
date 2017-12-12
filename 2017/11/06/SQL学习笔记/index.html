@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/06/SQL学习笔记/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SELECT * FROM Websites; 读取数据表的信息。 SELECT name,country FROM Websites; SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值 SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站 SELECT * FROM We">
-<meta property="og:updated_time" content="2017-11-06T06:06:57.000Z">
+<meta property="og:updated_time" content="2017-11-17T03:08:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL学习笔记">
 <meta name="twitter:description" content="SELECT * FROM Websites; 读取数据表的信息。 SELECT name,country FROM Websites; SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值 SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站 SELECT * FROM We">
@@ -72,7 +72,7 @@ ga('send', 'pageview');
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -161,11 +161,32 @@ ga('send', 'pageview');
 <li>ALTER TABLE Persons ALTER COLUMN DateOfBirth year 改变 “Persons” 表中 “DateOfBirth” 列的数据类型</li>
 <li>ALTER TABLE Persons DROP COLUMN DateOfBirth; 删除</li>
 </ul>
+<p>合并两个表。获取第一张表的 name 和第二张表的 id ,并排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">select t1.id, t1.name, count(1) from table1  t1 left join table2 t2 on t2.id = t1.id</div><div class="line">group by t2.id order by count(1) DESC</div></pre></td></tr></table></figure>
+<p>获取某天内的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select t, count(1) from table where data &lt;= &apos;2017-05-01 23:59:59&apos; and data &gt;= &apos;2017-05-01 00:00:00&apos; group by t</div></pre></td></tr></table></figure>
+<p>获取当天的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select t, count(1)  from table where d &gt;= date(now()) and d &lt; DATE_ADD(date(now()),INTERVAL 1 DAY) group by t</div></pre></td></tr></table></figure>
+<h5 id="DATE-ADD"><a href="#DATE-ADD" class="headerlink" title="DATE_ADD"></a>DATE_ADD</h5><ul>
+<li>select curDate();    #获取当前日期</li>
+<li>select curTime();    #获取当前时间</li>
+<li>select now();    #获取当前日期+时间</li>
+<li>select date_add(now(), interval 1 day);        #当前日期天数+1</li>
+<li>select date_add(now(), interval -1 day);        #当前日期天数-1</li>
+<li>select date_add(now(), interval 1 hour);  </li>
+<li>select date_add(now(), interval 1 minute);</li>
+<li>select date_add(now(), interval 1 second);</li>
+<li>select date_add(now(), interval 1 microsecond);</li>
+<li>select date_add(now(), interval 1 week);</li>
+<li>select date_add(now(), interval 1 month);</li>
+<li>select date_add(now(), interval 1 quarter);</li>
+<li>select date_add(now(), interval 1 year);</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cj9z0im5x0005kolujlfktw2h" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cjb32nqy1000b4vlubvfw1myw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
@@ -177,7 +198,7 @@ ga('send', 'pageview');
 <nav id="article-nav">
   
     <a href="/2017/11/06/elasticsearch—基础入门学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           elasticsearch—基础入门学习笔记
@@ -187,7 +208,7 @@ ga('send', 'pageview');
   
   
     <a href="/2017/10/28/mysql修改密码以及开通访问权限/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">mac mysql修改密码以及开通访问权限</div>
     </a>
   
@@ -205,9 +226,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -217,16 +238,16 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -234,9 +255,13 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/12/Java-从map中取出list/">Java_从map中取出list</a>
+          </li>
         
           <li>
             <a href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
@@ -252,10 +277,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/06/SQL学习笔记/">SQL学习笔记</a>
           </li>
         
       </ul>
