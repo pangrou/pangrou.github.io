@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -81,9 +81,55 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
-    <article id="post-Java-从map中取出list" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-elasticsearch-spark读写数据" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/12/Java-从map中取出list/" class="article-date">
+    <a href="/2018/01/25/elasticsearch-spark读写数据/" class="article-date">
+  <time datetime="2018-01-25T07:27:16.000Z" itemprop="datePublished">2018-01-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在向es里写数据的时候，部分field是用scala写的。<br><br>这时候我用java查询数据，结果出现了以下错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SQLContext sqlContext = new SQLContext(spark);</div><div class="line">Dataset readData = EsSparkSQL.esDF(sqlContext, &quot;index/type&quot;, query);</div><div class="line">readData.show();</div></pre></td></tr></table></figure>
+<p>错误原因： 类型转换不兼容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scala.MatchError: Buffer(中午) (of class scala.collection.convert.Wrappers$JListWrapper)</div></pre></td></tr></table></figure>
+<p>解决方法：使用<code>EsSpark.esJsonRDD</code>来读取数据，再将RDD转成JavaRDD类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SparkContext sc = spark.sparkContext();</div><div class="line">RDD&lt;Tuple2&lt;String,String&gt;&gt; readData = EsSpark.esJsonRDD(sc,“index/type”, query);</div><div class="line">JavaRDD&lt;Tuple2&lt;String,String&gt;&gt; rowRDD = readData.toJavaRDD().coalesce(4);</div></pre></td></tr></table></figure>
+<p>readData.first() 可以正常查看第一条数据。<br><br>接下来就可以用 JavaPairRDD 去处理数据了。</p>
+<p>将处理好的数据放入到es中，使用 DataFrame可以让代码看起来整洁一点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SQLContext sqlContext = new SQLContext(spark);</div><div class="line">JavaPairRDD&lt;String,String&gt; resultRDD = getResultRdd(sc); //刚才处理完的数据</div><div class="line">            JavaRDD&lt;User&gt; userRDD = resultRDD.map(new Function&lt;Tuple2&lt;String,String&gt;, User&gt;() &#123;</div><div class="line">                public User call(Tuple2&lt;String,String&gt; stringStringTuple2) throws Exception &#123;</div><div class="line">                    User user = new User();</div><div class="line">                    user.setId(stringStringTuple2._1());</div><div class="line">                    user.setLabel(stringStringTuple2._2());</div><div class="line">                    return user;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">//            System.out.print(&quot;first data:&quot; +  userRDD.first());</div><div class="line">            Dataset ds = sqlContext.createDataFrame(user, User.class);</div><div class="line">            EsSparkSQL.saveToEs(ds, &quot;newindex/newtype&quot;);</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjcu6iltq0007vplu26nuf6m3" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Map中取出list数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/12/Map中取出list数据/" class="article-date">
   <time datetime="2017-12-12T03:23:41.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
     
@@ -95,7 +141,7 @@ ga('send', 'pageview');
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/12/Java-从map中取出list/">Java_从map中取出list</a>
+      <a class="article-title" href="/2017/12/12/Map中取出list数据/">Java_从map中取出list</a>
     </h1>
   
 
@@ -104,114 +150,18 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="1-list-放入到-map中"><a href="#1-list-放入到-map中" class="headerlink" title="1. list 放入到 map中"></a>1. list 放入到 map中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, Object&gt; param = new HashMap&lt;&gt;();</div><div class="line">param.put(&quot;1&quot;, &quot;a&quot;);</div><div class="line">param.put(&quot;2&quot;, &quot;b&quot;);</div><div class="line">List&lt;String&gt; c = Arrays.asList(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;);</div><div class="line">param.put(&quot;3&quot;, c);</div></pre></td></tr></table></figure>
-<h4 id="1-取出-map-里的-list"><a href="#1-取出-map-里的-list" class="headerlink" title="1. 取出 map 里的 list"></a>1. 取出 map 里的 list</h4><h5 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h5><p>这样写会有 warning，不推荐。</p>
+<h4 id="2-取出-map-里的-list"><a href="#2-取出-map-里的-list" class="headerlink" title="2. 取出 map 里的 list"></a>2. 取出 map 里的 list</h4><h5 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h5><p>这样写会有 warning，不推荐。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = (List&lt;String&gt;) param.get(&quot;3&quot;);</div></pre></td></tr></table></figure>
 <h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = JSONArray.parseArray(JSONObject.toJSONString(param.get(&quot;3&quot;)), String.class);</div></pre></td></tr></table></figure>
+<h4 id="遍历json中的key-value"><a href="#遍历json中的key-value" class="headerlink" title="遍历json中的key-value"></a>遍历json中的key-value</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private List&lt;Map&lt;String, Object&gt;&gt; getJsonList(JSONObject jsonObject) &#123;</div><div class="line">        List&lt;Map&lt;String, Object&gt;&gt; result = new ArrayList&lt;&gt;();</div><div class="line">        Set&lt;String&gt; set = jsonObject.keySet();</div><div class="line">        for (String key : set) &#123;</div><div class="line">            Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</div><div class="line">            map.put(&quot;key&quot;, key);</div><div class="line">            map.put(&quot;value&quot;, jsonObject.getString(key));</div><div class="line">            result.add(map);</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/12/Java-从map中取出list/" data-id="cjb32nqxf00034vluy097k4oz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/12/Map中取出list数据/" data-id="cjcu6ilto0006vplueur1py14" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Elasticsearch学习笔记二" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/14/Elasticsearch学习笔记二/" class="article-date">
-  <time datetime="2017-11-14T02:39:46.000Z" itemprop="datePublished">2017-11-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考官方文档： <a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html" target="_blank" rel="external">https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html</a></p>
-<h4 id="取回一个文档"><a href="#取回一个文档" class="headerlink" title="取回一个文档"></a>取回一个文档</h4><p>从 Elasticsearch 中检索出文档 <code>pretty-print</code>  <br></p>
-<p><code>GET /website/blog/123?pretty</code> </p>
-<p><code>返回文档的一部分</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET website/blog/123?_source=title,text</div></pre></td></tr></table></figure>
-<p><code>只想得到 _source 字段，不需要任何元数据</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /website/blog/123/_source</div></pre></td></tr></table></figure>
-<p>结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;title&quot;: &quot;My first blog entry&quot;,</div><div class="line">  &quot;text&quot;: &quot;Just trying this out...&quot;,</div><div class="line">  &quot;date&quot;: &quot;2014/01/01&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2017/11/14/Elasticsearch学习笔记二/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/14/Elasticsearch学习笔记二/" data-id="cjb32nqxo00064vlu7mlsb7ag" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Kibana-discover新增索引" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/08/Kibana-discover新增索引/" class="article-date">
-  <time datetime="2017-11-08T01:52:34.000Z" itemprop="datePublished">2017-11-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在 Dev Tools 里新增数据之后，想要在 Discover 里能够直观的看到数据。<br></p>
-<ol>
-<li>Management</li>
-<li>Index Patterns</li>
-<li>Creat Index Pattern</li>
-<li>在 Index name or pattern 下的方框里填上 index </li>
-<li>Creat</li>
-<li>回到 Discover 点击 New</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/Kibana-discover新增索引/" data-id="cjb32nqxt00074vluf1h75rc3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kibana/">Kibana</a></li></ul>
 
     </footer>
   </div>
@@ -256,7 +206,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjb32nqxl00054vlul473evpq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjcu6iltg0003vplu6omst78s" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -268,10 +218,10 @@ curl &apos;http://localhost:9200/?pretty&apos;
 
 
   
-    <article id="post-elasticsearch—基础入门学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-pandas-melt" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/06/elasticsearch—基础入门学习笔记/" class="article-date">
-  <time datetime="2017-11-06T12:07:28.000Z" itemprop="datePublished">2017-11-06</time>
+    <a href="/2017/10/18/pandas-melt/" class="article-date">
+  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">2017-10-18</time>
 </a>
     
   </div>
@@ -282,7 +232,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
+      <a class="article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
     </h1>
   
 
@@ -290,20 +240,86 @@ curl &apos;http://localhost:9200/?pretty&apos;
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>megacorp 为索引 employee 类型 1 id</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">PUT /megacorp/employee/1</div><div class="line">&#123;</div><div class="line">    &quot;first_name&quot; : &quot;John&quot;,</div><div class="line">    &quot;last_name&quot; :  &quot;Smith&quot;,</div><div class="line">    &quot;age&quot; :        25,</div><div class="line">    &quot;about&quot; :      &quot;I love to go rock climbing&quot;,</div><div class="line">    &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT /megacorp/employee/2</div><div class="line">&#123;</div><div class="line">    &quot;first_name&quot; :  &quot;Jane&quot;,</div><div class="line">    &quot;last_name&quot; :   &quot;Smith&quot;,</div><div class="line">    &quot;age&quot; :         32,</div><div class="line">    &quot;about&quot; :       &quot;I like to collect rock albums&quot;,</div><div class="line">    &quot;interests&quot;:  [ &quot;music&quot; ]</div><div class="line">&#125;</div><div class="line"></div><div class="line">PUT /megacorp/employee/3</div><div class="line">&#123;</div><div class="line">    &quot;first_name&quot; :  &quot;Douglas&quot;,</div><div class="line">    &quot;last_name&quot; :   &quot;Fir&quot;,</div><div class="line">    &quot;age&quot; :         35,</div><div class="line">    &quot;about&quot;:        &quot;I like to build cabinets&quot;,</div><div class="line">    &quot;interests&quot;:  [ &quot;forestry&quot; ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>原型：<br></p>
+<pre><code>pandas.melt(frame, id_vars=None, value_vars=None, var_name=None, value_name=&apos;value&apos;, col_level=None)
+</code></pre><p>参数：</p>
+<ul>
+<li><p><code>frame</code> : DataFrame</p>
+</li>
+<li><p><code>id_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to use as identifier variables.</p>
+</li>
+<li><p><code>value_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to unpivot. If not specified, uses all columns that are not set as id_vars.</p>
+</li>
+<li><p><code>var_name</code> : scalar <br><br>Name to use for the ‘variable’ column. If None it uses frame.columns.name or ‘variable’.</p>
+</li>
+<li><p><code>value_name</code> : scalar, default ‘value’ <br><br>Name to use for the ‘value’ column.</p>
+</li>
+<li><p><code>col_level</code> : int or string, optional <br><br>If columns are a MultiIndex then use this level to melt.</p>
+</li>
+</ul>
+<p>举个简单的例子：<br><br>
         
           <p class="article-more-link">
-            <a href="/2017/11/06/elasticsearch—基础入门学习笔记/#more">Read More</a>
+            <a href="/2017/10/18/pandas-melt/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/elasticsearch—基础入门学习笔记/" data-id="cjb32nqya000j4vluj96a34uy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjcu6ilu7000hvpluaym6kzmv" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-判断点是否在多边形内" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/11/判断点是否在多边形内/" class="article-date">
+  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">2017-10-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。<br></p>
+<h4 id="解决算法-－-射线法"><a href="#解决算法-－-射线法" class="headerlink" title="解决算法 － 射线法"></a>解决算法 － 射线法</h4><p>思想： <code>从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。</code></p>
+<p>特殊情况：</p>
+<ol>
+<li>射线经过顶点</li>
+<li>点在边上</li>
+</ol>
+<h4 id="思路流程"><a href="#思路流程" class="headerlink" title="思路流程"></a>思路流程</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/10/11/判断点是否在多边形内/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cjcu6iluh000rvpluhmt1frfm" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
 
     </footer>
   </div>
@@ -315,7 +331,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -326,9 +342,9 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -336,9 +352,9 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -347,7 +363,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -355,20 +371,16 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/12/12/Java-从map中取出list/">Java_从map中取出list</a>
+            <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
           </li>
         
           <li>
-            <a href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+            <a href="/2017/12/12/Map中取出list数据/">Java_从map中取出list</a>
           </li>
         
           <li>
@@ -376,7 +388,11 @@ curl &apos;http://localhost:9200/?pretty&apos;
           </li>
         
           <li>
-            <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
+            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
           </li>
         
       </ul>
@@ -391,8 +407,8 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2018 pangrou<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

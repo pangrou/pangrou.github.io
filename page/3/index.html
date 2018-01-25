@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,215 +80,6 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-TensorFlow实现识别手写数字" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">2017-09-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这里使用 MNIST 数据集，它是由几万张 <code>28像素 * 28像素</code> 的手写数字组成。<br></p>
-<p>流程：</p>
-<ol>
-<li>参数初始化： w，b</li>
-<li>定义算法公式：y = Softmax(Wx + b)</li>
-<li>定义 loss function： cross-entropy</li>
-<li>选定优化器，并指定优化器优化 loss：随机梯度下降SGD</li>
-<li>随机选取样本，迭代训练</li>
-<li>在测试集上对准确率进行评测</li>
-</ol>
-<h3 id="1-加载数据集"><a href="#1-加载数据集" class="headerlink" title="1. 加载数据集"></a>1. 加载数据集</h3><p>TensorFlow 已经为我们提供了一个封装，可以直接加载。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from tensorflow.examples.tutorials.mnist import input_data</div><div class="line"></div><div class="line">dataSet = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2017/09/28/TensorFlow实现识别手写数字/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/28/TensorFlow实现识别手写数字/" data-id="cjb32nqy4000f4vluudniwf76" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-movieLens推荐电影2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/20/movieLens推荐电影2/" class="article-date">
-  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">2017-09-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>数据集与上篇文章相同。本篇文章是<code>基于用户推荐算法</code>。<br></p>
-<p>思路也与上篇大致一样。<br><br>只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。</p>
-<h4 id="与基于物品推荐不同点"><a href="#与基于物品推荐不同点" class="headerlink" title="与基于物品推荐不同点"></a>与基于物品推荐不同点</h4><p>过程：</p>
-<ol>
-<li>遍历相似的用户</li>
-<li>得到每个相似用户所评价过的电影</li>
-<li>计算每个电影的评分</li>
-<li>取评分前k个
-        
-          <p class="article-more-link">
-            <a href="/2017/09/20/movieLens推荐电影2/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/20/movieLens推荐电影2/" data-id="cjb32nqyd000n4vluu6d5e5p9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-movieLens推荐电影" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/14/movieLens推荐电影/" class="article-date">
-  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">2017-09-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>下载数据集地址： <a href="https://grouplens.org/datasets/movielens/" target="_blank" rel="external">https://grouplens.org/datasets/movielens/</a></p>
-<p><code>基于物品推荐算法</code>：</p>
-<ol>
-<li>获取数据集</li>
-<li>用皮尔逊系数求每部电影的前k个相似电影</li>
-<li>根据用户id，求出用户评价过的电影</li>
-<li>得到评价过的电影的相似电影</li>
-<li>对于这些相似电影，求评分的加权平均数</li>
-<li>取前k个，即为推荐的电影</li>
-</ol>
-<h3 id="1-数据集介绍"><a href="#1-数据集介绍" class="headerlink" title="1. 数据集介绍"></a>1. 数据集介绍</h3><p>这里使用 ml-100k 的数据 <br></p>
-<p>This data set consists of:</p>
-<ul>
-<li>100,000 ratings (1-5) from 943 users on 1682 movies. </li>
-<li>Each user has rated at least 20 movies. </li>
-<li>Simple demographic info for the users (age, gender, occupation, zip)
-        
-          <p class="article-more-link">
-            <a href="/2017/09/14/movieLens推荐电影/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/14/movieLens推荐电影/" data-id="cjb32nqyb000l4vlusio21e6m" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-手写识别数字" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/07/手写识别数字/" class="article-date">
-  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">2017-09-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>kaggle 地址： <a href="https://www.kaggle.com/c/digit-recognizer" target="_blank" rel="external">https://www.kaggle.com/c/digit-recognizer</a></p>
-<p>构造使用k-近邻分类器的手写识别系统。 这里主要识别 0～9。 <br></p>
-<h3 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h3><p>代码与前一篇文章《kNN》不同的就是读取数据这块。<br></p>
-<p>整体思路过程一致。<br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def loadDataSet(path):</div><div class="line">	dataSet = pd.read_csv(path)</div><div class="line">	dataSetMat = np.array(dataSet)</div><div class="line">	dataLabel = dataSetMat[:,0]</div><div class="line">	trainMat = dataSetMat[:,1:]</div><div class="line">	m,n = trainMat.shape</div><div class="line">	datMat = np.multiply(trainMat != np.zeros((m,n)), np.ones((m,1)))</div><div class="line">	return datMat,dataLabel</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2017/09/07/手写识别数字/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/07/手写识别数字/" data-id="cjb32nqyt00134vlud42y3v58" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-kNN" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -330,7 +121,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/09/06/kNN/" data-id="cjb32nqy8000h4vluizbe3np5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/06/kNN/" data-id="cjcu6ilty000avplu5egyldbk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
@@ -342,10 +133,221 @@ ga('send', 'pageview');
 
 
   
+    <article id="post-基于用户的协同过滤算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/06/基于用户的协同过滤算法/" class="article-date">
+  <time datetime="2017-09-06T03:18:07.000Z" itemprop="datePublished">2017-09-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/06/基于用户的协同过滤算法/">基于用户的协同过滤算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>推荐电影。<br></p>
+<h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><p>文件格式： 用户 电影 评分…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fp = open(&quot;uid_score_bid&quot;,&quot;r&quot;)</div><div class="line">users = &#123;&#125;</div><div class="line">for line in fp:</div><div class="line">	lines = line.strip().split(&quot;,&quot;)</div><div class="line">	if lines[0] not in users:</div><div class="line">		users[lines[0]] = &#123;&#125;</div><div class="line">	users[lines[0]][lines[2]] = float(lines[1])</div></pre></td></tr></table></figure>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h4><p>利用<code>皮尔逊相关系数计算公式</code> 计算用户间的相似距离<br></p>
+<ol>
+<li>计算出user与其他所有用户的相似度</li>
+<li>将与uesr最相近的k个人中user没有看过的书推荐给user,分数排名</li>
+<li>第i个人的与user的相似度，转换到[0,1]之间</li>
+<li>第i个用户看过的书和相应的打分</li>
+<li>排序
+        
+          <p class="article-more-link">
+            <a href="/2017/09/06/基于用户的协同过滤算法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/06/基于用户的协同过滤算法/" data-id="cjcu6ilul000wvplu1yyiysue" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python实现图片转字符串" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/05/python实现图片转字符串/" class="article-date">
+  <time datetime="2017-09-05T11:04:48.000Z" itemprop="datePublished">2017-09-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/05/python实现图片转字符串/">python实现图片转字符串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学习pillow库 argparse库<br></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>我们需要把一张彩色的图片对应到单色的字符画上。<br><br><code>灰度值</code>：指黑白图像中点的颜色深度，范围一般从0到255，白色为255，黑色为0，故黑白图片也称为灰度图像<br></p>
+<p>公式：</p>
+<pre><code>gray = int(0.2126*r+0.7152*g+0.0722*b)
+</code></pre><h4 id="安装pillow库"><a href="#安装pillow库" class="headerlink" title="安装pillow库"></a>安装pillow库</h4><pre><code>pip install pillow
+</code></pre><h4 id="获取图片"><a href="#获取图片" class="headerlink" title="获取图片"></a>获取图片</h4><pre><code>wget http://labfile.oss.aliyuncs.com/courses/370/ascii_dora.png
+</code></pre><h4 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h4><pre><code>ascii_char = list(&quot;$@B%8&amp;WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\()1{}[]?-_+~i!lI;:,\&quot;^`&apos;.&quot;)
+</code></pre><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/05/python实现图片转字符串/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/05/python实现图片转字符串/" data-id="cjcu6iluc000lvplu0myb7ff4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sigmod求导过程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/22/sigmod求导过程/" class="article-date">
+  <time datetime="2017-08-22T06:38:19.000Z" itemprop="datePublished">2017-08-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/22/sigmod求导过程/">sigmod求导过程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="公式："><a href="#公式：" class="headerlink" title="公式："></a>公式：</h4><pre><code>f(z) = 1 / (1 + exp(-z))
+</code></pre><h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><pre><code>f(z)&apos; = f(z)(1 − f(z))
+</code></pre><h4 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h4><pre><code>f(z) = 1 / (1 + exp(-z)) -&gt;     exp(-z) = (1-f(z))/f(z)
+
+f(z)&apos; = (1 / (1 + exp(-z)))&apos;
+      = ((1 + exp(-z))^-1)&apos;
+      = (-1)*((1 + exp(-z))^-2)*(1 + exp(-z))&apos;
+      = -((1 + exp(-z))^-2)*exp(-z)&apos;
+      = -((1 + exp(-z))^-2)*(exp(z)^-1)&apos;
+      = -((1 + exp(-z))^-2)*(-1)(exp(z)^-2)exp(z)
+      = (1 + exp(-z))^-2)*(exp(z)^-1)
+      = (f(z)^2)*exp(-z)
+      = (f(z)^2)*(1-f(z))/f(z)
+      = f(z)*(1-f(z))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/22/sigmod求导过程/" data-id="cjcu6iluf000ovplu3xtjjwib" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/">math</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-TensorFlow实现自编码器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/18/TensorFlow实现自编码器/" class="article-date">
+  <time datetime="2017-08-18T09:40:21.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/TensorFlow实现自编码器/">TensorFlow实现自编码器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>TensorFlow实现自编码器 学习笔记</p>
+<h4 id="1-了解概念"><a href="#1-了解概念" class="headerlink" title="1. 了解概念"></a>1. 了解概念</h4><p><code>自编码器(AutoEncoder)</code>：可以使用自身的高阶特征编码自己。 自编码器其实也是一种神经网络，它的输入和输出是一致的，它借助稀疏编码的思想，目标是使用稀疏的一些高阶特征重新组合来重构自己。<br></p>
+<p><code>特征的稀疏表达(Sparse Coding)</code>: 使用少量的基本特征组合拼装得到更高层抽象的特征。<br></p>
+<p>特点：</p>
+<ol>
+<li>期望输入/输出一致</li>
+<li>希望用高阶特征来重构自己，而不只是复制像素点</li>
+</ol>
+<h4 id="2-作用"><a href="#2-作用" class="headerlink" title="2. 作用"></a>2. 作用</h4><p>自编码器的作用不仅局限于给监督训练做预训练，也可以直接使用自编码器进行特征提取和分析。</p>
+<h4 id="3-对数据进行降维"><a href="#3-对数据进行降维" class="headerlink" title="3. 对数据进行降维"></a>3. 对数据进行降维</h4><p>自编码器的输入节点和输出节点是一致的，但如果只是单纯的复制节点则没有意义。自编码器通常使用少量稀疏的高阶特征来重构输入。所以可以加入以下限制：<br></p>
+<ol>
+<li>限制中间隐含层节点的数量。如果再给中间隐含层的权重加一个L1的正则，那就可以根据惩罚系数控制隐含节点的稀疏程度。</li>
+<li>给数据加入噪声，即 去躁自编码器(Denoising AutoEncoder)，从噪声中学习出数据的特征。最常使用的是 <code>加性高斯噪声(Additive Gaussian Noise, AGN)</code>.</li>
+</ol>
+<h4 id="4-TensorFlow-实现自编码器"><a href="#4-TensorFlow-实现自编码器" class="headerlink" title="4. TensorFlow 实现自编码器"></a>4. TensorFlow 实现自编码器</h4>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/18/TensorFlow实现自编码器/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/18/TensorFlow实现自编码器/" data-id="cjcu6ilu1000bvpluu1zl7q91" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -356,9 +358,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -366,9 +368,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -377,7 +379,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -385,20 +387,16 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/12/12/Java-从map中取出list/">Java_从map中取出list</a>
+            <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
           </li>
         
           <li>
-            <a href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+            <a href="/2017/12/12/Map中取出list数据/">Java_从map中取出list</a>
           </li>
         
           <li>
@@ -406,7 +404,11 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
+            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
           </li>
         
       </ul>
@@ -421,8 +423,8 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2018 pangrou<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

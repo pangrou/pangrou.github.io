@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2017/9 | Hexo</title>
+  <title>elasticsearch-spark读写数据 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+  <meta name="description" content="在向es里写数据的时候，部分field是用scala写的。这时候我用java查询数据，结果出现了以下错误。 1234SparkSession spark = ESMysqlSpark.getSession();SQLContext sqlContext = new SQLContext(spark);Dataset readData = EsSparkSQL.esDF(sqlContext, &amp;q">
+<meta name="keywords" content="elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elasticsearch-spark读写数据">
+<meta property="og:url" content="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="在向es里写数据的时候，部分field是用scala写的。这时候我用java查询数据，结果出现了以下错误。 1234SparkSession spark = ESMysqlSpark.getSession();SQLContext sqlContext = new SQLContext(spark);Dataset readData = EsSparkSQL.esDF(sqlContext, &amp;q">
+<meta property="og:updated_time" content="2018-01-25T07:30:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="elasticsearch-spark读写数据">
+<meta name="twitter:description" content="在向es里写数据的时候，部分field是用scala写的。这时候我用java查询数据，结果出现了以下错误。 1234SparkSession spark = ESMysqlSpark.getSession();SQLContext sqlContext = new SQLContext(spark);Dataset readData = EsSparkSQL.esDF(sqlContext, &amp;q">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,120 +81,62 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="archive-article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">Sep 28</time>
+        <section id="main"><article id="post-elasticsearch-spark读写数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/25/elasticsearch-spark读写数据/" class="article-date">
+  <time datetime="2018-01-25T07:27:16.000Z" itemprop="datePublished">2018-01-25</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+    <h1 class="article-title" itemprop="name">
+      elasticsearch-spark读写数据
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/20/movieLens推荐电影2/" class="archive-article-date">
-  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">Sep 20</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/14/movieLens推荐电影/" class="archive-article-date">
-  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">Sep 14</time>
-</a>
+        <p>在向es里写数据的时候，部分field是用scala写的。<br><br>这时候我用java查询数据，结果出现了以下错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SQLContext sqlContext = new SQLContext(spark);</div><div class="line">Dataset readData = EsSparkSQL.esDF(sqlContext, &quot;index/type&quot;, query);</div><div class="line">readData.show();</div></pre></td></tr></table></figure>
+<p>错误原因： 类型转换不兼容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scala.MatchError: Buffer(中午) (of class scala.collection.convert.Wrappers$JListWrapper)</div></pre></td></tr></table></figure>
+<p>解决方法：使用<code>EsSpark.esJsonRDD</code>来读取数据，再将RDD转成JavaRDD类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SparkContext sc = spark.sparkContext();</div><div class="line">RDD&lt;Tuple2&lt;String,String&gt;&gt; readData = EsSpark.esJsonRDD(sc,“index/type”, query);</div><div class="line">JavaRDD&lt;Tuple2&lt;String,String&gt;&gt; rowRDD = readData.toJavaRDD().coalesce(4);</div></pre></td></tr></table></figure>
+<p>readData.first() 可以正常查看第一条数据。<br><br>接下来就可以用 JavaPairRDD 去处理数据了。</p>
+<p>将处理好的数据放入到es中，使用 DataFrame可以让代码看起来整洁一点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">SparkSession spark = ESMysqlSpark.getSession();</div><div class="line">SQLContext sqlContext = new SQLContext(spark);</div><div class="line">JavaPairRDD&lt;String,String&gt; resultRDD = getResultRdd(sc); //刚才处理完的数据</div><div class="line">            JavaRDD&lt;User&gt; userRDD = resultRDD.map(new Function&lt;Tuple2&lt;String,String&gt;, User&gt;() &#123;</div><div class="line">                public User call(Tuple2&lt;String,String&gt; stringStringTuple2) throws Exception &#123;</div><div class="line">                    User user = new User();</div><div class="line">                    user.setId(stringStringTuple2._1());</div><div class="line">                    user.setLabel(stringStringTuple2._2());</div><div class="line">                    return user;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">//            System.out.print(&quot;first data:&quot; +  userRDD.first());</div><div class="line">            Dataset ds = sqlContext.createDataFrame(user, User.class);</div><div class="line">            EsSparkSQL.saveToEs(ds, &quot;newindex/newtype&quot;);</div></pre></td></tr></table></figure>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/07/手写识别数字/" class="archive-article-date">
-  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">Sep 7</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjcu6iltq0007vplu26nuf6m3" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/06/kNN/" class="archive-article-date">
-  <time datetime="2017-09-06T09:36:50.000Z" itemprop="datePublished">Sep 6</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/kNN/">kNN</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/12/Map中取出list数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Java_从map中取出list</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2017/09/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/09/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">

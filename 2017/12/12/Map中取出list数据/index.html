@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2017/9 | Hexo</title>
+  <title>Java_从map中取出list | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2017/09/index.html">
+  <meta name="description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java_从map中取出list">
+<meta property="og:url" content="http://yoursite.com/2017/12/12/Map中取出list数据/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
+<meta property="og:updated_time" content="2018-01-04T02:44:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="Java_从map中取出list">
+<meta name="twitter:description" content="1. list 放入到 map中12345Map&amp;lt;String, Object&amp;gt; param = new HashMap&amp;lt;&amp;gt;();param.put(&amp;quot;1&amp;quot;, &amp;quot;a&amp;quot;);param.put(&amp;quot;2&amp;quot;, &amp;quot;b&amp;quot;);List&amp;lt;String&amp;gt; c = Arrays.asList(&amp;quot;">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,120 +81,68 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="archive-article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">Sep 28</time>
+        <section id="main"><article id="post-Map中取出list数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/12/Map中取出list数据/" class="article-date">
+  <time datetime="2017-12-12T03:23:41.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+    <h1 class="article-title" itemprop="name">
+      Java_从map中取出list
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/20/movieLens推荐电影2/" class="archive-article-date">
-  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">Sep 20</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
-    </h1>
-  
+        <h4 id="1-list-放入到-map中"><a href="#1-list-放入到-map中" class="headerlink" title="1. list 放入到 map中"></a>1. list 放入到 map中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, Object&gt; param = new HashMap&lt;&gt;();</div><div class="line">param.put(&quot;1&quot;, &quot;a&quot;);</div><div class="line">param.put(&quot;2&quot;, &quot;b&quot;);</div><div class="line">List&lt;String&gt; c = Arrays.asList(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;);</div><div class="line">param.put(&quot;3&quot;, c);</div></pre></td></tr></table></figure>
+<h4 id="2-取出-map-里的-list"><a href="#2-取出-map-里的-list" class="headerlink" title="2. 取出 map 里的 list"></a>2. 取出 map 里的 list</h4><h5 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h5><p>这样写会有 warning，不推荐。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = (List&lt;String&gt;) param.get(&quot;3&quot;);</div></pre></td></tr></table></figure>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; c = JSONArray.parseArray(JSONObject.toJSONString(param.get(&quot;3&quot;)), String.class);</div></pre></td></tr></table></figure>
+<h4 id="遍历json中的key-value"><a href="#遍历json中的key-value" class="headerlink" title="遍历json中的key-value"></a>遍历json中的key-value</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">private List&lt;Map&lt;String, Object&gt;&gt; getJsonList(JSONObject jsonObject) &#123;</div><div class="line">        List&lt;Map&lt;String, Object&gt;&gt; result = new ArrayList&lt;&gt;();</div><div class="line">        Set&lt;String&gt; set = jsonObject.keySet();</div><div class="line">        for (String key : set) &#123;</div><div class="line">            Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</div><div class="line">            map.put(&quot;key&quot;, key);</div><div class="line">            map.put(&quot;value&quot;, jsonObject.getString(key));</div><div class="line">            result.add(map);</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/14/movieLens推荐电影/" class="archive-article-date">
-  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">Sep 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/07/手写识别数字/" class="archive-article-date">
-  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">Sep 7</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/12/Map中取出list数据/" data-id="cjcu6ilto0006vplueur1py14" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/06/kNN/" class="archive-article-date">
-  <time datetime="2017-09-06T09:36:50.000Z" itemprop="datePublished">Sep 6</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/kNN/">kNN</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/25/elasticsearch-spark读写数据/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          elasticsearch-spark读写数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/08/Elasticsearch数据迁移到new-index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Elasticsearch数据迁移到new_index</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2017/09/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/09/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">

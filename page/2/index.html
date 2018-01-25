@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,218 +80,6 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-SQL学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/06/SQL学习笔记/" class="article-date">
-  <time datetime="2017-11-06T06:04:47.000Z" itemprop="datePublished">2017-11-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/06/SQL学习笔记/">SQL学习笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>SELECT * FROM Websites; 读取数据表的信息。</li>
-<li>SELECT name,country FROM Websites;</li>
-<li>SELECT DISTINCT country FROM Websites;去掉 “country” 列重复值</li>
-<li>SELECT * FROM Websites WHERE country=’CN’;取国家为 “CN” 的所有网站</li>
-<li>SELECT * FROM Websites WHERE country=’CN’ AND alexa &gt; 50;选取国家为 “CN” 且alexa排名大于 “50” 的所有网站</li>
-<li>SELECT * FROM Websites WHERE country=’USA’ OR country=’CN’;选取国家为 “USA” 或者 “CN” 的所有客户</li>
-<li>SELECT * FROM Websites WHERE alexa &gt; 15 AND (country=’CN’ OR country=’USA’);</li>
-<li>SELECT * FROM Websites ORDER BY alexa;按照 “alexa” 列排序</li>
-<li>SELECT * FROM Websites ORDER BY alexa DESC;按照 “alexa” 列降序排序</li>
-<li>SELECT * FROM Websites ORDER BY country,alexa;按照 “country” 和 “alexa” 列排序</li>
-<li>INSERT INTO Websites (name, url, alexa, country) VALUES (‘百度’,’<a href="https://www.baidu.com/&#39;,&#39;4&#39;,&#39;CN" target="_blank" rel="external">https://www.baidu.com/&#39;,&#39;4&#39;,&#39;CN</a>‘); 向 “Websites” 表中插入一个新行
-        
-          <p class="article-more-link">
-            <a href="/2017/11/06/SQL学习笔记/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/SQL学习笔记/" data-id="cjb32nqy1000b4vlubvfw1myw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mysql修改密码以及开通访问权限" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/28/mysql修改密码以及开通访问权限/" class="article-date">
-  <time datetime="2017-10-28T09:38:28.000Z" itemprop="datePublished">2017-10-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/28/mysql修改密码以及开通访问权限/">mac mysql修改密码以及开通访问权限</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><h3 id="关闭数据库"><a href="#关闭数据库" class="headerlink" title="关闭数据库"></a>关闭数据库</h3><pre><code>mysql.server stop
-</code></pre><h3 id="进入到-mysql-所在的-bin-目录"><a href="#进入到-mysql-所在的-bin-目录" class="headerlink" title="进入到 mysql 所在的 bin 目录"></a>进入到 mysql 所在的 bin 目录</h3><pre><code>cd /usr/local/Cellar/mysql/5.7.17/bin
-</code></pre><p>具体还是要看自己电脑里的路径</p>
-<h3 id="开通管理员权限"><a href="#开通管理员权限" class="headerlink" title="开通管理员权限"></a>开通管理员权限</h3><pre><code>sudo su
-</code></pre><h3 id="禁止-mysql-验证功能"><a href="#禁止-mysql-验证功能" class="headerlink" title="禁止 mysql 验证功能"></a>禁止 mysql 验证功能</h3><pre><code>./mysqld_safe --skip-grant-tables &amp;
-</code></pre>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/28/mysql修改密码以及开通访问权限/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/28/mysql修改密码以及开通访问权限/" data-id="cjb32nqyg000s4vluvj6p6qwq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-pandas-melt" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/18/pandas-melt/" class="article-date">
-  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">2017-10-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原型：<br></p>
-<pre><code>pandas.melt(frame, id_vars=None, value_vars=None, var_name=None, value_name=&apos;value&apos;, col_level=None)
-</code></pre><p>参数：</p>
-<ul>
-<li><p><code>frame</code> : DataFrame</p>
-</li>
-<li><p><code>id_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to use as identifier variables.</p>
-</li>
-<li><p><code>value_vars</code> : tuple, list, or ndarray, optional <br><br>Column(s) to unpivot. If not specified, uses all columns that are not set as id_vars.</p>
-</li>
-<li><p><code>var_name</code> : scalar <br><br>Name to use for the ‘variable’ column. If None it uses frame.columns.name or ‘variable’.</p>
-</li>
-<li><p><code>value_name</code> : scalar, default ‘value’ <br><br>Name to use for the ‘value’ column.</p>
-</li>
-<li><p><code>col_level</code> : int or string, optional <br><br>If columns are a MultiIndex then use this level to melt.</p>
-</li>
-</ul>
-<p>举个简单的例子：<br><br>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/18/pandas-melt/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjb32nqyf000q4vlu32xjso2c" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-判断点是否在多边形内" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/11/判断点是否在多边形内/" class="article-date">
-  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">2017-10-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。<br></p>
-<h4 id="解决算法-－-射线法"><a href="#解决算法-－-射线法" class="headerlink" title="解决算法 － 射线法"></a>解决算法 － 射线法</h4><p>思想： <code>从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。</code></p>
-<p>特殊情况：</p>
-<ol>
-<li>射线经过顶点</li>
-<li>点在边上</li>
-</ol>
-<h4 id="思路流程"><a href="#思路流程" class="headerlink" title="思路流程"></a>思路流程</h4>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/11/判断点是否在多边形内/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cjb32nqyl000w4vluhwrbik1p" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-解决推荐系统冷启动问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -332,7 +120,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/09/解决推荐系统冷启动问题/" data-id="cjb32nqyy00174vlu8n81spia" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/09/解决推荐系统冷启动问题/" data-id="cjcu6iluj000uvplugp8ka0fd" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommend/">recommend</a></li></ul>
@@ -344,10 +132,219 @@ ga('send', 'pageview');
 
 
   
+    <article id="post-TensorFlow实现识别手写数字" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="article-date">
+  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">2017-09-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里使用 MNIST 数据集，它是由几万张 <code>28像素 * 28像素</code> 的手写数字组成。<br></p>
+<p>流程：</p>
+<ol>
+<li>参数初始化： w，b</li>
+<li>定义算法公式：y = Softmax(Wx + b)</li>
+<li>定义 loss function： cross-entropy</li>
+<li>选定优化器，并指定优化器优化 loss：随机梯度下降SGD</li>
+<li>随机选取样本，迭代训练</li>
+<li>在测试集上对准确率进行评测</li>
+</ol>
+<h3 id="1-加载数据集"><a href="#1-加载数据集" class="headerlink" title="1. 加载数据集"></a>1. 加载数据集</h3><p>TensorFlow 已经为我们提供了一个封装，可以直接加载。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from tensorflow.examples.tutorials.mnist import input_data</div><div class="line"></div><div class="line">dataSet = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/28/TensorFlow实现识别手写数字/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/28/TensorFlow实现识别手写数字/" data-id="cjcu6ilu3000dvpluxlhnx77m" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-movieLens推荐电影2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/20/movieLens推荐电影2/" class="article-date">
+  <time datetime="2017-09-20T11:44:23.000Z" itemprop="datePublished">2017-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/20/movieLens推荐电影2/">movieLens推荐电影(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>数据集与上篇文章相同。本篇文章是<code>基于用户推荐算法</code>。<br></p>
+<p>思路也与上篇大致一样。<br><br>只是先求出每个用户的相似用户,再根据相似用户评价过的电影，对评分进行排序即得推荐的电影。</p>
+<h4 id="与基于物品推荐不同点"><a href="#与基于物品推荐不同点" class="headerlink" title="与基于物品推荐不同点"></a>与基于物品推荐不同点</h4><p>过程：</p>
+<ol>
+<li>遍历相似的用户</li>
+<li>得到每个相似用户所评价过的电影</li>
+<li>计算每个电影的评分</li>
+<li>取评分前k个
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/movieLens推荐电影2/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/20/movieLens推荐电影2/" data-id="cjcu6ilu9000jvplurn10icjx" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-movieLens推荐电影" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/14/movieLens推荐电影/" class="article-date">
+  <time datetime="2017-09-14T15:33:50.000Z" itemprop="datePublished">2017-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/14/movieLens推荐电影/">movieLens推荐电影(一)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下载数据集地址： <a href="https://grouplens.org/datasets/movielens/" target="_blank" rel="external">https://grouplens.org/datasets/movielens/</a></p>
+<p><code>基于物品推荐算法</code>：</p>
+<ol>
+<li>获取数据集</li>
+<li>用皮尔逊系数求每部电影的前k个相似电影</li>
+<li>根据用户id，求出用户评价过的电影</li>
+<li>得到评价过的电影的相似电影</li>
+<li>对于这些相似电影，求评分的加权平均数</li>
+<li>取前k个，即为推荐的电影</li>
+</ol>
+<h3 id="1-数据集介绍"><a href="#1-数据集介绍" class="headerlink" title="1. 数据集介绍"></a>1. 数据集介绍</h3><p>这里使用 ml-100k 的数据 <br></p>
+<p>This data set consists of:</p>
+<ul>
+<li>100,000 ratings (1-5) from 943 users on 1682 movies. </li>
+<li>Each user has rated at least 20 movies. </li>
+<li>Simple demographic info for the users (age, gender, occupation, zip)
+        
+          <p class="article-more-link">
+            <a href="/2017/09/14/movieLens推荐电影/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/14/movieLens推荐电影/" data-id="cjcu6ilu4000fvpluf5wxn5ox" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-手写识别数字" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/07/手写识别数字/" class="article-date">
+  <time datetime="2017-09-07T10:08:04.000Z" itemprop="datePublished">2017-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/07/手写识别数字/">手写识别数字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>kaggle 地址： <a href="https://www.kaggle.com/c/digit-recognizer" target="_blank" rel="external">https://www.kaggle.com/c/digit-recognizer</a></p>
+<p>构造使用k-近邻分类器的手写识别系统。 这里主要识别 0～9。 <br></p>
+<h3 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h3><p>代码与前一篇文章《kNN》不同的就是读取数据这块。<br></p>
+<p>整体思路过程一致。<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def loadDataSet(path):</div><div class="line">	dataSet = pd.read_csv(path)</div><div class="line">	dataSetMat = np.array(dataSet)</div><div class="line">	dataLabel = dataSetMat[:,0]</div><div class="line">	trainMat = dataSetMat[:,1:]</div><div class="line">	m,n = trainMat.shape</div><div class="line">	datMat = np.multiply(trainMat != np.zeros((m,n)), np.ones((m,1)))</div><div class="line">	return datMat,dataLabel</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/09/07/手写识别数字/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/09/07/手写识别数字/" data-id="cjcu6iluh000svplusyi43q6x" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/knn/">knn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -358,9 +355,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kibana/">Kibana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -368,9 +365,9 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kibana/" style="font-size: 10px;">Kibana</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -379,7 +376,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -387,20 +384,16 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/12/12/Java-从map中取出list/">Java_从map中取出list</a>
+            <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
           </li>
         
           <li>
-            <a href="/2017/11/14/Elasticsearch学习笔记二/">Elasticsearch学习笔记二</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/08/Kibana-discover新增索引/">Kibana_discover新增索引</a>
+            <a href="/2017/12/12/Map中取出list数据/">Java_从map中取出list</a>
           </li>
         
           <li>
@@ -408,7 +401,11 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2017/11/06/elasticsearch—基础入门学习笔记/">elasticsearch—基础入门学习笔记</a>
+            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
           </li>
         
       </ul>
@@ -423,8 +420,8 @@ ga('send', 'pageview');
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2018 pangrou<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
