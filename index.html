@@ -81,6 +81,65 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-爬取航班数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/10/爬取航班数据/" class="article-date">
+  <time datetime="2018-04-10T03:41:41.000Z" itemprop="datePublished">2018-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对<code>飞常准</code>和<code>航旅纵横</code>，爬取<code>航段+航班日期</code>和<code>航班号+航班日期</code>数据</p>
+<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p>飞常准：</p>
+<pre><code>航段
+&apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;dep=%s&amp;&apos; \
+&apos;date=%s&amp;token=根据自己的浏览器来&apos; % (arr, dep, fData)
+航班
+&apos;http://webapp.veryzhun.com/h5/flightsearch?fnum=%s&amp;date=%s&apos; \
+&apos;&amp;token=小仙女的马赛克&apos; % (fNo, fData)
+arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
+</code></pre><p>航旅纵横：</p>
+<pre><code>航段
+&apos;http://www.umetrip.com/mskyweb/fs/fa.do?dep=&apos; \
+&apos;%s&amp;arr=%s&amp;date=%s&amp;channel=&apos; % (arr, dep, fData)
+航班
+&apos;http://www.umetrip.com/mskyweb/fs/fc.do?&apos; \
+&apos;flightNo=%s&amp;date=%s&amp;channel=&apos; % (fNo, fData)
+</code></pre><h4 id="爬取数据"><a href="#爬取数据" class="headerlink" title="爬取数据"></a>爬取数据</h4>
+        
+          <p class="article-more-link">
+            <a href="/2018/04/10/爬取航班数据/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjftew04g000rqdlud0vu3y57" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-elasticsearch-spark读写数据" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/25/elasticsearch-spark读写数据/" class="article-date">
@@ -116,7 +175,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjcu6iltq0007vplu26nuf6m3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjftew03i000aqdlu2u7ftdso" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -164,7 +223,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjcu6iltg0003vplu6omst78s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjftew02x0002qdluomc2n9x3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -224,7 +283,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjcu6ilu7000hvpluaym6kzmv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjftew03r000fqdluxtz0t789" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
@@ -274,61 +333,10 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cjcu6iluh000rvpluhmt1frfm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cjftew048000pqdlulpt3j3fr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-解决推荐系统冷启动问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/09/解决推荐系统冷启动问题/" class="article-date">
-  <time datetime="2017-10-09T03:07:55.000Z" itemprop="datePublished">2017-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>对于冷启动问题，一般分为三类：</p>
-<ol>
-<li>用户冷启动： 对新用户做个性化推荐</li>
-<li>物品冷启动： 把新物品推荐给用户</li>
-<li>系统冷启动： 给新开发的应用设计推荐系统</li>
-</ol>
-<p>通过不同的维度获取用户的基本特征，操作习惯，从而进行粗粒度的推荐。</p>
-<h4 id="1-注册信息"><a href="#1-注册信息" class="headerlink" title="1 注册信息"></a>1 注册信息</h4><p>获取用户的注册国家/时区/地区/年龄/性别等</p>
-<h4 id="2-获取社交信息进行冷启动"><a href="#2-获取社交信息进行冷启动" class="headerlink" title="2 获取社交信息进行冷启动"></a>2 获取社交信息进行冷启动</h4><p>尝试将注册路径改为 QQ/微信/微博/twitter等社交平台登陆，可以获取用户的关注列表，根据最近的转发/评论/点赞等获取用户的偏好，从而获得推荐系统的冷启动数据。<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/09/解决推荐系统冷启动问题/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/09/解决推荐系统冷启动问题/" data-id="cjcu6iluj000uvplugp8ka0fd" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommend/">recommend</a></li></ul>
 
     </footer>
   </div>
@@ -353,7 +361,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -363,7 +371,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -372,7 +380,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -383,6 +391,10 @@ curl &apos;http://localhost:9200/?pretty&apos;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
+          </li>
         
           <li>
             <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
@@ -398,10 +410,6 @@ curl &apos;http://localhost:9200/?pretty&apos;
         
           <li>
             <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-          </li>
-        
-          <li>
-            <a href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
           </li>
         
       </ul>

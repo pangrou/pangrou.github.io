@@ -81,6 +81,55 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-Logistic回归" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/03/Logistic回归/" class="article-date">
+  <time datetime="2017-08-03T10:49:56.000Z" itemprop="datePublished">2017-08-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/03/Logistic回归/">Logistic回归</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>《机器学习实战》</p>
+<h4 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h4><p>概念：假设有一些数据点，我们用一条直线对这些点进行拟合，这个拟合过程成为回归。这条线称之为 最佳拟合直线。<br></p>
+<p>主要思想：根据现有数据对分类边界线建立回归公式，以此进行分类。<br></p>
+<p>“回归”一词源于最佳拟合，表示要找到最佳拟合参数集。    <br></p>
+<h4 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h4><pre><code>f(x) = 1/(1 + e(-x))
+</code></pre><p>当 x = 0时, f(x) = 0; 随着 x 的增大，f(x) 逼近于1；随着 x 的减小，f(x) 逼近于0。<br></p>
+<h3 id="2-Logistic回归分类器原理："><a href="#2-Logistic回归分类器原理：" class="headerlink" title="2.Logistic回归分类器原理："></a>2.Logistic回归分类器原理：</h3><p>  我们可以在每个特征上都乘以一个回归系数，然后把所有的结果值相加，将这个总和代入Sigmoid函数中，进而得到一个0～1之间的数值。 任何大于0.5的数据被分为1类，小于0.5则被归为0类。 所以，Logistic回归也可以被看成是一种概率估计。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/03/Logistic回归/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/03/Logistic回归/" data-id="cjftew03d0005qdluw4kirwts" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Logistic/">Logistic</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Bag-of-Words-Meets-Bags-of-Popcorn" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" class="article-date">
@@ -125,7 +174,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cjcu6ilt80001vplucejg6dvo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/27/Bag-of-Words-Meets-Bags-of-Popcorn/" data-id="cjftew0330003qdluqanea1px" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -180,7 +229,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cjcu6ilun000zvplualaiawzl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/07/26/朴素贝叶斯/" data-id="cjftew04s000zqdlusdooxox9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li></ul>
@@ -226,7 +275,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cjcu6ilud000nvplu4vfbrq8l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/strtok分割时间/" data-id="cjftew043000nqdlu21st9q42" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
@@ -254,7 +303,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -264,7 +313,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -273,7 +322,7 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -284,6 +333,10 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
+          </li>
         
           <li>
             <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
@@ -299,10 +352,6 @@ P(&apos;属于某类&apos; | &apos;具有某特征&apos;)
         
           <li>
             <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-          </li>
-        
-          <li>
-            <a href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
           </li>
         
       </ul>

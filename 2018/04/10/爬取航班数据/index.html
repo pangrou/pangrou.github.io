@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>爬取航班数据 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="针对飞常准和航旅纵横，爬取航段+航班日期和航班号+航班日期数据 url飞常准： 航段 &amp;apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;amp;dep=%s&amp;amp;&amp;apos; \ &amp;apos;date=%s&amp;amp;token=根据自己的浏览器来&amp;apos; % (arr, dep, fData) 航班 &amp;apos;http://w">
+<meta name="keywords" content="scrape">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取航班数据">
+<meta property="og:url" content="http://yoursite.com/2018/04/10/爬取航班数据/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="针对飞常准和航旅纵横，爬取航段+航班日期和航班号+航班日期数据 url飞常准： 航段 &amp;apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;amp;dep=%s&amp;amp;&amp;apos; \ &amp;apos;date=%s&amp;amp;token=根据自己的浏览器来&amp;apos; % (arr, dep, fData) 航班 &amp;apos;http://w">
+<meta property="og:updated_time" content="2018-04-10T08:35:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬取航班数据">
+<meta name="twitter:description" content="针对飞常准和航旅纵横，爬取航段+航班日期和航班号+航班日期数据 url飞常准： 航段 &amp;apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;amp;dep=%s&amp;amp;&amp;apos; \ &amp;apos;date=%s&amp;amp;token=根据自己的浏览器来&amp;apos; % (arr, dep, fData) 航班 &amp;apos;http://w">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66782234-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/pangrou">GitHub</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-爬取航班数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/10/爬取航班数据/" class="article-date">
+  <time datetime="2018-04-10T03:41:41.000Z" itemprop="datePublished">2018-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬取航班数据
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对<code>飞常准</code>和<code>航旅纵横</code>，爬取<code>航段+航班日期</code>和<code>航班号+航班日期</code>数据</p>
+<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p>飞常准：</p>
+<pre><code>航段
+&apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;dep=%s&amp;&apos; \
+&apos;date=%s&amp;token=根据自己的浏览器来&apos; % (arr, dep, fData)
+航班
+&apos;http://webapp.veryzhun.com/h5/flightsearch?fnum=%s&amp;date=%s&apos; \
+&apos;&amp;token=小仙女的马赛克&apos; % (fNo, fData)
+arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
+</code></pre><p>航旅纵横：</p>
+<pre><code>航段
+&apos;http://www.umetrip.com/mskyweb/fs/fa.do?dep=&apos; \
+&apos;%s&amp;arr=%s&amp;date=%s&amp;channel=&apos; % (arr, dep, fData)
+航班
+&apos;http://www.umetrip.com/mskyweb/fs/fc.do?&apos; \
+&apos;flightNo=%s&amp;date=%s&amp;channel=&apos; % (fNo, fData)
+</code></pre><h4 id="爬取数据"><a href="#爬取数据" class="headerlink" title="爬取数据"></a>爬取数据</h4><a id="more"></a>
+<p>飞常准的数据格式是<code>json</code>，返回一个数组，里面包含了航班的所有信息。 如果想知道某机场的所有航班信息情况，那么只用按照航段+航班日期来爬取就行了。（异常信息可以根据自己遇到的情况添加）</p>
+<pre><code>try:
+    html = urlopen(url).read().strip().decode(&quot;utf-8&quot;)
+    return json.loads(html)
+except (HTTPError,URLError,AttributeError,
+    requests.exceptions.ReadTimeout,
+    requests.exceptions.ConnectionError,
+    json.decoder.JSONDecodeError) as e:
+    return &quot;&quot;
+</code></pre><p>航旅纵横是<code>html</code>格式的，与飞常准不同的是，获取某机场航班所有信息，只能先爬取航段数据，得到该航段的所有航班号，再根据航班号查询。 （异常同上 这里简写）</p>
+<pre><code>html = urlopen(url)
+bsObj = BeautifulSoup(html.read())  
+</code></pre><h4 id="数据解析"><a href="#数据解析" class="headerlink" title="数据解析"></a>数据解析</h4><p>飞常准是标准的 json 格式，把数据直接入库就可以。<br><br>航旅纵横的航班数据是用javascript渲染的，我用了比较不灵活的办法（用字符串分隔）。  <br><br>接着对航班数据再进行一次 <code>BeautifulSoup</code> 处理，就可以得到<code>span</code>里的数据啦 <br><br>复杂的这块代码就不粘贴了</p>
+<h4 id="验证码问题"><a href="#验证码问题" class="headerlink" title="验证码问题"></a>验证码问题</h4><p>飞常准爬取次数&gt;10 的时候，会出现<code>请输入验证码</code>。<br><br>第一次的验证码就是纯图片，我机智的模拟输入<code>111</code>，–验证码有误 请重新输入。这次的验证码就正常了。</p>
+<h5 id="下载验证码"><a href="#下载验证码" class="headerlink" title="下载验证码"></a>下载验证码</h5><p>首先得把验证码下载下来，才能识别不是。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">try:</div><div class="line">        f = open(&quot;VerificationCode.jpg&quot;, &apos;wb&apos;) </div><div class="line">        f.write(urlopen(picUrl).read())</div><div class="line">        f.close()</div><div class="line">    except Exception as e:</div><div class="line">        print(picUrl+&quot; error&quot;)</div></pre></td></tr></table></figure>
+<h5 id="识别验证码"><a href="#识别验证码" class="headerlink" title="识别验证码"></a>识别验证码</h5><p>因为这个验证码比较简单，我就用<code>pytesseract</code>来识别了。<br><br>验证码是<code>数字+字母</code>的组合，但有时候会识别到特殊符号导致出错，我就用正则表达式过滤掉了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">image = Image.open(&quot;VerificationCode.jpg&quot;)</div><div class="line">   yzm = pytesseract.image_to_string(image)</div><div class="line">   yzm = re.sub(&apos;[^a-zA-Z0-9]&apos;,&quot;&quot;,yzm)</div></pre></td></tr></table></figure>
+<h4 id="封ip问题"><a href="#封ip问题" class="headerlink" title="封ip问题"></a>封ip问题</h4><p>飞常准没爬几次验证码就出现了，之后再爬几次就封ip了。具体表现为：<code>操作频繁</code>。<br><br>航旅纵横就比较友好了，我能爬很久，但就是数据不全。。我想要的它没有，不过航旅纵横的app里数据很全，厉害的人可以试着去爬app<br><br><br><br>那么问题出现了，接下来代理ip上场。</p>
+<h4 id="代理ip"><a href="#代理ip" class="headerlink" title="代理ip"></a>代理ip</h4><p>我试过 <a href="http://www.xdaili.cn" target="_blank" rel="external">讯代理</a> 和 <a href="http://www.goubanjia.com/" target="_blank" rel="external">全网代理IP</a> <br><br>这两个都还算稳定的，选择哪个主要还是看自己需求，挑个便宜的</p>
+<h5 id="讯代理的动态转发"><a href="#讯代理的动态转发" class="headerlink" title="讯代理的动态转发"></a>讯代理的动态转发</h5><p>官方提供的代码很简单，就是把<code>headers</code>封装成他们的服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">def getAuth():</div><div class="line">    timestamp = str(int(time.time()))                # 计算时间戳</div><div class="line">    string = &quot;orderno=&quot; + orderno + &quot;,&quot; + &quot;secret=&quot; + secret + &quot;,&quot; + &quot;timestamp=&quot; + timestamp</div><div class="line">    if is_python3:                          </div><div class="line">        string = string.encode()</div><div class="line">    sign = hashlib.md5(string).hexdigest().upper()                    </div><div class="line">    auth = &quot;sign=&quot; + sign + &quot;&amp;&quot; + &quot;orderno=&quot; + orderno + &quot;&amp;&quot; + &quot;timestamp=&quot; + timestamp</div><div class="line">    return auth</div><div class="line"></div><div class="line">def getXundailiIp():</div><div class="line">    ip_port = ip + &quot;:&quot; + port</div><div class="line">    auth = getAuth()</div><div class="line">    proxy = &#123;&quot;http&quot;: &quot;http://&quot; + ip_port, &quot;https&quot;: &quot;https://&quot; + ip_port&#125;</div><div class="line">    headers = &#123;&quot;Proxy-Authorization&quot;: auth&#125;</div><div class="line">    return headers,proxy</div></pre></td></tr></table></figure>
+<p>下了一个1块钱10000次订单。用起来不是特别稳定，不过影响不大。</p>
+<h5 id="全网代理IP"><a href="#全网代理IP" class="headerlink" title="全网代理IP"></a>全网代理IP</h5><p>我买了4小时的动态代理IP，每次接口返回一个IP，IP有效期1分钟。用起来也还不错。有时候响应的比较慢，我在请求的时候加了超时时间。<br><br>这套代码就更简单啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">def getProxyip():</div><div class="line">    # 这里填写全网代理IP提供的API订单号（请到用户中心获取）</div><div class="line">    order = &quot;小仙女的马赛克&quot;</div><div class="line">    # 获取IP的API接口</div><div class="line">    apiUrl = &quot;http://dynamic.goubanjia.com/dynamic/get/&quot; + order + &quot;.html&quot;</div><div class="line">    </div><div class="line">    try:</div><div class="line">        # 获取IP列表</div><div class="line">        res = urlopen(apiUrl).read().strip()</div><div class="line">        # 按照\n分割获取到的IP</div><div class="line">        # ips = res.split(&quot;\n&quot;)</div><div class="line">        # 随机选择一个IP</div><div class="line">        # proxyip = random.choice(ips)</div><div class="line">        # 使用代理IP请求目标网址</div><div class="line">        proxyip = res.decode(encoding=&quot;utf-8&quot;)</div><div class="line">        return proxyip</div><div class="line">    except Exception:  </div><div class="line">        return &quot;&quot;</div></pre></td></tr></table></figure>
+<p>因为我每次返回只有一个ip啦，不需要切割再随机选择一个</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>已上传到github <a href="https://github.com/pangrou/machine-learning/tree/master/scrape" target="_blank" rel="external">https://github.com/pangrou/machine-learning/tree/master/scrape</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjftew04g000rqdlud0vu3y57" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/25/elasticsearch-spark读写数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">elasticsearch-spark读写数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/elasticsearch-spark读写数据/">elasticsearch-spark读写数据</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/Elasticsearch数据迁移到new-index/">Elasticsearch数据迁移到new_index</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/18/pandas-melt/">pandas_melt</a>
+          </li>
+        
+          <li>
+            <a href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 pangrou<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/pangrou" class="mobile-nav-link">GitHub</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
