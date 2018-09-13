@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -103,33 +103,19 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="需求：统计每天有多少条数据-以及某字段的平均值。"><a href="#需求：统计每天有多少条数据-以及某字段的平均值。" class="headerlink" title="需求：统计每天有多少条数据,以及某字段的平均值。"></a>需求：统计每天有多少条数据,以及某字段的平均值。</h4><p>#####1. 使用<code>DateHistogramAggregationBuilder</code>按天统计，再嵌入aggs取平均值。</p>
-<p>如果要对结果进行排序，在 AggregationBuilders 加上  <code>.order(Histogram.Order.COUNT_DESC)</code> </p>
+        <h4 id="需求：统计每天有多少条数据-以及某字段的平均值。"><a href="#需求：统计每天有多少条数据-以及某字段的平均值。" class="headerlink" title="需求：统计每天有多少条数据,以及某字段的平均值。"></a>需求：统计每天有多少条数据,以及某字段的平均值。</h4><h5 id="1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"><a href="#1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。" class="headerlink" title="1. 使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"></a>1. 使用<code>DateHistogramAggregationBuilder</code>按天统计，再嵌入aggs取平均值。</h5><p>如果要对结果进行排序，在 AggregationBuilders 加上  <code>.order(Histogram.Order.COUNT_DESC)</code> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders</div><div class="line">        .avg(&quot;avg_aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;);</div><div class="line">        </div><div class="line">DateHistogramAggregationBuilder dateHistogramAggregationBuilder = AggregationBuilders</div><div class="line">        .dateHistogram(&quot;aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;) //可以是time</div><div class="line">        .dateHistogramInterval(DateHistogramInterval.DAY)</div><div class="line">        .format(&quot;yyyy-MM-dd&quot;)</div><div class="line">        .minDocCount(0L)</div><div class="line">        .subAggregation(avgAggregationBuilder);</div></pre></td></tr></table></figure>
-<p>#####2. 如果再新增一条需求：只统计近一个月的数据。<br><br>那么就加一条filter，过滤后再聚合。</p>
+<h5 id="2-如果再新增一条需求：只统计近一个月的数据。"><a href="#2-如果再新增一条需求：只统计近一个月的数据。" class="headerlink" title="2. 如果再新增一条需求：只统计近一个月的数据。"></a>2. 如果再新增一条需求：只统计近一个月的数据。<br></h5><p>那么就加一条filter，过滤后再聚合。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//日期限制</div><div class="line">		QueryBuilder rangeBuilder = QueryBuilders</div><div class="line">            .rangeQuery(aggsName)</div><div class="line">            .format(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;)</div><div class="line">            .gte(timeRange.get(&quot;startTime&quot;).toString())</div><div class="line">            .lte(timeRange.get(&quot;endTime&quot;).toString());</div><div class="line">            </div><div class="line">//        过滤后聚合 .missing(0)</div><div class="line">        QueryBuilder queryBuilder = QueryBuilders</div><div class="line">                .boolQuery()</div><div class="line">                .filter(rangeBuilder);</div></pre></td></tr></table></figure>
-<!--more--!>
-
-#####3. 获取当天/一周内／一个月内起始时间
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">private static Map&lt;String, String&gt; getTime(String period) &#123;</div><div class="line"></div><div class="line">       Map&lt;String, String&gt; timeRange = new HashMap&lt;&gt;();</div><div class="line">       SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;);</div><div class="line">       Calendar calendar = Calendar.getInstance();</div><div class="line">       timeRange.put(&quot;endTime&quot;, simpleDateFormat.format(calendar.getTime()));</div><div class="line"></div><div class="line">       switch (period) &#123;</div><div class="line"></div><div class="line">           case &quot;week&quot;: &#123;</div><div class="line">               calendar.add(Calendar.DATE, -7);</div><div class="line">           &#125;</div><div class="line">           break;</div><div class="line"></div><div class="line">           case &quot;month&quot;: &#123;</div><div class="line">               calendar.add(Calendar.MONTH, -1);</div><div class="line">           &#125;</div><div class="line">           break;</div><div class="line"></div><div class="line">           default: break;</div><div class="line"></div><div class="line">       &#125;</div><div class="line"></div><div class="line">       calendar.set(Calendar.HOUR_OF_DAY, 0);</div><div class="line">       calendar.set(Calendar.MINUTE, 0);</div><div class="line">       calendar.set(Calendar.SECOND, 0);</div><div class="line">       calendar.set(Calendar.MILLISECOND, 0);</div><div class="line">       timeRange.put(&quot;startTime&quot;, simpleDateFormat.format(calendar.getTime()));</div><div class="line">       return timeRange;</div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>#####4. 整合查询语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">searchSourceBuilder</div><div class="line">              .query(queryBuilder)</div><div class="line">              .aggregation(dateHistogramAggregationBuilder);</div><div class="line"></div><div class="line">      String query = searchSourceBuilder.toString();</div></pre></td></tr></table></figure>
-<h4 id="需求：获取type-index下最新一条记录"><a href="#需求：获取type-index下最新一条记录" class="headerlink" title="需求：获取type/index下最新一条记录"></a>需求：获取type/index下最新一条记录</h4><p>首先用 <code>matchAll</code> 匹配所有数据，再根据时间排序。最终获取 <code>getFirstHit</code>，得到最新记录。（字段中最好包含time字段）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">QueryBuilder queryBuilder = QueryBuilders</div><div class="line">              .matchAllQuery();</div><div class="line">      </div><div class="line">      searchSourceBuilder</div><div class="line">              .query(queryBuilder)</div><div class="line">              .sort(&quot;time&quot;, SortOrder.DESC);</div></pre></td></tr></table></figure>
-<h4 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h4><p>#####1. 获取 <code>hits</code> 数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">List&lt;SearchResult.Hit&lt;TESTCLASS, Void&gt;&gt; hits = result.getHits(TESTCLASS.class);</div><div class="line">      List&lt;TESTCLASS&gt; userList = new ArrayList&lt;&gt;();</div><div class="line">      for (SearchResult.Hit&lt;TESTCLASS, Void&gt; hit : hits) &#123;</div><div class="line">          userList.add(hit.source);</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<p>#####2. 获取 aggs 里的 buckets 数据： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MetricAggregation jsonAggs = searchResult.getAggregations();</div></pre></td></tr></table></figure>
-<p>日期柱状图</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();</div><div class="line">      DateHistogramAggregation histogram = jsonAggs.getDateHistogramAggregation(&quot;aggsName&quot;);</div><div class="line">      for (DateHistogramAggregation.DateHistogram entry : histogram.getBuckets()) &#123;</div><div class="line">          map.put(entry.getTimeAsString(), entry.getCount());</div><div class="line">      &#125;</div></pre></td></tr></table></figure>
-<p>求平均值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AvgAggregation avg = jsonAggs.getAvgAggregation(&quot;avg_aggsName&quot;);</div><div class="line">result.put(&quot;avg_aggsName&quot;, Math.ceil(avg.getAvg()));</div></pre></td></tr></table></figure>
--->
+        
+          <p class="article-more-link">
+            <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjm06ngef0000w0luvlmi5kws" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjm06ngef0000w0luvlmi5kws" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -188,7 +174,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjftew04g000rqdlud0vu3y57" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjftew04g000rqdlud0vu3y57" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
@@ -235,7 +221,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjftew03i000aqdlu2u7ftdso" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjftew03i000aqdlu2u7ftdso" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -283,7 +269,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjftew02x0002qdluomc2n9x3" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjftew02x0002qdluomc2n9x3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -343,7 +329,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjftew03r000fqdluxtz0t789" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjftew03r000fqdluxtz0t789" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
@@ -369,7 +355,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
@@ -379,7 +365,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
@@ -398,7 +384,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -435,7 +421,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 pangrou<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
