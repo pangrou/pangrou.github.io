@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archieven | Hexo</title>
+  <title>selenium+PhantomJs爬虫 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantoms">
+<meta name="keywords" content="spider">
+<meta property="og:type" content="article">
+<meta property="og:title" content="selenium+PhantomJs爬虫">
+<meta property="og:url" content="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantoms">
+<meta property="og:updated_time" content="2018-09-17T06:55:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="selenium+PhantomJs爬虫">
+<meta name="twitter:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantoms">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,120 +81,96 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/11/08/Elasticsearch数据迁移到new-index/" class="archive-article-date">
-  <time datetime="2017-11-08T01:51:27.000Z" itemprop="datePublished">Nov 8</time>
+        <section id="main"><article id="post-selenium-PhantomJs爬虫" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/14/selenium-PhantomJs爬虫/" class="article-date">
+  <time datetime="2018-09-14T09:27:44.000Z" itemprop="datePublished">2018-09-14</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/08/Elasticsearch数据迁移到new-index/">Elasticsearch数据迁移到new_index</a>
+    <h1 class="article-title" itemprop="name">
+      selenium+PhantomJs爬虫
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/18/pandas-melt/" class="archive-article-date">
-  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">Oct 18</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
-    </h1>
-  
+        <p>需求：urlopen得到的数据不正确，发现是因为界面经过<code>js渲染</code>，故使用<code>selenium</code>尝试一下。</p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><pre><code>brew install selenium
+brew install phantoms
+</code></pre><p>配合<code>Chrome</code>使用需要安装<code>chromedriver</code>:</p>
+<ol>
+<li><a href="http://chromedriver.storage.googleapis.com/index.html" target="_blank" rel="external">下载地址</a>  驱动版本与浏览器版本要对应<br></li>
+<li>将下载的可执行文件(chromedriver) 移动到/usr/bin下</li>
+</ol>
+<p>最后，把 phantoms 路径添加到 bash 中，source一下生效。</p>
+<pre><code>export PHANTOMJS_HOME=/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx
+export PATH=$PATH:$PHANTOMJS_HOME/bin    
+</code></pre><h3 id="2-使用selenium"><a href="#2-使用selenium" class="headerlink" title="2. 使用selenium"></a>2. 使用selenium</h3><p>简单测试一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">		driver = webdriver.Chrome()</div><div class="line">        driver.get(&quot;https://www.baidu.com&quot;)</div><div class="line">        print(&quot;page_source:&quot;, driver.page_source)</div><div class="line">```	</div><div class="line"></div><div class="line">`driver.page_source` 就是抓取下来的页面数据。</div><div class="line">&lt;!--more--&gt;</div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
+<pre><code>browser = webdriver.PhantomJS(executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)
+browser.start_session(webdriver.DesiredCapabilities.PHANTOMJS)
+# 设置超时时间
+browser.set_page_load_timeout(50)
+browser.set_script_timeout(50)
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/11/判断点是否在多边形内/" class="archive-article-date">
-  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">Oct 11</time>
-</a>
+browser.get(&quot;http://www.baidu.com&quot;)            
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">可以通过 `browser.find_element_by_class_name` 等接口拿到想要的数据。&lt;br /&gt;</div><div class="line"></div><div class="line">保存截图</div></pre></td></tr></table></figure>
+<pre><code>browser.save_screenshot(&quot;baidu.png&quot;)
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 4. 设置代理</div></pre></td></tr></table></figure>
+<pre><code># 利用DesiredCapabilities(代理设置)参数值
+proxy = webdriver.Proxy()
+proxy.proxy_type = ProxyType.MANUAL
+proxy.http_proxy = ip //ip地址
+# 将代理设置添加到 webdriver.DesiredCapabilities.PHANTOMJS 中        proxy.add_to_capabilities(webdriver.DesiredCapabilities.PHANTOMJS)
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">### 5. 设置header</div></pre></td></tr></table></figure>
+<pre><code>desired_capabilities = webdriver.DesiredCapabilities.PHANTOMJS.copy()
+headers = {
+    &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&apos;,
+    &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
+    &apos;Cache-Control&apos;: &apos;no-cache&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;,
+    &apos;User-Agent&apos;: &apos; &apos; 
+}
+for key, value in headers.items():
+    desired_capabilities[&apos;phantomjs.page.customHeaders.{}&apos;.format(key)] = value
+
+browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)
+</code></pre><p>```</p>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/09/解决推荐系统冷启动问题/" class="archive-article-date">
-  <time datetime="2017-10-09T03:07:55.000Z" itemprop="datePublished">Oct 9</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjm5xr9a5000a3llu63abpbds" class="article-share-link">Delen</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/09/解决推荐系统冷启动问题/">解决推荐系统冷启动问题</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/28/TensorFlow实现识别手写数字/" class="archive-article-date">
-  <time datetime="2017-09-28T09:42:40.000Z" itemprop="datePublished">Sep 28</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/28/TensorFlow实现识别手写数字/">TensorFlow实现 Softmax Regression 识别手写数字</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/14/spark读取hive数据-java/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">spark读取hive数据-java</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/archives/">&laquo; __('prev')</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
