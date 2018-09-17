@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  注意驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantom">
-<meta property="og:updated_time" content="2018-09-17T07:02:29.000Z">
+<meta property="og:updated_time" content="2018-09-17T07:19:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="selenium+PhantomJs爬虫">
 <meta name="twitter:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  注意驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantom">
@@ -115,7 +115,7 @@ brew install phantoms
 <pre><code>export PHANTOMJS_HOME=/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx
 export PATH=$PATH:$PHANTOMJS_HOME/bin    
 </code></pre><h3 id="2-使用selenium"><a href="#2-使用selenium" class="headerlink" title="2. 使用selenium"></a>2. 使用selenium</h3><p>简单测试一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">		driver = webdriver.Chrome()</div><div class="line">        driver.get(&quot;https://www.baidu.com&quot;)</div><div class="line">        </div><div class="line">```	</div><div class="line"></div><div class="line">获取网页内容: `driver.page_source` </div><div class="line"></div><div class="line">&lt;!--more--&gt;</div><div class="line"></div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">	driver = webdriver.Chrome()</div><div class="line">    driver.get(&quot;https://www.baidu.com&quot;)     </div><div class="line">```	</div><div class="line"></div><div class="line">获取网页内容: `driver.page_source` </div><div class="line"></div><div class="line">&lt;!--more--&gt;</div><div class="line"></div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
 <pre><code>browser = webdriver.PhantomJS(executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)
 browser.start_session(webdriver.DesiredCapabilities.PHANTOMJS)
 # 设置超时时间
