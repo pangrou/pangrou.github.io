@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  注意驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantom">
-<meta property="og:updated_time" content="2018-09-17T07:21:46.000Z">
+<meta property="og:updated_time" content="2018-09-17T07:23:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="selenium+PhantomJs爬虫">
 <meta name="twitter:description" content="需求：urlopen得到的数据不正确，发现是因为界面经过js渲染，故使用selenium尝试一下。 1. 安装brew install selenium brew install phantoms 配合Chrome使用需要安装chromedriver:  下载地址  注意驱动版本与浏览器版本要对应 将下载的可执行文件(chromedriver) 移动到/usr/bin下  最后，把 phantom">
@@ -72,7 +72,7 @@ ga('send', 'pageview');
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -115,41 +115,21 @@ brew install phantoms
 <pre><code>export PHANTOMJS_HOME=/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx
 export PATH=$PATH:$PHANTOMJS_HOME/bin    
 </code></pre><h3 id="2-使用selenium"><a href="#2-使用selenium" class="headerlink" title="2. 使用selenium"></a>2. 使用selenium</h3><p>简单测试一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">driver = webdriver.Chrome()</div><div class="line">driver.get(&quot;https://www.baidu.com&quot;)     </div><div class="line">```	</div><div class="line"></div><div class="line">获取网页内容: `driver.page_source` </div><div class="line"></div><div class="line">&lt;!--more--&gt;</div><div class="line"></div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
-<pre><code>browser = webdriver.PhantomJS(executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)
-    browser.start_session(webdriver.DesiredCapabilities.PHANTOMJS)
-    # 设置超时时间
-    browser.set_page_load_timeout(50)
-    browser.set_script_timeout(50)
-
-    browser.get(&quot;http://www.baidu.com&quot;)            
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">可以通过 `browser.find_element_by_class_name` 等接口拿到想要的数据。&lt;br /&gt;</div><div class="line"></div><div class="line">保存截图</div></pre></td></tr></table></figure>
-<pre><code>browser.save_screenshot(&quot;baidu.png&quot;)
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 4. 设置代理</div></pre></td></tr></table></figure>
-<pre><code># 利用DesiredCapabilities(代理设置)参数值
- proxy = webdriver.Proxy()
- proxy.proxy_type = ProxyType.MANUAL
- proxy.http_proxy = ip //ip地址
- # 将代理设置添加到 webdriver.DesiredCapabilities.PHANTOMJS 中        proxy.add_to_capabilities(webdriver.DesiredCapabilities.PHANTOMJS) 
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">### 5. 设置header</div></pre></td></tr></table></figure>
-<pre><code>desired_capabilities = webdriver.DesiredCapabilities.PHANTOMJS.copy()
- headers = {
-     &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&apos;,
-     &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,
-     &apos;Cache-Control&apos;: &apos;no-cache&apos;,
-     &apos;Connection&apos;: &apos;keep-alive&apos;,
-     &apos;User-Agent&apos;: &apos; &apos; 
- }
- for key, value in headers.items():
-     desired_capabilities[&apos;phantomjs.page.customHeaders.{}&apos;.format(key)] = value
-
- browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)   
-</code></pre><p>```</p>
+<pre><code>driver = webdriver.Chrome()
+driver.get(&quot;https://www.baidu.com&quot;)     
+</code></pre><p>获取网页内容: <code>driver.page_source</code> </p>
+<a id="more"></a>
+<h3 id="3-selenium-PhantomJs"><a href="#3-selenium-PhantomJs" class="headerlink" title="3. selenium+PhantomJs"></a>3. selenium+PhantomJs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">browser = webdriver.PhantomJS(executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)</div><div class="line">       browser.start_session(webdriver.DesiredCapabilities.PHANTOMJS)</div><div class="line">       # 设置超时时间</div><div class="line">       browser.set_page_load_timeout(50)</div><div class="line">       browser.set_script_timeout(50)</div><div class="line"></div><div class="line">       browser.get(&quot;http://www.baidu.com&quot;)</div></pre></td></tr></table></figure>
+<p>可以通过 <code>browser.find_element_by_class_name</code> 等接口拿到想要的数据。<br></p>
+<p>保存截图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">browser.save_screenshot(&quot;baidu.png&quot;)</div></pre></td></tr></table></figure>
+<h3 id="4-设置代理"><a href="#4-设置代理" class="headerlink" title="4. 设置代理"></a>4. 设置代理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 利用DesiredCapabilities(代理设置)参数值</div><div class="line"> proxy = webdriver.Proxy()</div><div class="line"> proxy.proxy_type = ProxyType.MANUAL</div><div class="line"> proxy.http_proxy = ip //ip地址</div><div class="line"> # 将代理设置添加到 webdriver.DesiredCapabilities.PHANTOMJS 中		proxy.add_to_capabilities(webdriver.DesiredCapabilities.PHANTOMJS)</div></pre></td></tr></table></figure>
+<h3 id="5-设置header"><a href="#5-设置header" class="headerlink" title="5. 设置header"></a>5. 设置header</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">desired_capabilities = webdriver.DesiredCapabilities.PHANTOMJS.copy()</div><div class="line"> headers = &#123;</div><div class="line">     &apos;Accept&apos;: &apos;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&apos;,</div><div class="line">     &apos;Accept-Language&apos;: &apos;zh-CN,zh;q=0.9&apos;,</div><div class="line">     &apos;Cache-Control&apos;: &apos;no-cache&apos;,</div><div class="line">     &apos;Connection&apos;: &apos;keep-alive&apos;,</div><div class="line">     &apos;User-Agent&apos;: &apos; &apos; </div><div class="line"> &#125;</div><div class="line"> for key, value in headers.items():</div><div class="line">     desired_capabilities[&apos;phantomjs.page.customHeaders.&#123;&#125;&apos;.format(key)] = value</div><div class="line"> </div><div class="line"> browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)</div></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjm5xr9a5000a3llu63abpbds" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjm5xr9a5000a3llu63abpbds" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
@@ -162,7 +142,7 @@ export PATH=$PATH:$PHANTOMJS_HOME/bin
   
   
     <a href="/2018/09/14/spark读取hive数据-java/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">spark读取hive数据-java</div>
     </a>
   
@@ -180,7 +160,7 @@ export PATH=$PATH:$PHANTOMJS_HOME/bin
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spider/">spider</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
@@ -199,7 +179,7 @@ export PATH=$PATH:$PHANTOMJS_HOME/bin
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -209,7 +189,7 @@ export PATH=$PATH:$PHANTOMJS_HOME/bin
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
