@@ -70,7 +70,7 @@ ga('send', 'pageview');
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -115,7 +115,7 @@ brew install phantoms
 <pre><code>export PHANTOMJS_HOME=/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx
 export PATH=$PATH:$PHANTOMJS_HOME/bin    
 </code></pre><h3 id="2-使用selenium"><a href="#2-使用selenium" class="headerlink" title="2. 使用selenium"></a>2. 使用selenium</h3><p>简单测试一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">		driver = webdriver.Chrome()</div><div class="line">        driver.get(&quot;https://www.baidu.com&quot;)</div><div class="line">        print(&quot;page_source:&quot;, driver.page_source)</div><div class="line">```	</div><div class="line"></div><div class="line">`driver.page_source` 就是抓取下来的页面数据。</div><div class="line">&lt;!--more--&gt;</div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">		driver = webdriver.Chrome()</div><div class="line">        driver.get(&quot;https://www.baidu.com&quot;)</div><div class="line">        </div><div class="line">```	</div><div class="line"></div><div class="line">获取网页内容: `driver.page_source` </div><div class="line"></div><div class="line">&lt;!--more--&gt;</div><div class="line"></div><div class="line">### 3. selenium+PhantomJs</div></pre></td></tr></table></figure>
 <pre><code>browser = webdriver.PhantomJS(executable_path=&quot;/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx/bin/phantomjs&quot;)
 browser.start_session(webdriver.DesiredCapabilities.PHANTOMJS)
 # 设置超时时间
@@ -149,7 +149,7 @@ browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executab
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjm5xr9a5000a3llu63abpbds" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjm5xr9a5000a3llu63abpbds" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
@@ -196,7 +196,7 @@ browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executab
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/spark读取hive数据-java/" data-id="cjm5xr9ae000i3llujll0042y" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/09/14/spark读取hive数据-java/" data-id="cjm5xr9ae000i3llujll0042y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark/">spark</a></li></ul>
@@ -242,7 +242,7 @@ browser = webdriver.PhantomJS(desired_capabilities=desired_capabilities,executab
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjm5xr9a200093llu2pusp1al" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjm5xr9a200093llu2pusp1al" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -301,7 +301,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjm5xr9aq000v3llu1rk476wn" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjm5xr9aq000v3llu1rk476wn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
@@ -348,7 +348,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjm5xr99x00053lluc1jwod7k" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjm5xr99x00053lluc1jwod7k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -374,7 +374,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spider/">spider</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
@@ -393,7 +393,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
@@ -403,7 +403,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
