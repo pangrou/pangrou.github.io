@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/12/15/ELK日志系统入门/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="filebeat -&amp;gt; logstash -&amp;gt; elasticsearch filebeat 安装brew install filebeat filebeat下载地址     进入到filebeat的安装目录后，首先对filebeat.yml进行备份 cp filebeat.yml filebeat.yml.bak 开始编写第一个filebeat.yml修改filebeat.yml，在">
-<meta property="og:updated_time" content="2018-12-15T09:20:56.000Z">
+<meta property="og:updated_time" content="2018-12-15T09:23:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELK日志系统入门">
 <meta name="twitter:description" content="filebeat -&amp;gt; logstash -&amp;gt; elasticsearch filebeat 安装brew install filebeat filebeat下载地址     进入到filebeat的安装目录后，首先对filebeat.yml进行备份 cp filebeat.yml filebeat.yml.bak 开始编写第一个filebeat.yml修改filebeat.yml，在">
@@ -117,7 +117,8 @@ ga('send', 'pageview');
    - /var/log/test.log
  input_type: log
  document_type: test
-</code></pre><h4 id="filebeat启动"><a href="#filebeat启动" class="headerlink" title="filebeat启动"></a>filebeat启动</h4><pre><code>./filebeat -e -c filebeat.yml -d &quot;publish&quot;
+</code></pre><a id="more"></a> 
+<h4 id="filebeat启动"><a href="#filebeat启动" class="headerlink" title="filebeat启动"></a>filebeat启动</h4><pre><code>./filebeat -e -c filebeat.yml -d &quot;publish&quot;
 </code></pre><h3 id="logstash-安装"><a href="#logstash-安装" class="headerlink" title="logstash 安装"></a>logstash 安装</h3><p>Mac</p>
 <pre><code>brew install logstash
 </code></pre><p>Linux</p>

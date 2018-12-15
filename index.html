@@ -117,31 +117,12 @@ ga('send', 'pageview');
    - /var/log/test.log
  input_type: log
  document_type: test
-</code></pre><h4 id="filebeat启动"><a href="#filebeat启动" class="headerlink" title="filebeat启动"></a>filebeat启动</h4><pre><code>./filebeat -e -c filebeat.yml -d &quot;publish&quot;
-</code></pre><h3 id="logstash-安装"><a href="#logstash-安装" class="headerlink" title="logstash 安装"></a>logstash 安装</h3><p>Mac</p>
-<pre><code>brew install logstash
-</code></pre><p>Linux</p>
-<pre><code>wget https://artifacts.elastic.co/downloads/logstash/logstash-5.2.1.tar.gz
-tar -zxvf logstash-5.2.1.tar.gz    
-</code></pre><p>安装之后先测试一下：</p>
-<pre><code>cd logstash-5.2.1
-bin/logstash -e &apos;input { stdin { } } output { stdout {} }&apos;
-</code></pre><p>可以看见以下输出：</p>
-<pre><code>The stdin plugin is now waiting for input:
-</code></pre><p>此时在控制台输入 <code>hello world</code>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">	hello world</div><div class="line">&#123;</div><div class="line">      &quot;@version&quot; =&gt; &quot;1&quot;,</div><div class="line">    &quot;@timestamp&quot; =&gt; 2018-12-15T08:33:42.910Z,</div><div class="line">       &quot;message&quot; =&gt; &quot;hello world&quot;,</div><div class="line">          &quot;host&quot; =&gt; &quot;pangrou&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>就就表示logstash已经安装成功啦！</p>
-<h4 id="安装beats"><a href="#安装beats" class="headerlink" title="安装beats"></a>安装beats</h4><p>logstash的输入源是filebeat，那么我们需要安装一下beats：</p>
-<pre><code>./bin/logstash-plugin prepare-offline-pack logstash-input-beats
-bin/logstash-plugin install file:///home/bigData/logstash-5.5.0/logstash-offline-plugins-5.5.0.zip
-</code></pre><h4 id="开始编写"><a href="#开始编写" class="headerlink" title="开始编写"></a>开始编写</h4><h5 id="读取本地日志文件，输出到elasticsearch"><a href="#读取本地日志文件，输出到elasticsearch" class="headerlink" title="读取本地日志文件，输出到elasticsearch"></a>读取本地日志文件，输出到elasticsearch</h5><p>log格式为</p>
-<pre><code>log_fmt = &apos;%(asctime)s %(filename)s,line %(lineno)s,%(levelname)s: %(message)s&apos;
-</code></pre><p>进入logstash/bin目录，新建pangrou.conf：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">input&#123; </div><div class="line">    file&#123; </div><div class="line">        path =&gt;&quot;pangrou/logs/*.log&quot;</div><div class="line">		start_position=&gt;&quot;beginning&quot;</div><div class="line">		sincedb_path=&gt;&quot;/dev/null&quot;</div><div class="line">    &#125; </div><div class="line">&#125; </div><div class="line">filter&#123; </div><div class="line">    grok&#123; </div><div class="line">        match=&gt;&#123;</div><div class="line">            &quot;message&quot;=&gt;&quot;%&#123;TIMESTAMP_ISO8601:accessTime&#125; %&#123;DATA:fileName&#125;,line %&#123;NUMBER:lineNo&#125;,%&#123;DATA:levelName&#125;: %&#123;GREEDYDATA:msg&#125;&quot;</div><div class="line">&#125;</div><div class="line">       remove_field=&gt;&quot;message&quot;</div><div class="line">    &#125; </div><div class="line">    date&#123;</div><div class="line">        match=&gt;[&quot;accessTime&quot;,&quot;yyyy-MM-dd HH:mm:ss,SSS&quot;] </div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">output &#123;</div><div class="line">	if [levelName] == &quot;ERROR&quot;</div><div class="line">	&#123;</div><div class="line">		elasticsearch &#123;</div><div class="line">        	hosts =&gt; &quot;127.0.0.1:9200&quot;</div><div class="line">			index =&gt; &quot;pangrou&quot;</div><div class="line">    	&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">       stdout &#123; codec =&gt; rubydebug&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">``` </div><div class="line"></div><div class="line">运行：</div><div class="line"></div><div class="line">	./logstash -f pangrou.conf</div><div class="line"></div><div class="line"></div><div class="line">##### 接收filebeat数据，输出到elasticsearch</div><div class="line">配置 5044 端口作为 Filebeat 的连接</div></pre></td></tr></table></figure>
-<p>input {<br>     beats {<br>         port =&gt; 5044<br>     }<br>}<br>output {<br>     elastic search {<br>         hosts =&gt; “127.0.0.1:9200”<br>         manage_template =&gt; false<br>         index =&gt; “%{[@metadata][beat]}-%{+YYYY.MM.dd}”<br>         document_type =&gt; “%{[@metadata][type]}”<br>     }<br>}<br>```</p>
-<p>在elasticsearch中的索引为 <code>filebeat-*</code></p>
-<h4 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h4><p>logstash运行起来后，开启filebeat，就可以在elasticsearch中查看日志了。</p>
-
+</code></pre>
+        
+          <p class="article-more-link">
+            <a href="/2018/12/15/ELK日志系统入门/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
