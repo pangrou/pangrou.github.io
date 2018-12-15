@@ -81,6 +81,57 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql实时同步到elasticsearch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/15/mysql实时同步到elasticsearch/" class="article-date">
+  <time datetime="2018-12-15T09:53:42.000Z" itemprop="datePublished">2018-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/15/mysql实时同步到elasticsearch/">mysql实时同步到elasticsearch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下插件实现MySQL数据自动同步到Elasticsearch的功能</p>
+<p><code>go-mysql-elasticsearch</code></p>
+<p>是一种将MySQL数据自动同步到Elasticsearch的服务。<br \=""><br>它首先用于mysqldump获取原始数据，然后使用binlog逐步同步数据。<br \=""></p>
+<p><strong>优点</strong>：支持实时增删改<br \=""><br><strong>缺点</strong>：只支持有主键的表<br \=""></p>
+<p><code>logstash-input-jdbc</code></p>
+<p><strong>优点</strong>：操作简单<br \=""><br><strong>缺点</strong>：最快10s同步一次数据。支持增改，不支持删除<br \=""></p>
+<h3 id="go-mysql-elasticsearch"><a href="#go-mysql-elasticsearch" class="headerlink" title="go-mysql-elasticsearch"></a>go-mysql-elasticsearch</h3><p><strong>使用前须知</strong> <br><br>数据库目前只支持有PK(PRIMARY KEY)<br></p>
+<p>github: <a href="https://github.com/siddontang/go-mysql-elasticsearch" target="_blank" rel="external">https://github.com/siddontang/go-mysql-elasticsearch</a></p>
+<p>备注：本地需要安装go环境<br>
+        
+          <p class="article-more-link">
+            <a href="/2018/12/15/mysql实时同步到elasticsearch/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/15/mysql实时同步到elasticsearch/" data-id="cjppb6q0e000h7slui7r3jv9u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ELK日志系统入门" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/12/15/ELK日志系统入门/" class="article-date">
@@ -126,7 +177,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/15/ELK日志系统入门/" data-id="cjpp94qu800012yluuplwvid3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/15/ELK日志系统入门/" data-id="cjppb6q0000037sluw27i8nne" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELK/">ELK</a></li></ul>
@@ -183,7 +234,7 @@ driver.get(&quot;https://www.baidu.com&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjpp94quu000j2ylui8jw1tie" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjppb6q0h000l7slusznqlqxe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
@@ -230,7 +281,7 @@ driver.get(&quot;https://www.baidu.com&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/spark读取hive数据-java/" data-id="cjpp94quy000o2yluxnqzc5nr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/14/spark读取hive数据-java/" data-id="cjppb6q0j000o7slusb9witun" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark/">spark</a></li></ul>
@@ -276,69 +327,10 @@ driver.get(&quot;https://www.baidu.com&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjpp94quq000b2yluyi8uew9a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjppb6q0b000b7sluax779kky" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-爬取航班数据" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/10/爬取航班数据/" class="article-date">
-  <time datetime="2018-04-10T03:41:41.000Z" itemprop="datePublished">2018-04-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>针对<code>飞常准</code>和<code>航旅纵横</code>，爬取<code>航段+航班日期</code>和<code>航班号+航班日期</code>数据</p>
-<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p>飞常准：</p>
-<pre><code>航段
-&apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;dep=%s&amp;&apos; \
-&apos;date=%s&amp;token=根据自己的浏览器来&apos; % (arr, dep, fData)
-航班
-&apos;http://webapp.veryzhun.com/h5/flightsearch?fnum=%s&amp;date=%s&apos; \
-&apos;&amp;token=小仙女的马赛克&apos; % (fNo, fData)
-arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
-</code></pre><p>航旅纵横：</p>
-<pre><code>航段
-&apos;http://www.umetrip.com/mskyweb/fs/fa.do?dep=&apos; \
-&apos;%s&amp;arr=%s&amp;date=%s&amp;channel=&apos; % (arr, dep, fData)
-航班
-&apos;http://www.umetrip.com/mskyweb/fs/fc.do?&apos; \
-&apos;flightNo=%s&amp;date=%s&amp;channel=&apos; % (fNo, fData)
-</code></pre><h4 id="爬取数据"><a href="#爬取数据" class="headerlink" title="爬取数据"></a>爬取数据</h4>
-        
-          <p class="article-more-link">
-            <a href="/2018/04/10/爬取航班数据/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjpp94qv5000y2yluhdz02esv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
 
     </footer>
   </div>
@@ -373,7 +365,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 15px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 15px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 15px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spider/" style="font-size: 10px;">spider</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spider/" style="font-size: 10px;">spider</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -395,6 +387,10 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       <ul>
         
           <li>
+            <a href="/2018/12/15/mysql实时同步到elasticsearch/">mysql实时同步到elasticsearch</a>
+          </li>
+        
+          <li>
             <a href="/2018/12/15/ELK日志系统入门/">ELK日志系统入门</a>
           </li>
         
@@ -408,10 +404,6 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
         
           <li>
             <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/">elasticsearch时间柱状图聚合java实现</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
           </li>
         
       </ul>
