@@ -68,9 +68,9 @@ ga('send', 'pageview');
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -80,6 +80,52 @@ ga('send', 'pageview');
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-elasticsearch时间柱状图聚合java实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/" class="article-date">
+  <time datetime="2018-09-13T03:52:19.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/13/elasticsearch时间柱状图聚合java实现/">elasticsearch时间柱状图聚合java实现</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="需求：统计每天有多少条数据-以及某字段的平均值。"><a href="#需求：统计每天有多少条数据-以及某字段的平均值。" class="headerlink" title="需求：统计每天有多少条数据,以及某字段的平均值。"></a>需求：统计每天有多少条数据,以及某字段的平均值。</h4><h5 id="1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"><a href="#1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。" class="headerlink" title="1. 使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"></a>1. 使用<code>DateHistogramAggregationBuilder</code>按天统计，再嵌入aggs取平均值。</h5><p>如果要对结果进行排序，在 AggregationBuilders 加上  <code>.order(Histogram.Order.COUNT_DESC)</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders</div><div class="line">        .avg(&quot;avg_aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;);</div><div class="line">        </div><div class="line">DateHistogramAggregationBuilder dateHistogramAggregationBuilder = AggregationBuilders</div><div class="line">        .dateHistogram(&quot;aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;) //可以是time</div><div class="line">        .dateHistogramInterval(DateHistogramInterval.DAY)</div><div class="line">        .format(&quot;yyyy-MM-dd&quot;)</div><div class="line">        .minDocCount(0L)</div><div class="line">        .subAggregation(avgAggregationBuilder);</div></pre></td></tr></table></figure>
+<h5 id="2-如果再新增一条需求：只统计近一个月的数据。"><a href="#2-如果再新增一条需求：只统计近一个月的数据。" class="headerlink" title="2. 如果再新增一条需求：只统计近一个月的数据。"></a>2. 如果再新增一条需求：只统计近一个月的数据。<br></h5><p>那么就加一条filter，过滤后再聚合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//日期限制</div><div class="line">		QueryBuilder rangeBuilder = QueryBuilders</div><div class="line">            .rangeQuery(aggsName)</div><div class="line">            .format(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;)</div><div class="line">            .gte(timeRange.get(&quot;startTime&quot;).toString())</div><div class="line">            .lte(timeRange.get(&quot;endTime&quot;).toString());</div><div class="line">            </div><div class="line">//        过滤后聚合 .missing(0)</div><div class="line">        QueryBuilder queryBuilder = QueryBuilders</div><div class="line">                .boolQuery()</div><div class="line">                .filter(rangeBuilder);</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjppk026y000af6lufsfhb4ln" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-爬取航班数据" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -128,7 +174,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjppb6q0s000y7slujqdeiqre" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjppk027g0011f6lupvz9us8a" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
@@ -175,7 +221,7 @@ arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjppb6q09000a7slu0ziehycv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/25/elasticsearch-spark读写数据/" data-id="cjppk0276000lf6luze2syac1" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -223,7 +269,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjppb6q0400057slufi315qeh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/08/Elasticsearch数据迁移到new-index/" data-id="cjppk026w0006f6lu5jj1ic5b" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -283,60 +329,10 @@ curl &apos;http://localhost:9200/?pretty&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjppb6q0f000j7sluaicm65vt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/18/pandas-melt/" data-id="cjppk0275000jf6lukahwwjal" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/">pandas</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-判断点是否在多边形内" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/11/判断点是否在多边形内/" class="article-date">
-  <time datetime="2017-10-11T01:54:42.000Z" itemprop="datePublished">2017-10-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/11/判断点是否在多边形内/">判断点是否在多边形内</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>地图应用上，会经常判断用户是否在 xx 内(车站／商场／机场等)，即判断一个点是否位于多边形区域内。<br></p>
-<h4 id="解决算法-－-射线法"><a href="#解决算法-－-射线法" class="headerlink" title="解决算法 － 射线法"></a>解决算法 － 射线法</h4><p>思想： <code>从待判断的点向某一个方向引射线，计算和多边形交点的个数，如果个数是偶数或者0，则点在多边形外，如果是奇数，则在多边形内。</code></p>
-<p>特殊情况：</p>
-<ol>
-<li>射线经过顶点</li>
-<li>点在边上</li>
-</ol>
-<h4 id="思路流程"><a href="#思路流程" class="headerlink" title="思路流程"></a>思路流程</h4>
-        
-          <p class="article-more-link">
-            <a href="/2017/10/11/判断点是否在多边形内/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/11/判断点是否在多边形内/" data-id="cjppb6q0l000s7sluln9lcnpw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
 
     </footer>
   </div>
@@ -359,9 +355,9 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spider/">spider</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Logistic/">Logistic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/knn/">knn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/naive-bayes/">naive bayes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pandas/">pandas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/presto/">presto</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommend/">recommend</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scrape/">scrape</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spider/">spider</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a></li></ul>
     </div>
   </div>
 
@@ -369,9 +365,9 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spider/" style="font-size: 10px;">spider</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/ELK/" style="font-size: 10px;">ELK</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Logistic/" style="font-size: 10px;">Logistic</a> <a href="/tags/TensorFlow/" style="font-size: 13.33px;">TensorFlow</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/knn/" style="font-size: 20px;">knn</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/naive-bayes/" style="font-size: 13.33px;">naive bayes</a> <a href="/tags/pandas/" style="font-size: 10px;">pandas</a> <a href="/tags/presto/" style="font-size: 10px;">presto</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/recommend/" style="font-size: 10px;">recommend</a> <a href="/tags/scrape/" style="font-size: 10px;">scrape</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spider/" style="font-size: 10px;">spider</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -388,9 +384,13 @@ curl &apos;http://localhost:9200/?pretty&apos;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/12/15/presto读取mysql数据/">presto读取mysql数据</a>
+          </li>
         
           <li>
             <a href="/2018/12/15/mysql实时同步到elasticsearch/">mysql实时同步到elasticsearch</a>
@@ -408,10 +408,6 @@ curl &apos;http://localhost:9200/?pretty&apos;
             <a href="/2018/09/14/spark读取hive数据-java/">spark读取hive数据-java</a>
           </li>
         
-          <li>
-            <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/">elasticsearch时间柱状图聚合java实现</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -425,7 +421,7 @@ curl &apos;http://localhost:9200/?pretty&apos;
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 pangrou<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

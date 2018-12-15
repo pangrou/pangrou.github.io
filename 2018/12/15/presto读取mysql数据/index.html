@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Mot-clé: pandas | Hexo</title>
+  <title>presto读取mysql数据 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/pandas/index.html">
+  <meta name="description" content="如果需要读取多数据源的数据的话，presto用起来就比较合适了。 安装brew install presto 配置配置文件目录：/usr/local/Cellar/presto/0.206/libexec/etc   修改config.properties里的端口号 在/etc下vim mysql.properties（连接mysql）  connector.name=mysql connecti">
+<meta name="keywords" content="presto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="presto读取mysql数据">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/presto读取mysql数据/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="如果需要读取多数据源的数据的话，presto用起来就比较合适了。 安装brew install presto 配置配置文件目录：/usr/local/Cellar/presto/0.206/libexec/etc   修改config.properties里的端口号 在/etc下vim mysql.properties（连接mysql）  connector.name=mysql connecti">
+<meta property="og:updated_time" content="2018-12-15T14:25:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="presto读取mysql数据">
+<meta name="twitter:description" content="如果需要读取多数据源的数据的话，presto用起来就比较合适了。 安装brew install presto 配置配置文件目录：/usr/local/Cellar/presto/0.206/libexec/etc   修改config.properties里的端口号 在/etc下vim mysql.properties（连接mysql）  connector.name=mysql connecti">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,39 +81,73 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/10/18/pandas-melt/" class="archive-article-date">
-  <time datetime="2017-10-18T09:52:48.000Z" itemprop="datePublished">Oct 18</time>
+        <section id="main"><article id="post-presto读取mysql数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/15/presto读取mysql数据/" class="article-date">
+  <time datetime="2018-12-15T13:50:00.000Z" itemprop="datePublished">2018-12-15</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/18/pandas-melt/">pandas_melt</a>
+    <h1 class="article-title" itemprop="name">
+      presto读取mysql数据
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果需要读取多数据源的数据的话，presto用起来就比较合适了。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre><code>brew install presto
+</code></pre><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>配置文件目录：/usr/local/Cellar/presto/0.206/libexec/etc </p>
+<ol>
+<li>修改config.properties里的端口号</li>
+<li><p>在/etc下vim mysql.properties（连接mysql）</p>
+<p> connector.name=mysql<br> connection-url=jdbc:mysql://example.net:3306<br> connection-user=root<br> connection-password=secret</p>
+<a id="more"></a>        
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p> presto –server localhost:7077 –catalog mysql –schema park<br> show tables；</p>
+</li>
+</ol>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><pre><code>presto-server run  
+ 或者
+ brew services start presto
+</code></pre><h4 id="读取mysql"><a href="#读取mysql" class="headerlink" title="读取mysql"></a>读取mysql</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"># !/usr/bin/env python</div><div class="line"></div><div class="line">from sqlalchemy import *</div><div class="line">from sqlalchemy.engine import create_engine</div><div class="line">from sqlalchemy.schema import *</div><div class="line">import pandas as pd</div><div class="line"></div><div class="line">engine = create_engine(&apos;presto://localhost:7077/mysql&apos;)</div><div class="line"></div><div class="line"></div><div class="line">def read_from_sql(sql):</div><div class="line">    df = pd.read_sql(sql, engine)</div><div class="line">    return df</div></pre></td></tr></table></figure>
+<p><strong>问题点</strong>：<br \=""><br>在安装目录/usr/local/Cellar/presto/0.206下配置etc等配置文件，一直不生效<br \=""></p>
+<p><strong>原因</strong>：<br \=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps -ef |grep presto</div><div class="line">501 29796     1   0  5:06下午 ??         2:22.37 /usr/bin/java -cp /usr/local/Cellar/presto/0.206/libexec/lib/* -server -Xmx16G -XX:+UseG1GC -XX:G1HeapRegionSize=32M -XX:+UseGCOverheadLimit -XX:+ExplicitGCInvokesConcurrent -XX:+HeapDumpOnOutOfMemoryError -XX:+ExitOnOutOfMemoryError -Dnode.environment=production -Dlog.levels-file=/usr/local/Cellar/presto/0.206/libexec/etc/log.properties -Dconfig=/usr/local/Cellar/presto/0.206/libexec/etc/config.properties -Dnode.data-dir=/usr/local/var/presto/data -Dnode.id=ffffffff-ffff-ffff-ffff-ffffffffffff com.facebook.presto.server.PrestoServer</div></pre></td></tr></table></figure>
+<p>可以看出，配置文件目录不正确<br \=""></p>
+<p><strong>解决方案</strong>：<br \=""><br>修改正确目录下的配置文件    <br \=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/15/presto读取mysql数据/" data-id="cjppk0274000hf6lujlyitqve" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/presto/">presto</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/15/mysql实时同步到elasticsearch/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">mysql实时同步到elasticsearch</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 </section>
         
