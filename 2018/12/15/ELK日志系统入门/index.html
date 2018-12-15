@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>ELK日志系统入门 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="about machine learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="filebeat -&amp;gt; logstash -&amp;gt; elasticsearch filebeat 安装brew install filebeat filebeat下载地址     进入到filebeat的安装目录后，首先对filebeat.yml进行备份 cp filebeat.yml filebeat.yml.bak 开始编写第一个filebeat.yml修改filebeat.yml，在">
+<meta name="keywords" content="ELK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK日志系统入门">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/ELK日志系统入门/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="about machine learning">
+<meta property="og:description" content="filebeat -&amp;gt; logstash -&amp;gt; elasticsearch filebeat 安装brew install filebeat filebeat下载地址     进入到filebeat的安装目录后，首先对filebeat.yml进行备份 cp filebeat.yml filebeat.yml.bak 开始编写第一个filebeat.yml修改filebeat.yml，在">
+<meta property="og:updated_time" content="2018-12-15T09:20:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="about machine learning">
+<meta name="twitter:title" content="ELK日志系统入门">
+<meta name="twitter:description" content="filebeat -&amp;gt; logstash -&amp;gt; elasticsearch filebeat 安装brew install filebeat filebeat下载地址     进入到filebeat的安装目录后，首先对filebeat.yml进行备份 cp filebeat.yml filebeat.yml.bak 开始编写第一个filebeat.yml修改filebeat.yml，在">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,9 +81,7 @@ ga('send', 'pageview');
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-ELK日志系统入门" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ELK日志系统入门" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/12/15/ELK日志系统入门/" class="article-date">
   <time datetime="2018-12-15T09:17:33.000Z" itemprop="datePublished">2018-12-15</time>
@@ -94,8 +94,8 @@ ga('send', 'pageview');
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/15/ELK日志系统入门/">ELK日志系统入门</a>
+    <h1 class="article-title" itemprop="name">
+      ELK日志系统入门
     </h1>
   
 
@@ -153,224 +153,20 @@ bin/logstash-plugin install file:///home/bigData/logstash-5.5.0/logstash-offline
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-selenium-PhantomJs爬虫" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/14/selenium-PhantomJs爬虫/" class="article-date">
-  <time datetime="2018-09-14T09:27:44.000Z" itemprop="datePublished">2018-09-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/14/selenium-PhantomJs爬虫/">selenium+PhantomJs爬虫</a>
-    </h1>
+    <a href="/2018/09/14/selenium-PhantomJs爬虫/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">selenium+PhantomJs爬虫</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>需求：urlopen得到的数据不正确，发现是因为界面经过<code>js渲染</code>，故使用<code>selenium</code>尝试一下。</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><pre><code>brew install selenium
-brew install phantoms
-</code></pre><p>配合<code>Chrome</code>使用需要安装<code>chromedriver</code>:</p>
-<ol>
-<li><a href="http://chromedriver.storage.googleapis.com/index.html" target="_blank" rel="external">下载地址</a>  注意驱动版本与浏览器版本要对应<br></li>
-<li>将下载的可执行文件(chromedriver) 移动到/usr/bin下</li>
-</ol>
-<p>最后，把 phantoms 路径添加到 bash 中，source一下生效。</p>
-<pre><code>export PHANTOMJS_HOME=/usr/local/Cellar/phantomjs/phantomjs-2.1.1-macosx
-export PATH=$PATH:$PHANTOMJS_HOME/bin    
-</code></pre><h3 id="2-使用selenium"><a href="#2-使用selenium" class="headerlink" title="2. 使用selenium"></a>2. 使用selenium</h3><p>简单测试一下：</p>
-<pre><code>driver = webdriver.Chrome()
-driver.get(&quot;https://www.baidu.com&quot;)     
-</code></pre><p>获取网页内容: <code>driver.page_source</code> </p>
-        
-          <p class="article-more-link">
-            <a href="/2018/09/14/selenium-PhantomJs爬虫/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/selenium-PhantomJs爬虫/" data-id="cjpp94quu000j2ylui8jw1tie" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
 
-
-  
-    <article id="post-spark读取hive数据-java" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/14/spark读取hive数据-java/" class="article-date">
-  <time datetime="2018-09-14T09:08:58.000Z" itemprop="datePublished">2018-09-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/14/spark读取hive数据-java/">spark读取hive数据-java</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>需求：将hive中的数据读取出来，写入es中。<br><br>环境：spark 2.0.2 <br></p>
-<h5 id="1-SparkSession里设置enableHiveSupport"><a href="#1-SparkSession里设置enableHiveSupport" class="headerlink" title="1. SparkSession里设置enableHiveSupport()"></a>1. SparkSession里设置enableHiveSupport()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SparkConf conf = new SparkConf().setAppName(&quot;appName&quot;).setMaster(&quot;local[*]&quot;);</div><div class="line"></div><div class="line">SparkSession spark = SparkSession</div><div class="line">              .builder()</div><div class="line">              .appName(&quot;Java Spark SQL basic example hive&quot;)</div><div class="line">              .config(conf)</div><div class="line">              .enableHiveSupport()  //支持hive</div><div class="line">              .getOrCreate();</div></pre></td></tr></table></figure>
-<h5 id="2-pom-添加依赖-对hive版本没要求"><a href="#2-pom-添加依赖-对hive版本没要求" class="headerlink" title="2. pom 添加依赖 ( 对hive版本没要求 )"></a>2. pom 添加依赖 ( 对hive版本没要求 )</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">          &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;spark-hive_2.10&lt;/artifactId&gt;</div><div class="line">          &lt;version&gt;1.2.1&lt;/version&gt;</div><div class="line">      &lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">          &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;spark-hive_2.11&lt;/artifactId&gt;</div><div class="line">          &lt;version&gt;2.3.0&lt;/version&gt;</div><div class="line">      &lt;/dependency&gt;</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2018/09/14/spark读取hive数据-java/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/14/spark读取hive数据-java/" data-id="cjpp94quy000o2yluxnqzc5nr" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spark/">spark</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-elasticsearch时间柱状图聚合java实现" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/" class="article-date">
-  <time datetime="2018-09-13T03:52:19.000Z" itemprop="datePublished">2018-09-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/13/elasticsearch时间柱状图聚合java实现/">elasticsearch时间柱状图聚合java实现</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="需求：统计每天有多少条数据-以及某字段的平均值。"><a href="#需求：统计每天有多少条数据-以及某字段的平均值。" class="headerlink" title="需求：统计每天有多少条数据,以及某字段的平均值。"></a>需求：统计每天有多少条数据,以及某字段的平均值。</h4><h5 id="1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"><a href="#1-使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。" class="headerlink" title="1. 使用DateHistogramAggregationBuilder按天统计，再嵌入aggs取平均值。"></a>1. 使用<code>DateHistogramAggregationBuilder</code>按天统计，再嵌入aggs取平均值。</h5><p>如果要对结果进行排序，在 AggregationBuilders 加上  <code>.order(Histogram.Order.COUNT_DESC)</code> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders</div><div class="line">        .avg(&quot;avg_aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;);</div><div class="line">        </div><div class="line">DateHistogramAggregationBuilder dateHistogramAggregationBuilder = AggregationBuilders</div><div class="line">        .dateHistogram(&quot;aggsName&quot;)</div><div class="line">        .field(&quot;fieldName&quot;) //可以是time</div><div class="line">        .dateHistogramInterval(DateHistogramInterval.DAY)</div><div class="line">        .format(&quot;yyyy-MM-dd&quot;)</div><div class="line">        .minDocCount(0L)</div><div class="line">        .subAggregation(avgAggregationBuilder);</div></pre></td></tr></table></figure>
-<h5 id="2-如果再新增一条需求：只统计近一个月的数据。"><a href="#2-如果再新增一条需求：只统计近一个月的数据。" class="headerlink" title="2. 如果再新增一条需求：只统计近一个月的数据。"></a>2. 如果再新增一条需求：只统计近一个月的数据。<br></h5><p>那么就加一条filter，过滤后再聚合。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//日期限制</div><div class="line">		QueryBuilder rangeBuilder = QueryBuilders</div><div class="line">            .rangeQuery(aggsName)</div><div class="line">            .format(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;&quot;)</div><div class="line">            .gte(timeRange.get(&quot;startTime&quot;).toString())</div><div class="line">            .lte(timeRange.get(&quot;endTime&quot;).toString());</div><div class="line">            </div><div class="line">//        过滤后聚合 .missing(0)</div><div class="line">        QueryBuilder queryBuilder = QueryBuilders</div><div class="line">                .boolQuery()</div><div class="line">                .filter(rangeBuilder);</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2018/09/13/elasticsearch时间柱状图聚合java实现/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/13/elasticsearch时间柱状图聚合java实现/" data-id="cjpp94quq000b2yluyi8uew9a" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-爬取航班数据" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/10/爬取航班数据/" class="article-date">
-  <time datetime="2018-04-10T03:41:41.000Z" itemprop="datePublished">2018-04-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/10/爬取航班数据/">爬取航班数据</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>针对<code>飞常准</code>和<code>航旅纵横</code>，爬取<code>航段+航班日期</code>和<code>航班号+航班日期</code>数据</p>
-<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p>飞常准：</p>
-<pre><code>航段
-&apos;http://webapp.veryzhun.com/h5/flightsearch?arr=%s&amp;dep=%s&amp;&apos; \
-&apos;date=%s&amp;token=根据自己的浏览器来&apos; % (arr, dep, fData)
-航班
-&apos;http://webapp.veryzhun.com/h5/flightsearch?fnum=%s&amp;date=%s&apos; \
-&apos;&amp;token=小仙女的马赛克&apos; % (fNo, fData)
-arr:目的地 dep:出发地 fData:航班日期 fNo:航班号
-</code></pre><p>航旅纵横：</p>
-<pre><code>航段
-&apos;http://www.umetrip.com/mskyweb/fs/fa.do?dep=&apos; \
-&apos;%s&amp;arr=%s&amp;date=%s&amp;channel=&apos; % (arr, dep, fData)
-航班
-&apos;http://www.umetrip.com/mskyweb/fs/fc.do?&apos; \
-&apos;flightNo=%s&amp;date=%s&amp;channel=&apos; % (fNo, fData)
-</code></pre><h4 id="爬取数据"><a href="#爬取数据" class="headerlink" title="爬取数据"></a>爬取数据</h4>
-        
-          <p class="article-more-link">
-            <a href="/2018/04/10/爬取航班数据/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/爬取航班数据/" data-id="cjpp94qv5000y2yluhdz02esv" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrape/">scrape</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
